@@ -1,0 +1,13 @@
+{
+  "migIndex": 1,
+  "data": [
+    {
+      "path": "assets/fonts/Gantari-Bold.ttf",
+      "sha1": "67733134883430e13b2cc514b5fea3395fca675b"
+    },
+    {
+      "path": "assets/fonts/Gantari-Regular.ttf",
+      "sha1": "8c1d24aaa516f68dc5d2d895780df40ba753b61c"
+    }
+  ]
+}
