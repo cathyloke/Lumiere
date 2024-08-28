@@ -1,6 +1,6 @@
 import React, {useState,useEffect} from 'react';
 import { Image, View, Text, StyleSheet } from 'react-native';
-import {getDBConnection, getMenuData, getOrderHistory } from "../../assets/dbConnection";
+import {getDBConnection, getOrderHistory } from "../../assets/dbConnection";
 import { FlatList, ScrollView } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import {orderHistoryStyle} from '../../modules/orderHistoryStyle';
@@ -20,7 +20,7 @@ type orderHistoryItem = {
 }
 
 
-const OrderHistoryScreen = () => {
+const OrderHistoryScreen = ({ navigation }: any) => {
    const [orderHistory, setOrderHistory] = useState<orderHistoryItem[]>([]);
 
    const query = async () => {
@@ -53,8 +53,6 @@ const OrderHistoryScreen = () => {
                </View>
             </View>
          </View>
-         
-         
       </View>
     );
 

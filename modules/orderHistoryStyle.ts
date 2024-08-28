@@ -7,7 +7,7 @@ export const orderHistoryStyle = StyleSheet.create({
    header: {
       fontFamily: 'Gantari-Bold',
       fontSize: 20,
-      color: 'black',
+      color: '#102C57',
       padding: 15,
       textAlign: 'left',
       borderBottomWidth: 1,
@@ -37,7 +37,7 @@ export const orderHistoryStyle = StyleSheet.create({
       fontFamily: 'Gantari-Bold',
       fontSize: 18,
       fontWeight: 'bold',
-      color: 'black',
+      color: '#102C57',
    },
    orderDetails: {
       fontFamily: 'Gantari-Bold',
