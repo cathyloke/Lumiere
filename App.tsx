@@ -5,14 +5,18 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { Dimensions } from 'react-native';
 
+//Screens in Main menu
 import HomeScreen from './screens/HomeScreen';
 import MenuScreen from './screens/MenuScreen';
 import RewardsScreen from './screens/RewardsScreen';
 import ProfileDetailScreen from './screens/ProfileMenu/ProfileDetailScreen';
 import CartScreen from './screens/CartScreen';
-
 import { generalStyles } from './modules/generalStyle';
 
+//Screens in Cart Screen
+import CheckoutScreen from './screens/CheckoutScreen';
+
+//Screens in Profile Detail Screen - Account page
 import OrderHistoryScreen from './screens/ProfileMenu/OrderHistoryScreen';
 import HelpCentreScreen from './screens/ProfileMenu/HelpCentreScreen';
 import FeedbackScreen from './screens/ProfileMenu/FeedbackScreen';
@@ -76,7 +80,7 @@ const App = () => {
         />
         <Tab.Screen 
           name="Cart"
-          component={CartScreen}
+          component={CartMenu}
           options={{
             tabBarIcon: (({ focused }: any) => (
               <MaterialCommunityIcons name="cart-outline" size={30} color={focused ? '#102C57' : '#999'} />
@@ -123,6 +127,7 @@ const ProfileScreen = () => {
         component={ProfileDetailScreen}
         options={{ headerShown: false }}
       />
+
       <Stack.Screen name="OrderHistoryScreen" component={OrderHistoryScreen} options={{title: 'My Order History'}}/>
       <Stack.Screen name="HelpCentreScreen" component={HelpCentreScreen} options={{title: 'Help Centre'}}/>
       <Stack.Screen name="FeedbackScreen" component={FeedbackScreen} options={{title: 'Feedback'}}/>
@@ -133,3 +138,22 @@ const ProfileScreen = () => {
   );
 };
 
+const CartMenu = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+      headerTitleStyle: generalStyles.header,
+    }}>
+      <Stack.Screen
+        name="CartScreen"
+        component={CartScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen 
+        name="CheckoutScreen" 
+        component={CheckoutScreen} 
+        options={{title: 'Checkout'}}
+      />
+    </Stack.Navigator>
+  );
+};

@@ -8,6 +8,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { styles } from '../modules/homeStyle';
+import MenuScreen from './MenuScreen';
 
 const images = [
   require('../img/promo/PromoCroissant.png'),
@@ -23,7 +24,7 @@ const bestSellers = [
   { title: 'New York Cheesecake', image: require('../img/food/FoodNewYorkCheesecake.jpeg') },
 ];
 
-const HomeScreen = () => {
+const HomeScreen = ({navigation} : any) => {
   const [imgActive, setImgActive] = useState(0);
   const [greeting, setGreeting] = useState('');
 
@@ -102,10 +103,6 @@ const HomeScreen = () => {
 
           <TouchableOpacity style={styles.button}>
             <Text style={styles.buttonText}>Pickup</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>Merch</Text>
           </TouchableOpacity>
         </View>
 

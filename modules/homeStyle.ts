@@ -42,7 +42,7 @@ export const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 20,
     height: 80,
-    width: 100,
+    width: 150,
   },
   buttonText: {
     fontFamily: 'Gantari-Regular',
