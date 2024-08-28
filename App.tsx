@@ -1,118 +1,135 @@
-/**
- * Sample React Native App
- * https://github.com/facebook/react-native
- *
- * @format
- */
-
 import React from 'react';
-import type {PropsWithChildren} from 'react';
-import {
-  SafeAreaView,
-  ScrollView,
-  StatusBar,
-  StyleSheet,
-  Text,
-  useColorScheme,
-  View,
-} from 'react-native';
+import { NavigationContainer } from '@react-navigation/native';
+import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { createStackNavigator } from '@react-navigation/stack';
+import { createDrawerNavigator } from '@react-navigation/drawer';
+import { Dimensions } from 'react-native';
 
-import {
-  Colors,
-  DebugInstructions,
-  Header,
-  LearnMoreLinks,
-  ReloadInstructions,
-} from 'react-native/Libraries/NewAppScreen';
+import HomeScreen from './screens/HomeScreen';
+import MenuScreen from './screens/MenuScreen';
+import RewardsScreen from './screens/RewardsScreen';
+import ProfileDetailScreen from './screens/ProfileMenu/ProfileDetailScreen';
+import CartScreen from './screens/CartScreen';
 
-type SectionProps = PropsWithChildren<{
-  title: string;
-}>;
+import { generalStyles } from './modules/generalStyle';
 
-function Section({children, title}: SectionProps): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
-  return (
-    <View style={styles.sectionContainer}>
-      <Text
-        style={[
-          styles.sectionTitle,
-          {
-            color: isDarkMode ? Colors.white : Colors.black,
-          },
-        ]}>
-        {title}
-      </Text>
-      <Text
-        style={[
-          styles.sectionDescription,
-          {
-            color: isDarkMode ? Colors.light : Colors.dark,
-          },
-        ]}>
-        {children}
-      </Text>
-    </View>
-  );
-}
+import OrderHistoryScreen from './screens/ProfileMenu/OrderHistoryScreen';
+import HelpCentreScreen from './screens/ProfileMenu/HelpCentreScreen';
+import FeedbackScreen from './screens/ProfileMenu/FeedbackScreen';
+import TNCScreen from './screens/ProfileMenu/TNCScreen';
+import AboutScreen from './screens/ProfileMenu/AboutScreen';
+import LogoutScreen from './screens/Account/LogoutScreen';
 
-function App(): React.JSX.Element {
-  const isDarkMode = useColorScheme() === 'dark';
 
-  const backgroundStyle = {
-    backgroundColor: isDarkMode ? Colors.darker : Colors.lighter,
-  };
+import Feather from 'react-native-vector-icons/Feather';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
+import Octicons from 'react-native-vector-icons/Octicons';
+
+const Tab = createBottomTabNavigator();
+
+const App = () => {
+
+  const windowHeight = Dimensions.get('window').height;
 
   return (
-    <SafeAreaView style={backgroundStyle}>
-      <StatusBar
-        barStyle={isDarkMode ? 'light-content' : 'dark-content'}
-        backgroundColor={backgroundStyle.backgroundColor}
-      />
-      <ScrollView
-        contentInsetAdjustmentBehavior="automatic"
-        style={backgroundStyle}>
-        <Header />
-        <View
-          style={{
-            backgroundColor: isDarkMode ? Colors.black : Colors.white,
-          }}>
-          <Section title="Step One">
-            Edit <Text style={styles.highlight}>App.tsx</Text> to change this
-            screen and then come back to see your edits.
-          </Section>
-          <Section title="See Your Changes">
-            <ReloadInstructions />
-          </Section>
-          <Section title="Debug">
-            <DebugInstructions />
-          </Section>
-          <Section title="Learn More">
-            Read the docs to discover what to do next:
-          </Section>
-          <LearnMoreLinks />
-        </View>
-      </ScrollView>
-    </SafeAreaView>
+    <NavigationContainer>
+      <Tab.Navigator
+        screenOptions={{
+          headerShown: false,
+          tabBarStyle: {
+            backgroundColor: '#EADBC8',
+            height: windowHeight * 0.1,
+            borderTopLeftRadius: 35,
+            borderTopRightRadius: 35,
+          },
+          tabBarActiveTintColor: '#102C57',
+          tabBarInactiveTintColor: '#999',
+          tabBarLabelStyle: {
+            fontSize: 12,
+            fontWeight: 'bold',
+            fontFamily: 'Gantari-Regular',
+            marginBottom: 16,
+          },
+          tabBarIconStyle: {
+            marginTop: 16,
+          },
+        }}
+      >
+        <Tab.Screen 
+          name="Home" 
+          component={HomeScreen}
+          options={{
+            tabBarIcon: (({ focused }: any) => (
+              <Feather name="home" size={30} color={focused ? '#102C57' : '#999'} />
+            ))
+          }}
+        />
+        <Tab.Screen
+          name="Menu"
+          component={MenuScreen}
+          options={{
+            tabBarIcon: (({ focused }: any) => (
+              <MaterialIcons name="restaurant-menu" size={30} color={focused ? '#102C57' : '#999'} />
+            ))
+          }}
+        />
+        <Tab.Screen 
+          name="Cart"
+          component={CartScreen}
+          options={{
+            tabBarIcon: (({ focused }: any) => (
+              <MaterialCommunityIcons name="cart-outline" size={30} color={focused ? '#102C57' : '#999'} />
+            )),
+          }}
+        />
+        <Tab.Screen
+          name="Rewards"
+          component={RewardsScreen}
+          options={{
+            tabBarIcon: (({ focused }: any) => (
+              <Feather name="gift" size={30} color={focused ? '#102C57' : '#999'} />
+            ))
+          }}
+        />
+        <Tab.Screen 
+          name="Profile"
+          component={ProfileScreen}
+          options={{
+            tabBarIcon: (({ focused }: any) => (
+              <Octicons name="person" size={30} color={focused ? '#102C57' : '#999'} />
+            ))
+          }}
+        />
+      </Tab.Navigator>
+    </NavigationContainer>
   );
-}
-
-const styles = StyleSheet.create({
-  sectionContainer: {
-    marginTop: 32,
-    paddingHorizontal: 24,
-  },
-  sectionTitle: {
-    fontSize: 24,
-    fontWeight: '600',
-  },
-  sectionDescription: {
-    marginTop: 8,
-    fontSize: 18,
-    fontWeight: '400',
-  },
-  highlight: {
-    fontWeight: '700',
-  },
-});
+};
 
 export default App;
+
+
+const Stack = createStackNavigator();
+
+const ProfileScreen = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerTitleStyle: generalStyles.header,
+      }}
+    >
+      <Stack.Screen
+        name="ProfileDetailsScreen"
+        component={ProfileDetailScreen}
+        options={{ headerShown: false }}
+      />
+      <Stack.Screen name="OrderHistoryScreen" component={OrderHistoryScreen} options={{title: 'My Order History'}}/>
+      <Stack.Screen name="HelpCentreScreen" component={HelpCentreScreen} options={{title: 'Help Centre'}}/>
+      <Stack.Screen name="FeedbackScreen" component={FeedbackScreen} options={{title: 'Feedback'}}/>
+      <Stack.Screen name="TNCScreen" component={TNCScreen} options={{title: 'Terms & Conditions'}}/>
+      <Stack.Screen name="AboutScreen" component={AboutScreen} options={{title: 'About Lumière'}}/>
+      <Stack.Screen name="LogoutScreen" component={LogoutScreen} options={{title: 'Logout'}}/>
+    </Stack.Navigator>
+  );
+};
+
