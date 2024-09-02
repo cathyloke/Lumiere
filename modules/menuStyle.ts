@@ -8,7 +8,7 @@ export const styles = StyleSheet.create({
     flexDirection: 'row',
     flexGrow: 1,
   },
-    picker: {
+  picker: {
     height: 50,
     width: '100%',
     marginBottom: 20,
@@ -27,9 +27,10 @@ export const styles = StyleSheet.create({
     paddingVertical: 15,
     borderBottomWidth:2,
     borderColor:'#DAC0A3',
+    height: 100,
   },
   sidebarIcon: {
-    marginBottom: 10,   
+    marginBottom: 10,
   },
   sidebarText: {
     fontSize: 16,
@@ -90,7 +91,7 @@ export const styles = StyleSheet.create({
   },
   detailPrice: {
     fontSize: 20,
-    fontFamily: 'Gantari-Regular',
+    fontFamily: 'Gantari-Bold',
     textAlign: 'center',
     color: 'black',
     marginTop: 10,
