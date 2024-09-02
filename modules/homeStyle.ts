@@ -40,9 +40,9 @@ export const styles = StyleSheet.create({
     backgroundColor: '#102C57',
     justifyContent: 'center',
     padding: 10,
-    borderRadius: 20,
+    borderRadius: 100,
     height: 80,
-    width: 150,
+    width: 200,
   },
   buttonText: {
     fontFamily: 'Gantari-Regular',
