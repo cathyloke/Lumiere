@@ -33,7 +33,7 @@ const RewardsScreen = ({navigation}: any) => {
    );
 
    return (
-      <GestureHandlerRootView>
+      <GestureHandlerRootView style={styles.container}>
         <Text style={styles.header}>Rewards</Text>
         <View>
           <Text style={styles.content}>Get Rewards</Text>
