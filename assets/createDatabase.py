@@ -67,7 +67,7 @@ cursor.execute('''
 
 cursor.execute('''
     INSERT INTO menu(foodID, name, category, type, description, image, price)
-    VALUES('001','Egg croissant sandwich', 'Food', 'Breakfast', 'A delicious Egg Croissant Sandwich is suitable for you as a breakfast.', 'FoodEggCroissantSandwich', 8.00)
+    VALUES('001','Egg Croissant Sandwich', 'Food', 'Breakfast', 'A delicious Egg Croissant Sandwich is suitable for you as a breakfast.', 'FoodEggCroissantSandwich', 8.00)
 ''')
 
 cursor.execute('''
@@ -77,22 +77,22 @@ cursor.execute('''
 
 cursor.execute('''
     INSERT INTO menu(foodID, name, category, type, description, image, price)
-    VALUES('003','Avocado toast', 'Food', 'Breakfast', 'Avocado Toast, fast prepared breakfast, speed up and save your time.', 'FoodAvocadoToast', 8.90)
+    VALUES('003','Avocado Toast', 'Food', 'Breakfast', 'Avocado Toast, fast prepared breakfast, speed up and save your time.', 'FoodAvocadoToast', 8.90)
 ''')
 
 cursor.execute('''
     INSERT INTO menu(foodID, name, category, type, description, image, price)
-    VALUES('004','Chocolate cake', 'Food', 'Dessert', 'Chocolate Cake, a cake flavored with melted chocolate, and cocoa powder on top.', 'FoodChocolateCake', 15.90)
+    VALUES('004','Chocolate Cake', 'Food', 'Dessert', 'Chocolate Cake, a cake flavored with melted chocolate, and cocoa powder on top.', 'FoodChocolateCake', 15.90)
 ''')
 
 cursor.execute('''
     INSERT INTO menu(foodID, name, category, type, description, image, price)
-    VALUES('005','New York cheesecake', 'Food', 'Dessert', 'New York Cheesecake, full of cheesy and smooth texture.', 'FoodNewYorkCheesecake', 12.90)
+    VALUES('005','New York Cheesecake', 'Food', 'Dessert', 'New York Cheesecake, full of cheesy and smooth texture.', 'FoodNewYorkCheesecake', 12.90)
 ''')
 
 cursor.execute('''
     INSERT INTO menu(foodID, name, category, type, description, image, price)
-    VALUES('006','Tiramisu cake', 'Food', 'Dessert', 'Tiramisu Cake, a vanilla sponge cakes soaked in coffee, frosted with a fluffy mascarpone cream and topped with a dusting of cocoa powder.', 'FoodTiramisuCake', 13.90)
+    VALUES('006','Tiramisu Cake', 'Food', 'Dessert', 'Tiramisu Cake, a vanilla sponge cakes soaked in coffee, frosted with a fluffy mascarpone cream and topped with a dusting of cocoa powder.', 'FoodTiramisuCake', 13.90)
 ''')
 
 cursor.execute('''
