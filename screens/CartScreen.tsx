@@ -21,7 +21,7 @@ const CartScreen = ({ navigation }: any) => {
          const cartItemData = await getCartItem(db, '01');  // Replace with current user ID
          setCartItems(cartItemData);
       } catch (error) {
-         console.error("Error fetching order data:", error);
+         console.error('Error fetching order data: ', error);
       }
    };
 
@@ -90,13 +90,13 @@ const CartScreen = ({ navigation }: any) => {
    return (
       <View style={styles.container}>
          <Text style={styles.header}>My Cart</Text>
-      
+
          <FlatList
             data={cartItems}
             renderItem={renderItem}
             keyExtractor={(item, index) => item.id || index.toString()}
          />
-         
+
          <TouchableOpacity
             style={styles.checkoutButton}
             onPress={() => navigation.navigate('CheckoutScreen')}>
