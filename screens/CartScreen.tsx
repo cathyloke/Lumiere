@@ -29,11 +29,37 @@ const CartScreen = ({ navigation }: any) => {
       query();
    }, []);
 
+   /*
    const updateQuantity = (id: string, quantity: number) => {
       const updatedItems = cartItems.map(item =>
       item.id === id ? { ...item, quantity } : item
       );
       setCartItems(updatedItems);
+   };
+   */
+
+   const updateQuantity = async (id: string, quantity: number) => {
+      try {
+         const db = await getDBConnection();
+         await updateCartItem(db, '01', id, quantity);  // Replace with current user ID
+         const updatedItems = cartItems.map(item =>
+            item.id === id ? { ...item, quantity } : item
+         );
+         setCartItems(updatedItems);
+      } catch (error) {
+         console.error('Failed to update quantity:', error);
+      }
+   };
+
+   const removeItem = async (id: string) => {
+      try {
+         const db = await getDBConnection();
+         await deleteCartItem(db, '01', id);  // Replace with current user ID
+         const updatedItems = cartItems.filter(item => item.id !== id);
+         setCartItems(updatedItems);
+      } catch (error) {
+         console.error('Failed to delete cart item:', error);
+      }
    };
 
    const renderItem = ({ item }: { item: CartItem }) => (
