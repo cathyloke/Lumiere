@@ -48,8 +48,8 @@ const OrderHistoryScreen = ({ navigation }: any) => {
                <Image source={item.image} style={orderHistoryStyle.image} />
                <View>
                   <Text style={orderHistoryStyle.orderDetails}>Quantity: {item.quantity}</Text>
-                  <Text style={[orderHistoryStyle.orderDetails, { marginBottom: 40 }]}>Price: {item.price}</Text>
-                  <Text style={orderHistoryStyle.orderDetails}>SubTotal: {(item.price * item.quantity).toFixed(2)}</Text>
+                  <Text style={[orderHistoryStyle.orderDetails, { marginBottom: 40 }]}>Price: RM{(item.price).toFixed(2)}</Text>
+                  <Text style={orderHistoryStyle.orderDetails}>Subtotal: RM{(item.price * item.quantity).toFixed(2)}</Text>
                </View>
             </View>
          </View>
