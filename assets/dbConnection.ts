@@ -219,6 +219,28 @@ export const processPayment = async (db: SQLiteDatabase, userID: string): Promis
   }
 };
 
+// Update the quantity of a cart item
+export const updateCartItem = async (db: SQLiteDatabase, userID: string, foodID: string, quantity: number): Promise<void> => {
+  try {
+    const query = `UPDATE cartItem SET quantity = ? WHERE userID = ? AND foodID = ?`;
+    await db.executeSql(query, [quantity, userID, foodID]);
+  } catch (error) {
+    console.error('Failed to update cart item:', error);
+    throw new Error('Failed to update cart item');
+  }
+};
+
+// Delete a cart item
+export const deleteCartItem = async (db: SQLiteDatabase, userID: string, foodID: string): Promise<void> => {
+  try {
+    const query = `DELETE FROM cartItem WHERE userID = ? AND foodID = ?`;
+    await db.executeSql(query, [userID, foodID]);
+  } catch (error) {
+    console.error('Failed to delete cart item:', error);
+    throw new Error('Failed to delete cart item');
+  }
+};
+
 
 const openCallback = () => {
     console.log('database open success');

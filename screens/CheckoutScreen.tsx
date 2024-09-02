@@ -45,13 +45,13 @@ const CheckoutScreen = ({ navigation }: any) => {
                 <Text style={styles.name}>{item.name}</Text>
                 <Text style={[styles.itemDetails,{textAlign: 'left'}]}>RM{item.price.toFixed(2)}</Text>
                 <Text style={[styles.itemDetails,{textAlign: 'left'}]}>Quantity: {item.quantity}</Text>
-                <Text style={[styles.itemDetails,{textAlign: 'right'}]}>SubTotal: {(item.price * item.quantity).toFixed(2)}</Text>
+                <Text style={[styles.itemDetails,{textAlign: 'right'}]}>Subtotal: {(item.price * item.quantity).toFixed(2)}</Text>
             </View>
         </View>
     );
 
     const checkoutAction = () => {
-        Alert.alert('You had successfully pay');
+        Alert.alert('You had successfully paid.');
         // Delete data here    
     }
 
