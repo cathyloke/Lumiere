@@ -13,16 +13,12 @@ import { GestureHandlerRootView } from 'react-native-gesture-handler';
 const RewardsScreen = ({navigation}: any) => {
 
    const images = [
-      require('../img/promo/chuu.jpg'),
       require('../img/promo/PromoCoffee.png'),
       require('../img/promo/PromoCroissant.png'),
       require('../img/promo/PromoPancake.png'),
-      require('../img/promo/yves.jpg'),
-      require('../img/promo/chuu.jpg'),
       require('../img/promo/PromoCoffee.png'),
       require('../img/promo/PromoCroissant.png'),
       require('../img/promo/PromoPancake.png'),
-      require('../img/promo/yves.jpg'),
       require('../img/promo/PromoCoffee.png'),
    ];
 
