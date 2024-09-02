@@ -179,6 +179,47 @@ export const getCartItem = async (db: SQLiteDatabase, userID?: string): Promise<
   }
 
 
+  // havent try for the checkout function -- cathy
+export const processPayment = async (db: SQLiteDatabase, userID: string): Promise<void> => {
+  try {
+    if (!userID) {
+      console.log("Missing user ID");
+      throw new Error('User ID is required');
+    }
+
+    // Step 1: Retrieve cart items
+    const cartItems = await getCartItem(db, userID);
+    
+    if (cartItems.length === 0) {
+      console.log("Cart is empty");
+      throw new Error('Cart is empty');
+    }
+
+    // Generate a unique orderID (for simplicity, use timestamp or UUID)
+    const orderID = Date.now().toString();
+
+    // Get the current date (format as needed)
+    const date = new Date().toISOString();
+
+    // Step 2: Insert items into order history
+    const insertOrderQuery = `INSERT INTO orderHistory (orderID, userID, foodID, date, quantity) VALUES (?, ?, ?, ?, ?)`;
+    for (const item of cartItems) {
+      await db.executeSql(insertOrderQuery, [orderID, userID, item.foodID, date, item.quantity]);
+    }
+
+    // Step 3: Delete items from cart
+    const deleteCartQuery = `DELETE FROM cartItem WHERE userID = ?`;
+    await db.executeSql(deleteCartQuery, [userID]);
+
+    console.log("Payment processed successfully");
+
+  } catch (error) {
+    console.error('Failed to process payment:', error);
+    throw new Error('Failed to process payment');
+  }
+};
+
+
 const openCallback = () => {
     console.log('database open success');
 }
