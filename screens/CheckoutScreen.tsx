@@ -45,7 +45,7 @@ const CheckoutScreen = ({ navigation }: any) => {
                 <Text style={styles.name}>{item.name}</Text>
                 <Text style={[styles.itemDetails,{textAlign: 'left'}]}>RM{item.price.toFixed(2)}</Text>
                 <Text style={[styles.itemDetails,{textAlign: 'left'}]}>Quantity: {item.quantity}</Text>
-                <Text style={[styles.itemDetails,{textAlign: 'right'}]}>Subtotal: {(item.price * item.quantity).toFixed(2)}</Text>
+                <Text style={[styles.itemDetails,{textAlign: 'right'}]}>Subtotal: RM{(item.price * item.quantity).toFixed(2)}</Text>
             </View>
         </View>
     );
@@ -63,7 +63,7 @@ const CheckoutScreen = ({ navigation }: any) => {
         renderItem={renderItem}
         keyExtractor={(item, index) => item.id || index.toString()}
         />
-        <Text style={styles.total}>Total: {total.toFixed(2)}</Text>
+        <Text style={styles.total}>Total: RM{total.toFixed(2)}</Text>
         <TouchableOpacity
             style={styles.checkoutButton}
             onPress={checkoutAction}>    

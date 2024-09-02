@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, Image, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
-import { getDBConnection, getCartItem } from '../assets/dbConnection';
+import { getDBConnection, getCartItem, updateCartItem, deleteCartItem } from '../assets/dbConnection';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import {styles} from '../modules/cartStyle';
 
@@ -92,9 +92,9 @@ const CartScreen = ({ navigation }: any) => {
          <Text style={styles.header}>My Cart</Text>
       
          <FlatList
-         data={cartItems}
-         renderItem={renderItem}
-         keyExtractor={(item, index) => item.id || index.toString()}
+            data={cartItems}
+            renderItem={renderItem}
+            keyExtractor={(item, index) => item.id || index.toString()}
          />
          
          <TouchableOpacity
@@ -108,16 +108,3 @@ const CartScreen = ({ navigation }: any) => {
 };
 
 export default CartScreen;
-
-
-
-
-const CheckoutScreen = () => {
-
-   return(
-      <View>
-         <Text>Hi there</Text>
-
-      </View>
-   );
-};
