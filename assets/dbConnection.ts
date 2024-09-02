@@ -56,7 +56,7 @@ export const getDBConnection = async() => {
 export const getUsers = async( db: SQLiteDatabase ): Promise<any> => {
     try{
         const userData : any = [];
-        const query = `SELECT * FROM users`;
+        const query = 'SELECT * FROM users';
         const results = await db.executeSql(query);
         results.forEach(result => {
             (result.rows.raw()).forEach(( item:any ) => {
@@ -111,7 +111,7 @@ const getImage = (imageName: string) => {
 export const getMenuData = async (db: SQLiteDatabase, category?: string): Promise<any> => {
   try {
     const menuData: any = [];
-    const query = category ? `SELECT * FROM menu WHERE category=?` : `SELECT * FROM menu`;
+    const query = category ? 'SELECT * FROM menu WHERE category=?' : 'SELECT * FROM menu';
     const params = category ? [category] : [];
     
     const results = await db.executeSql(query, params);
@@ -138,7 +138,7 @@ export const getOrderHistory = async (db: SQLiteDatabase, userID?: string): Prom
       throw new Error('User ID is required');
     }
 
-    const query = `SELECT * FROM orderHistory JOIN menu ON orderHistory.foodID = menu.foodID WHERE userID = ?`;
+    const query = 'SELECT * FROM orderHistory JOIN menu ON orderHistory.foodID = menu.foodID WHERE userID = ?';
     const results = await db.executeSql(query, [userID]);
 
     results.forEach(result => {
@@ -158,11 +158,11 @@ export const getCartItem = async (db: SQLiteDatabase, userID?: string): Promise<
     try {
       const cartItemData: any[] = [];
       if (!userID) {
-        console.log("Missing user ID");
+        console.log('Missing user ID');
         throw new Error('User ID is required');
       }
   
-      const query = `SELECT * FROM cartItem JOIN menu ON cartItem.foodID = menu.foodID WHERE userID = ?`;
+      const query = 'SELECT * FROM cartItem JOIN menu ON cartItem.foodID = menu.foodID WHERE userID = ?';
       const results = await db.executeSql(query, [userID]);
       
       results.forEach(result => {
@@ -183,7 +183,7 @@ export const getCartItem = async (db: SQLiteDatabase, userID?: string): Promise<
 export const processPayment = async (db: SQLiteDatabase, userID: string): Promise<void> => {
   try {
     if (!userID) {
-      console.log("Missing user ID");
+      console.log('Missing user ID');
       throw new Error('User ID is required');
     }
 
@@ -191,7 +191,7 @@ export const processPayment = async (db: SQLiteDatabase, userID: string): Promis
     const cartItems = await getCartItem(db, userID);
     
     if (cartItems.length === 0) {
-      console.log("Cart is empty");
+      console.log('Cart is empty');
       throw new Error('Cart is empty');
     }
 
@@ -202,16 +202,16 @@ export const processPayment = async (db: SQLiteDatabase, userID: string): Promis
     const date = new Date().toISOString();
 
     // Step 2: Insert items into order history
-    const insertOrderQuery = `INSERT INTO orderHistory (orderID, userID, foodID, date, quantity) VALUES (?, ?, ?, ?, ?)`;
+    const insertOrderQuery = 'INSERT INTO orderHistory (orderID, userID, foodID, date, quantity) VALUES (?, ?, ?, ?, ?)';
     for (const item of cartItems) {
       await db.executeSql(insertOrderQuery, [orderID, userID, item.foodID, date, item.quantity]);
     }
 
     // Step 3: Delete items from cart
-    const deleteCartQuery = `DELETE FROM cartItem WHERE userID = ?`;
+    const deleteCartQuery = 'DELETE FROM cartItem WHERE userID = ?';
     await db.executeSql(deleteCartQuery, [userID]);
 
-    console.log("Payment processed successfully");
+    console.log('Payment processed successfully');
 
   } catch (error) {
     console.error('Failed to process payment:', error);
@@ -222,7 +222,7 @@ export const processPayment = async (db: SQLiteDatabase, userID: string): Promis
 // Update the quantity of a cart item
 export const updateCartItem = async (db: SQLiteDatabase, userID: string, foodID: string, quantity: number): Promise<void> => {
   try {
-    const query = `UPDATE cartItem SET quantity = ? WHERE userID = ? AND foodID = ?`;
+    const query = 'UPDATE cartItem SET quantity = ? WHERE userID = ? AND foodID = ?';
     await db.executeSql(query, [quantity, userID, foodID]);
   } catch (error) {
     console.error('Failed to update cart item:', error);
@@ -233,7 +233,7 @@ export const updateCartItem = async (db: SQLiteDatabase, userID: string, foodID:
 // Delete a cart item
 export const deleteCartItem = async (db: SQLiteDatabase, userID: string, foodID: string): Promise<void> => {
   try {
-    const query = `DELETE FROM cartItem WHERE userID = ? AND foodID = ?`;
+    const query = 'DELETE FROM cartItem WHERE userID = ? AND foodID = ?';
     await db.executeSql(query, [userID, foodID]);
   } catch (error) {
     console.error('Failed to delete cart item:', error);
