@@ -22,11 +22,11 @@ export const styles = StyleSheet.create({
     borderColor: '#DAC0A3',
   },
   sidebarItem: {
-    flexDirection: 'column', 
-    alignItems: 'center',    
-    paddingVertical: 15, 
+    flexDirection: 'column',
+    alignItems: 'center',
+    paddingVertical: 15,
     borderBottomWidth:2,
-    borderColor:'#DAC0A3',  
+    borderColor:'#DAC0A3',
   },
   sidebarIcon: {
     marginBottom: 10,   
@@ -34,9 +34,8 @@ export const styles = StyleSheet.create({
   sidebarText: {
     fontSize: 16,
     fontFamily: 'Gantari-Regular',
-    fontWeight: 'bold',
     paddingTop:7,
-    color:'#102C57', 
+    color:'#102C57',
   },
   content: {
     flex: 1,
@@ -65,14 +64,12 @@ export const styles = StyleSheet.create({
   },
   title: {
     fontSize: 16,
-    fontFamily: 'Gantari-Regular',
-    fontWeight: 'bold',
+    fontFamily: 'Gantari-Bold',
     color:'black',
   },
   price: {
     fontSize: 16,
     fontFamily: 'Gantari-Regular',
-    fontWeight: 'bold',
     color: 'black',
     marginTop: 10,
   },
@@ -87,7 +84,6 @@ export const styles = StyleSheet.create({
   detailTitle: {
     fontSize: 24,
     fontFamily: 'Gantari-Regular',
-    fontWeight: 'bold',
     textAlign: 'center',
     color:'black',
     marginTop: 20,
@@ -95,7 +91,6 @@ export const styles = StyleSheet.create({
   detailPrice: {
     fontSize: 20,
     fontFamily: 'Gantari-Regular',
-    fontWeight: 'bold',
     textAlign: 'center',
     color: 'black',
     marginTop: 10,

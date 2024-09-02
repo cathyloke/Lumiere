@@ -97,7 +97,10 @@ const HomeScreen = ({navigation} : any) => {
 
         {/* FOR ORDER NOW BUTTON */}
         <View style={styles.buttonContainer}>
-          <TouchableOpacity style={styles.button}>
+          <TouchableOpacity
+            style={styles.button}
+            onPress={() => navigation.navigate('Menu')}
+          >
             <Text style={styles.buttonText}>Order Now</Text>
           </TouchableOpacity>
         </View>
