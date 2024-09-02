@@ -95,14 +95,10 @@ const HomeScreen = ({navigation} : any) => {
           </Text>
         </View>
 
-        {/* FOR DELIVERY, PICKUP, MERCH BUTTONS */}
+        {/* FOR ORDER NOW BUTTON */}
         <View style={styles.buttonContainer}>
           <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>Delivery</Text>
-          </TouchableOpacity>
-
-          <TouchableOpacity style={styles.button}>
-            <Text style={styles.buttonText}>Pickup</Text>
+            <Text style={styles.buttonText}>Order Now</Text>
           </TouchableOpacity>
         </View>
 
