@@ -4,15 +4,6 @@ export const orderHistoryStyle = StyleSheet.create({
    container: {
       flex: 1
    },
-   header: {
-      fontFamily: 'Gantari-Bold',
-      fontSize: 20,
-      color: '#102C57',
-      padding: 15,
-      textAlign: 'left',
-      borderBottomWidth: 1,
-      borderColor: 'grey',
-   },
    orderHeaderSection:{
       flexDirection: 'row',
       justifyContent: 'space-between',
@@ -20,7 +11,7 @@ export const orderHistoryStyle = StyleSheet.create({
    orderDetailSection: {
       marginTop: 10,
       flexDirection: 'row',
-      justifyContent: 'space-between'
+      justifyContent: 'space-between',
    },
    orderItem: {
       padding: 15,
@@ -43,6 +34,6 @@ export const orderHistoryStyle = StyleSheet.create({
       fontFamily: 'Gantari-Bold',
       fontSize: 16,
       color: 'grey',
-      textAlign: 'right'
+      textAlign: 'right',
    },
 });

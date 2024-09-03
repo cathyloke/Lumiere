@@ -58,13 +58,13 @@ const OrderHistoryScreen = ({ navigation }: any) => {
 
    return (
       <SafeAreaView style={orderHistoryStyle.container}>
-         <Text style={orderHistoryStyle.header}>My orders</Text>
 
             <FlatList
-               data = {orderHistory}   
+               data = {orderHistory}
                renderItem = {renderOrderHistoryItem}
                keyExtractor={(item, index) => item.id || index.toString()}
             />
+
       </SafeAreaView>
    );
 };
