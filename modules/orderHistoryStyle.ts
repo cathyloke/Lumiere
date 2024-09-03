@@ -27,11 +27,10 @@ export const orderHistoryStyle = StyleSheet.create({
    orderTitle: {
       fontFamily: 'Gantari-Bold',
       fontSize: 18,
-      fontWeight: 'bold',
       color: '#102C57',
    },
    orderDetails: {
-      fontFamily: 'Gantari-Bold',
+      fontFamily: 'Gantari-Regular',
       fontSize: 16,
       color: 'grey',
       textAlign: 'right',
