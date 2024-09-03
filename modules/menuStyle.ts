@@ -84,7 +84,7 @@ export const styles = StyleSheet.create({
   },
   detailTitle: {
     fontSize: 24,
-    fontFamily: 'Gantari-Regular',
+    fontFamily: 'Gantari-Bold',
     textAlign: 'center',
     color:'#102C57',
     marginTop: 20,
