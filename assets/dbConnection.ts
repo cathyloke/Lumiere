@@ -183,6 +183,44 @@ export const processPayment = async (db: SQLiteDatabase, userID: string): Promis
   }
 };
 
+//add cart
+export const addCartItem = async (db: SQLiteDatabase, userID: string, foodID: string, quantity: number): Promise<void> => {
+  try {
+    if (!userID) {
+      console.log('Missing user ID');
+      throw new Error('User ID is required');
+    } else if (!foodID) {
+      console.log('Missing food ID');
+      throw new Error('Food ID is required');
+    } else if (!quantity) {
+      console.log('Missing quantity');
+      throw new Error('Quantity is required');
+    } else {
+      console.log('No missing error in userID, foodID and quantity')
+    }
+    
+    // Check if the item already exists in the cart
+    const checkQuery = 'SELECT quantity FROM cartItem WHERE userID = ? AND foodID = ?';
+    const result = await db.executeSql(checkQuery, [userID, foodID]);
+
+    if (result[0].rows.length > 0) {
+      // If the item exists, update the quantity
+      const existingQuantity = result[0].rows.item(0).quantity;
+      const newQuantity = existingQuantity + quantity;
+      const updateQuery = 'UPDATE cartItem SET quantity = ? WHERE userID = ? AND foodID = ?';
+      await db.executeSql(updateQuery, [newQuantity, userID, foodID]);
+    } else {
+      // If the item does not exist, insert it as a new entry
+      const insertQuery = 'INSERT INTO cartItem (userID, foodID, quantity) VALUES (?, ?, ?)';
+      await db.executeSql(insertQuery, [userID, foodID, quantity]);
+    }
+    console.log('Cart item added successfully');
+  } catch (error) {
+    console.error('Failed to add cart item:', error);
+    throw new Error('Failed to add cart item');
+  }
+};
+
 // Update the quantity of a cart item
 export const updateCartItem = async (db: SQLiteDatabase, userID: string, foodID: string, quantity: number): Promise<void> => {
   try {
