@@ -31,12 +31,9 @@ const CartScreen = ({ navigation }: any) => {
       }
    };
 
-   // useEffect(() => {
-   //    query();
-   // }, []);
    useFocusEffect(
       useCallback(() => {
-         query(); // Fetch the latest cart items whenever the screen is focused
+         query();
       }, [])
    );
 
