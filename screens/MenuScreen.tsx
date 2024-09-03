@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image, FlatList, TouchableOpacity, SafeAreaView,TouchableHighlight, } from 'react-native';
+import { View, Text, Image, FlatList, TouchableOpacity, SafeAreaView,TouchableHighlight, Alert, } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import { createStackNavigator} from '@react-navigation/stack';
 import { styles } from '../modules/menuStyle';
@@ -64,6 +64,7 @@ const ItemDetailScreen = ({route}: any) => { //item detail screen
   const [quantity, setQuantity] = useState(1);
   const handleAddToCart = () => {
     console.log(`Added ${quantity} of ${item.name} to cart`);
+    Alert.alert('Added to cart', `Added ${quantity} ${item.name} to the cart.`);
   };
 
   return (
