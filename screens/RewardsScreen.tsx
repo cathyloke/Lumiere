@@ -14,12 +14,8 @@ const RewardsScreen = ({navigation}: any) => {
 
    const images = [
       require('../img/promo/PromoCoffee.png'),
-      require('../img/promo/PromoCroissant.png'),
       require('../img/promo/PromoPancake.png'),
-      require('../img/promo/PromoCoffee.png'),
       require('../img/promo/PromoCroissant.png'),
-      require('../img/promo/PromoPancake.png'),
-      require('../img/promo/PromoCoffee.png'),
    ];
 
    const renderItem = ({ item }: { item: any }) => (
