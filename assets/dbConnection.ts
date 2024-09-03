@@ -12,47 +12,6 @@ export const getDBConnection = async() => {
     );
 }
 
-// export const createTableUsers = async( db: SQLiteDatabase ) => {
-//     try{
-//         const query = 'CREATE TABLE IF NOT EXISTS users(id VARCHAR(10) PRIMARY KEY, name VARCHAR(20), phone VARCHAR(20), password VARCHAR(20))';
-//         await db.executeSql(query);
-//       } catch (error) {
-//         console.error(error);
-//         throw Error('Failed to create table !!!');
-//       }
-// }
-
-// export const createTableMenu = async( db: SQLiteDatabase ) => {
-//     try{
-//         const query = 'CREATE TABLE IF NOT EXISTS menu(id VARCHAR(10) PRIMARY KEY, name VARCHAR(20), category VARCHAR(20), type VARCHAR(10), description VARCHAR2(100), image VARCHAR2(50), price NUMERIC(10,2))';
-//         await db.executeSql(query);
-//       } catch (error) {
-//         console.error(error);
-//         throw Error('Failed to create table !!!');
-//       }
-// }
-
-// export const createTableOrderHistory = async( db: SQLiteDatabase ) => {
-//     try{
-//         const query = 'CREATE TABLE IF NOT EXISTS orderHistory(id VARCHAR(10) PRIMARY KEY AUTOINCREMENT, userID VARCHAR(20), foodID VARCHAR(20), date VARCHAR(12), quantity VARCHAR(10))';
-//         await db.executeSql(query);
-//       } catch (error) {
-//         console.error(error);
-//         throw Error('Failed to create table !!!');
-//       }
-// }
-
-// export const createTableCartItem = async( db: SQLiteDatabase ) => {
-//     try{
-//         const query = 'CREATE TABLE IF NOT EXISTS cartItem(id VARCHAR(10) PRIMARY KEY AUTOINCREMENT, userID VARCHAR(20), foodID VARCHAR(20), quantity VARCHAR(10))';
-//         await db.executeSql(query);
-//       } catch (error) {
-//         console.error(error);
-//         throw Error('Failed to create table !!!');
-//       }
-// }
-
-
 export const getUsers = async( db: SQLiteDatabase ): Promise<any> => {
     try{
         const userData : any = [];
@@ -185,6 +144,11 @@ export const processPayment = async (db: SQLiteDatabase, userID: string): Promis
     if (!userID) {
       console.log('Missing user ID');
       throw new Error('User ID is required');
+    } else if (!userID) {
+      console.log('Missing food ID');
+      throw new Error('Food ID is required');
+    } else {
+      console.log('No missing error in userID, foodID and quantity')
     }
 
     // Step 1: Retrieve cart items
@@ -222,8 +186,21 @@ export const processPayment = async (db: SQLiteDatabase, userID: string): Promis
 // Update the quantity of a cart item
 export const updateCartItem = async (db: SQLiteDatabase, userID: string, foodID: string, quantity: number): Promise<void> => {
   try {
+    if (!userID) {
+      console.log('Missing user ID');
+      throw new Error('User ID is required');
+    } else if (!foodID) {
+      console.log('Missing food ID');
+      throw new Error('Food ID is required');
+    } else if (!quantity) {
+      console.log('Missing quantity');
+      throw new Error('Quantity is required');
+    } else {
+      console.log('No missing error in userID, foodID and quantity')
+    }
     const query = 'UPDATE cartItem SET quantity = ? WHERE userID = ? AND foodID = ?';
     await db.executeSql(query, [quantity, userID, foodID]);
+
   } catch (error) {
     console.error('Failed to update cart item:', error);
     throw new Error('Failed to update cart item');
