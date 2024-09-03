@@ -62,10 +62,13 @@ const CustomStackContent = ({ navigation }: any) => { //side bar
 const ItemDetailScreen = ({route}: any) => { //item detail screen
   const {item} = route.params;
   const [quantity, setQuantity] = useState(1);
+  const handleAddToCart = () => {
+    console.log(`Added ${quantity} of ${item.title} to cart`);
+  };
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={{flex:1,justifyContent:'center',marginBottom:20}}>
+      <View style={{flex:1,justifyContent:'center',marginBottom:30}}>
         <Image source={item.image} style={styles.detailImage} />
         <Text style={styles.detailTitle}>{item.title}</Text>
         <Text style={styles.detailPrice}>RM {item.price.toFixed(2)}</Text>
@@ -81,9 +84,14 @@ const ItemDetailScreen = ({route}: any) => { //item detail screen
           <TouchableOpacity onPress={() => setQuantity(q => q + 1)} style={{marginLeft:20}}>
             <Ionicons name="add-circle-outline" size={30} color="#102C57" />
           </TouchableOpacity>
-          
+
         </View>
       </View>
+
+      <TouchableOpacity style={styles.fab} onPress={handleAddToCart}>
+        <MaterialCommunityIcons name="cart" size={30} color="#102C57" />
+      </TouchableOpacity>
+
     </SafeAreaView>
   );
 };
@@ -170,7 +178,7 @@ const CategoryScreen = ({navigation, route}: any) => {
 
                 <View style={styles.textContainer}>
                   <Text style={styles.title}>{item.name}</Text>
-                  <Text style={styles.price}>RM {item.price}</Text>
+                  <Text style={styles.price}>RM {item.price.toFixed(2)}</Text>
                 </View>
               </View>
             </TouchableHighlight>
