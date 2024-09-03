@@ -116,4 +116,10 @@ export const styles = StyleSheet.create({
     alignItems: 'center',
     elevation: 5,
   },
+  addToCartText: {
+    fontFamily: 'Gantari-Regular',
+    fontSize: 18,
+    marginRight: 5,
+    color: '#102C57',
+  },
 });

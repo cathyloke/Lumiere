@@ -89,6 +89,7 @@ const ItemDetailScreen = ({route}: any) => { //item detail screen
       </View>
 
       <TouchableOpacity style={styles.fab} onPress={handleAddToCart}>
+        <Text style={styles.addToCartText}>Add to cart</Text>
         <MaterialCommunityIcons name="cart" size={30} color="#102C57" />
       </TouchableOpacity>
 
