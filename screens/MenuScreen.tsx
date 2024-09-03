@@ -68,7 +68,7 @@ const ItemDetailScreen = ({route}: any) => { //item detail screen
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={{flex:1,justifyContent:'center',marginBottom:30}}>
+      <View style={{flex:1,justifyContent:'center',marginBottom:100}}>
         <Image source={item.image} style={styles.detailImage} />
         <Text style={styles.detailTitle}>{item.title}</Text>
         <Text style={styles.detailPrice}>RM {item.price.toFixed(2)}</Text>
