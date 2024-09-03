@@ -85,7 +85,7 @@ const CartScreen = ({ navigation }: any) => {
 
    return (
       <View style={styles.container}>
-         <Text style={styles.header}>My Cart</Text>
+         <Text style={styles.header}>My cart</Text>
 
          <FlatList
             data={cartItems}
