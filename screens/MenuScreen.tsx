@@ -6,7 +6,7 @@ import { styles } from '../modules/menuStyle';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {getDBConnection, getMenuData } from "../assets/dbConnection";
+import { getDBConnection, getMenuData, getCartItem, updateCartItem } from "../assets/dbConnection";
 
 type FoodItem={
   id: string;
@@ -62,16 +62,51 @@ const CustomStackContent = ({ navigation }: any) => { //side bar
 const ItemDetailScreen = ({route}: any) => { //item detail screen
   const {item} = route.params;
   const [quantity, setQuantity] = useState(1);
+  /*
   const handleAddToCart = () => {
     console.log(`Added ${quantity} of ${item.name} to cart`);
     Alert.alert('Added to cart', `Added ${quantity} ${item.name} to the cart.`);
+  };
+  */
+
+  const addCartItem = async (db, newItem) => {
+    const existingItem = await getCartItem(db, newItem.userId, newItem.foodID);
+    if (existingItem) {
+       // Update quantity if item already exists
+       await updateCartItem(db, newItem.userId, newItem.foodID, existingItem.quantity + newItem.quantity);
+    } else {
+       // Add new item if it doesn't exist
+       await db.executeSql(
+          'INSERT INTO cartItems (userId, foodID, name, image, price, quantity) VALUES (?, ?, ?, ?, ?, ?)',
+          [newItem.userId, newItem.foodID, newItem.name, newItem.image, newItem.price, newItem.quantity]
+       );
+    }
+  };
+
+
+  const handleAddToCart = async () => {
+    try {
+      const db = await getDBConnection();
+      await addCartItem(db, {
+        userId: '01', // Replace with the actual user ID
+        foodID: item.id,
+        name: item.name,
+        image: item.image,
+        price: item.price,
+        quantity: quantity,
+      });
+      Alert.alert('Added to cart', `Added ${quantity} ${item.name} to the cart.`);
+    } catch (error) {
+        console.error('Failed to add to cart:', error);
+        Alert.alert('Error', 'Failed to add item to cart.');
+    }
   };
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={{flex:1,justifyContent:'center',marginBottom:100}}>
         <Image source={item.image} style={styles.detailImage} />
-        <Text style={styles.detailTitle}>{item.title}</Text>
+        <Text style={styles.detailTitle}>{item.name}</Text>
         <Text style={styles.detailPrice}>RM {item.price.toFixed(2)}</Text>
         <Text style={styles.detailDescription}>{item.description}</Text>
 
