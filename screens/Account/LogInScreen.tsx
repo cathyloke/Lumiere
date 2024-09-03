@@ -1,88 +1,65 @@
-import React from 'react';
-import { View, Text, Image, StyleSheet, TextInput, Button, TouchableOpacity } from 'react-native';
-import logo from '../img/lumiere_logo.png';
-import { useNavigation } from '@react-navigation/native';
+import React, { useState } from 'react';
+import { View, Text, TextInput, Button, Alert } from 'react-native';
+import SQLite from 'react-native-sqlite-storage';
 
-const LogInScreen = () => {
+const db = SQLite.openDatabase(
+  { name: 'lumiereDatabase.sqlite', createFromLocation: 1 },
+  () => {},
+  error => {
+    console.error('Error opening database', error);
+  }
+);
 
-    return (
-        <View style={styles.container}>
-            <Image
-                source={logo}
-                style={styles.logo} 
-            />
-            <View>
-                <Text style={styles.title}>{"\n"}Phone Number</Text>
-                <TextInput
-                    style={styles.input}
-                    placeholder="Enter your phone number"
-                    keyboardType="default"
-                />
-            </View>
+const LogInScreen = ({ navigation }) => {
+  const [phone, setPhone] = useState('');
+  const [password, setPassword] = useState('');
 
-            <View>
-                <Text style={styles.title}>{"\n"}{"\n"}Password</Text>
-                <TextInput
-                    style={styles.input}
-                    placeholder="Enter your password"
-                    keyboardType="default"
-                />
-            </View>
-
-            <View style={styles.button}>
-                <Button
-                    title="Log In"
-                    color="#102C57"
-                />
-            </View>
-            <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
-                <Text style={styles.last}>
-                    Don't have an account? Sign Up
-                </Text>
-            </TouchableOpacity>
-        </View>
-    );
-};
-
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,                  // Takes up the full height of the screen
-        justifyContent: 'center', // Centers content vertically
-        alignItems: 'center',     // Centers content horizontally
-    },
-    logo: {
-        width: 170, 
-        height: 170,
-    },
-    input: {
-        fontFamily: 'Gantari-Bold',
-        height: 40,
-        margin: 12,
-        borderWidth: 1,
-        padding: 10,
-        borderRadius: 15,
-        width: 300,
-        alignSelf: 'center', // Centers the input boxes horizontally
-    },
-    title: {
-        fontFamily: 'Gantari-Bold',
-        textAlign: "left",
-        marginLeft: 17,
-    },
-    button: {
-        backgroundColor: '#102C57',  
-        paddingVertical: 10,
-        paddingHorizontal: 30,  
-        borderRadius: 20, 
-        alignItems: 'center',
-        alignSelf: 'center',
-        marginTop: 30,
-        width: 250,
-    },
-    last:{
-        marginTop: 10,
-        textAlign:'center'
+  const handleLogin = () => {
+    if (!phone || !password) {
+      Alert.alert('Please fill all fields');
+      return;
     }
-});
+
+    db.transaction(tx => {
+      tx.executeSql(
+        'SELECT * FROM users WHERE phone = ? AND password = ?',
+        [phone, password],
+        (tx, results) => {
+          if (results.rows.length > 0) {
+            Alert.alert('Login successful!');
+            // You can navigate to a home screen or dashboard after successful login
+            // navigation.navigate('Home');
+          } else {
+            Alert.alert('Login failed. Invalid phone number or password.');
+          }
+        },
+        error => {
+          console.error('Error logging in', error);
+          Alert.alert('Error logging in');
+        }
+      );
+    });
+  };
+
+  return (
+    <View style={{ padding: 20 }}>
+      <Text>Log In</Text>
+      <TextInput
+        placeholder="Phone"
+        value={phone}
+        onChangeText={setPhone}
+        style={{ height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 10 }}
+      />
+      <TextInput
+        placeholder="Password"
+        secureTextEntry
+        value={password}
+        onChangeText={setPassword}
+        style={{ height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 10 }}
+      />
+      <Button title="Log In" onPress={handleLogin} />
+    </View>
+  );
+};
 
 export default LogInScreen;

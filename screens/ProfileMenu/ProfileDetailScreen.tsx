@@ -10,10 +10,11 @@ import {
 } from 'react-native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { styles } from '../../modules/profileStyle';
-
+import LogInScreen from '../Account/LogInScreen';  
+import SignUpScreen from '../Account/SignUpScreen'; 
 const Stack = createStackNavigator();
 
-const ProfileDetailsScreen = ({route, navigation}: any) => {
+const ProfileDetailsScreen = ({ navigation }: any) => {
   const [username, setUsername] = useState('Alyssa');
   const [email, setEmail] = useState('alyssa@example.com');
   const [isEditing, setIsEditing] = useState(false);
@@ -66,11 +67,33 @@ const ProfileDetailsScreen = ({route, navigation}: any) => {
               {isEditing ? 'Save' : 'Edit Profile'}
             </Text>
           </TouchableOpacity>
-          <TouchableOpacity style={[styles.button, styles.logoutButton]} onPress={() => navigation.navigate('LogoutScreen')}>
+          
+          {/* Navigate to Log In Screen */}
+          <TouchableOpacity 
+            style={[styles.button, styles.logInButton]} 
+            onPress={() => navigation.navigate('LogInScreen')}
+          >
+            <Text style={styles.buttonText}>Log In</Text>
+          </TouchableOpacity>
+
+          {/* Navigate to Sign Up Screen */}
+          <TouchableOpacity 
+            style={[styles.button, styles.signUpButton]} 
+            onPress={() => navigation.navigate('SignUpScreen')}
+          >
+            <Text style={styles.buttonText}>Sign Up</Text>
+          </TouchableOpacity>
+
+          {/* Navigate to Logout Screen */}
+          <TouchableOpacity 
+            style={[styles.button, styles.logoutButton]} 
+            onPress={() => navigation.navigate('LogoutScreen')}
+          >
             <Text style={styles.buttonText}>Log Out</Text>
           </TouchableOpacity>
         </View>
 
+        {/* Additional Options */}
         <View style={styles.optionsContainer}>
           <TouchableOpacity 
             style={styles.optionButton}
@@ -108,5 +131,15 @@ const ProfileDetailsScreen = ({route, navigation}: any) => {
   );
 };
 
+const ProfileStackNavigator = () => {
+  return (
+    <Stack.Navigator initialRouteName="ProfileDetailsScreen">
+      <Stack.Screen name="ProfileDetailsScreen" component={ProfileDetailsScreen} />
+      <Stack.Screen name="LogInScreen" component={LogInScreen} />
+      <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
+      {/* Add other screens like LogoutScreen, OrderHistoryScreen, etc. */}
+    </Stack.Navigator>
+  );
+};
 
-export default ProfileDetailsScreen;
+export default ProfileStackNavigator;

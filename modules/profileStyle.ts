@@ -1,10 +1,12 @@
 import {StyleSheet} from 'react-native';
+import { blue } from 'react-native-reanimated/lib/typescript/Colors';
 
 export const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#F8F0E5',
   },
+
   scrollViewContent: {
     alignItems: 'center',
     paddingVertical: 20,
@@ -63,6 +65,12 @@ export const styles = StyleSheet.create({
   },
   logoutButton: {
     backgroundColor: '#E57373', // Red accent for logout
+  },
+  logInButton: {
+    backgroundColor: '#0000FF', 
+  },
+  signUpButton: {
+    backgroundColor: '#0000FF', 
   },
   optionsContainer: {
     width: '90%',
@@ -157,4 +165,24 @@ export const styles = StyleSheet.create({
     alignSelf: 'center',
     width: 200,
   },
+
+  logo:{
+    width: 180,
+    height: 180,
+    alignSelf: 'center',
+  },
+
+  cafeImage:{
+    width: 300,
+    height: 180,
+    alignSelf: 'center',
+  },
+
+  description:{
+    fontFamily: 'Gantari-Bold',
+    textAlign: 'center',
+    justifyContent: 'center',
+    padding: 20, 
+  },
+
 });
