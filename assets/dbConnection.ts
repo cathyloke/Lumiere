@@ -137,6 +137,13 @@ export const getCartItem = async (db: SQLiteDatabase, userID?: string): Promise<
     }
   }
 
+const getTodayDate = (): string => {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, '0'); // Months are 0-based, so add 1
+  const day = String(today.getDate()).padStart(2, '0'); // Ensure two digits for day
+  return `${year}-${month}-${day}`;
+};
 
   // havent try for the checkout function -- cathy
 export const processPayment = async (db: SQLiteDatabase, userID: string): Promise<void> => {
@@ -144,37 +151,36 @@ export const processPayment = async (db: SQLiteDatabase, userID: string): Promis
     if (!userID) {
       console.log('Missing user ID');
       throw new Error('User ID is required');
-    } else if (!userID) {
-      console.log('Missing food ID');
-      throw new Error('Food ID is required');
     } else {
-      console.log('No missing error in userID, foodID and quantity')
+      console.log('No missing error in userID')
     }
 
-    // Step 1: Retrieve cart items
+    // Retrieve cart items
     const cartItems = await getCartItem(db, userID);
-    
+    console.log(cartItems)
+    console.log("aasdasd")
     if (cartItems.length === 0) {
       console.log('Cart is empty');
       throw new Error('Cart is empty');
     }
-
-    // Generate a unique orderID (for simplicity, use timestamp or UUID)
-    const orderID = Date.now().toString();
-
-    // Get the current date (format as needed)
-    const date = new Date().toISOString();
-
-    // Step 2: Insert items into order history
+ 
+    // Get the current date
+    const date = getTodayDate();
+ 
+    //Query to Insert and Delete
     const insertOrderQuery = 'INSERT INTO orderHistory (orderID, userID, foodID, date, quantity) VALUES (?, ?, ?, ?, ?)';
+    
+    //update order history table
     for (const item of cartItems) {
+      const orderID = generateUniqueID();
       await db.executeSql(insertOrderQuery, [orderID, userID, item.foodID, date, item.quantity]);
+  
     }
+    console.log("Done update cart Item table in database")
 
-    // Step 3: Delete items from cart
+    //delete cart item table
     const deleteCartQuery = 'DELETE FROM cartItem WHERE userID = ?';
     await db.executeSql(deleteCartQuery, [userID]);
-
     console.log('Payment processed successfully');
 
   } catch (error) {
@@ -183,7 +189,12 @@ export const processPayment = async (db: SQLiteDatabase, userID: string): Promis
   }
 };
 
-//add cart
+//generate primary key
+const generateUniqueID = (): string => {
+  return Math.random().toString(36).substr(2, 9); // Generate a unique ID
+};
+
+//add cart into cartItem table
 export const addCartItem = async (db: SQLiteDatabase, userID: string, foodID: string, quantity: number): Promise<void> => {
   try {
     if (!userID) {
@@ -211,8 +222,11 @@ export const addCartItem = async (db: SQLiteDatabase, userID: string, foodID: st
       await db.executeSql(updateQuery, [newQuantity, userID, foodID]);
     } else {
       // If the item does not exist, insert it as a new entry
-      const insertQuery = 'INSERT INTO cartItem (userID, foodID, quantity) VALUES (?, ?, ?)';
-      await db.executeSql(insertQuery, [userID, foodID, quantity]);
+      const newCartItemID = generateUniqueID();
+      console.log(newCartItemID)
+      const insertQuery = 'INSERT INTO cartItem (cartItemID, userID, foodID, quantity) VALUES (?, ?, ?, ?)';
+      await db.executeSql(insertQuery, [newCartItemID, userID, foodID, quantity]);
+
     }
     console.log('Cart item added successfully');
   } catch (error) {

@@ -1,4 +1,5 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import { View, Text, Image, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
 import { getDBConnection, getCartItem, updateCartItem, deleteCartItem } from '../assets/dbConnection';
 import { SafeAreaView } from 'react-native-safe-area-context';
@@ -30,9 +31,14 @@ const CartScreen = ({ navigation }: any) => {
       }
    };
 
-   useEffect(() => {
-      query();
-   }, []);
+   // useEffect(() => {
+   //    query();
+   // }, []);
+   useFocusEffect(
+      useCallback(() => {
+         query(); // Fetch the latest cart items whenever the screen is focused
+      }, [])
+   );
 
    const updateQuantity = async (foodID: string, quantity: number) => {
       try {
@@ -53,6 +59,7 @@ const CartScreen = ({ navigation }: any) => {
          await deleteCartItem(db, '01', id);  // Replace with current user ID
          const updatedItems = cartItems.filter(item => item.cartItemID !== id);
          setCartItems(updatedItems);
+         query();       //add this to refresh
       } catch (error) {
          console.error('Failed to delete cart item:', error);
       }
@@ -78,7 +85,13 @@ const CartScreen = ({ navigation }: any) => {
                >
                   <Text style={styles.buttonText}>+</Text>
                </TouchableOpacity>
+               <TouchableOpacity
+                  onPress={() => removeItem(item.foodID)}
+               >
+                  <Text>Remove Item</Text>
+               </TouchableOpacity>
             </View>
+            
          </View>
       </View>
    );

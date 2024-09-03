@@ -1,11 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { Alert, View, Text, Image, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
-import { getDBConnection, getCartItem } from '../assets/dbConnection';
+import { getDBConnection, getCartItem, processPayment } from '../assets/dbConnection';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import {styles} from '../modules/checkoutStyle';
 
 type CartItem = {
-   id: string;
+   cartItemId: string;
+   foodID: string;
    name: string;
    image: string;
    price: number;
@@ -50,9 +51,18 @@ const CheckoutScreen = ({ navigation }: any) => {
         </View>
     );
 
-    const checkoutAction = () => {
-        Alert.alert('You had successfully paid.');
-        // Delete data here    
+    //this is the delete cart item and update the order history table
+    const checkoutAction = async() => {
+        try {
+            const db = await getDBConnection();
+            await processPayment(db, '01');  // Replace with current user ID
+            
+            Alert.alert('You have successfully paid.');
+            query();
+            navigation.goBack()
+         } catch (error) {
+            console.error('Failed to delete process payment:', error);
+         }    
     }
 
     return (
@@ -61,7 +71,7 @@ const CheckoutScreen = ({ navigation }: any) => {
         <FlatList
         data={cartItems}
         renderItem={renderItem}
-        keyExtractor={(item, index) => item.id || index.toString()}
+        keyExtractor={(item, index) => item.cartItemId || index.toString()}
         />
         <Text style={styles.total}>Total: RM{total.toFixed(2)}</Text>
         <TouchableOpacity
