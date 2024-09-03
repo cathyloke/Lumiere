@@ -1,12 +1,12 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image, FlatList, TouchableOpacity, SafeAreaView,TouchableHighlight, } from 'react-native';
+import { View, Text, Image, FlatList, TouchableOpacity, SafeAreaView,TouchableHighlight, Alert, } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import { createStackNavigator} from '@react-navigation/stack';
 import { styles } from '../modules/menuStyle';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {getDBConnection, getMenuData } from "../assets/dbConnection";
+import { getDBConnection, getMenuData, getCartItem, updateCartItem, addCartItem } from "../assets/dbConnection";
 
 type FoodItem={
   id: string;
@@ -61,16 +61,26 @@ const CustomStackContent = ({ navigation }: any) => { //side bar
 
 const ItemDetailScreen = ({route}: any) => { //item detail screen
   const {item} = route.params;
-  const [quantity, setQuantity] = useState(1);
-  const handleAddToCart = () => {
-    console.log(`Added ${quantity} of ${item.title} to cart`);
+  const [quantity, setQuantity] = useState(0);
+
+
+  const handleAddToCart = async (foodID: string, quantity: number) => {
+    try {
+      const db = await getDBConnection();
+      await addCartItem(db, '01', foodID, quantity);  // Replace with current user ID
+      console.log('Added the Cart Item')
+      Alert.alert('Added to cart', `Added ${quantity} ${item.name} to the cart.`);
+    } catch (error) {
+      console.error('Failed to add to cart:', error);
+      Alert.alert('Error', 'Failed to add item to cart.');
+    }
   };
 
   return (
     <SafeAreaView style={styles.container}>
       <View style={{flex:1,justifyContent:'center',marginBottom:100}}>
         <Image source={item.image} style={styles.detailImage} />
-        <Text style={styles.detailTitle}>{item.title}</Text>
+        <Text style={styles.detailTitle}>{item.name}</Text>
         <Text style={styles.detailPrice}>RM {item.price.toFixed(2)}</Text>
         <Text style={styles.detailDescription}>{item.description}</Text>
 
@@ -88,7 +98,7 @@ const ItemDetailScreen = ({route}: any) => { //item detail screen
         </View>
       </View>
 
-      <TouchableOpacity style={styles.fab} onPress={handleAddToCart}>
+      <TouchableOpacity style={styles.fab} onPress={() => {handleAddToCart(item.foodID, quantity)}}>
         <Text style={styles.addToCartText}>Add to cart</Text>
         <MaterialCommunityIcons name="cart" size={30} color="#102C57" />
       </TouchableOpacity>
