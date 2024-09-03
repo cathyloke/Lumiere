@@ -63,7 +63,7 @@ const ItemDetailScreen = ({route}: any) => { //item detail screen
   const {item} = route.params;
   const [quantity, setQuantity] = useState(1);
   const handleAddToCart = () => {
-    console.log(`Added ${quantity} of ${item.title} to cart`);
+    console.log(`Added ${quantity} of ${item.name} to cart`);
   };
 
   return (
