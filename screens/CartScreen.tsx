@@ -38,12 +38,12 @@ const CartScreen = ({ navigation }: any) => {
    };
    */
 
-   const updateQuantity = async (id: string, quantity: number) => {
+   const updateQuantity = async (foodID: string, quantity: number) => {
       try {
          const db = await getDBConnection();
-         await updateCartItem(db, '01', id, quantity);  // Replace with current user ID
+         await updateCartItem(db, '01', foodID, quantity);  // Replace with current user ID
          const updatedItems = cartItems.map(item =>
-            item.id === id ? { ...item, quantity } : item
+            item.id === foodID ? { ...item, quantity } : item
          );
          setCartItems(updatedItems);
       } catch (error) {
