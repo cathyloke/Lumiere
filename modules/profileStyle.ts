@@ -188,6 +188,8 @@ export const styles = StyleSheet.create({
     width: 180,
     height: 180,
     alignSelf: 'center',
+    marginTop: 20,
+    marginBottom: 15,
   },
 
   cafeImage:{
