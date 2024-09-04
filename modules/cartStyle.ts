@@ -66,5 +66,11 @@ export const styles = StyleSheet.create({
       alignItems: 'center',
       padding: 16,
       borderRadius: 50,
-    }
+    },
+    emptyCartText: {
+      fontFamily: 'Gantari-Regular',
+      fontSize: 16,
+      textAlign: 'center',
+      marginTop: 30,
+    },
  });

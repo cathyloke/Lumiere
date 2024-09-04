@@ -3,7 +3,7 @@ import { useFocusEffect } from '@react-navigation/native';
 import { View, Text, Image, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
 import { getDBConnection, getCartItem, updateCartItem, deleteCartItem } from '../assets/dbConnection';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import {styles} from '../modules/cartStyle';
+import { styles } from '../modules/cartStyle';
 import { getSession } from '../assets/sessionData';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
@@ -127,19 +127,24 @@ const CartScreen = ({ navigation }: any) => {
    return (
       <View style={styles.container}>
          <Text style={styles.header}>My cart</Text>
-
-         <FlatList
-            data={cartItems}
-            renderItem={renderItem}
-            keyExtractor={(item, index) => item.cartItemID || index.toString()}
-         />
-         <TouchableOpacity
-            style={styles.checkoutButton}
-            onPress={() => navigation.navigate('CheckoutScreen')}>
-            <Text style={styles.buttonText}>Proceed to payment</Text>
-         </TouchableOpacity>
+         {cartItems.length === 0 ? (
+            <Text style={styles.emptyCartText}>Your cart is empty.</Text>
+         ) : (
+            <FlatList
+               data={cartItems}
+               renderItem={renderItem}
+               keyExtractor={(item, index) => item.cartItemID || index.toString()}
+            />
+         )}
+         {cartItems.length > 0 && (
+            <TouchableOpacity
+               style={styles.checkoutButton}
+               onPress={() => navigation.navigate('CheckoutScreen')}
+            >
+               <Text style={styles.buttonText}>Proceed to payment</Text>
+            </TouchableOpacity>
+         )}
       </View>
-
    );
 };
 
