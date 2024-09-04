@@ -109,12 +109,12 @@ const ProfileDetailsScreen = ({ navigation }: any) => {
           }
           {isEditing && 
             <View style={{flexDirection:'row'}}>
-              <TouchableOpacity style={styles.button} onPress={handleEdit}>
+              <TouchableOpacity style={styles.saveButton} onPress={handleEdit}>
                 <Text style={styles.buttonText}>
                   Save
                 </Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.button} onPress={() => {setIsEditing(false)}}>
+              <TouchableOpacity style={styles.cancelButton} onPress={() => {setIsEditing(false)}}>
                 <Text style={styles.buttonText}>
                   Cancel
                 </Text>
