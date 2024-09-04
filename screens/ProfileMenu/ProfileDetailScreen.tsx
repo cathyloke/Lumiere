@@ -5,7 +5,7 @@ import {
   View,
   Text,
   Image,
-  Alert, 
+  Alert,
   TouchableOpacity,
   TextInput,
 } from 'react-native';
@@ -99,15 +99,15 @@ const ProfileDetailsScreen = ({ navigation }: any) => {
               <Text style={styles.value}>{phone}</Text>
             )}
           </View>
-          
-          {!isEditing && 
+
+          {!isEditing &&
           <TouchableOpacity style={styles.button} onPress={() => {setIsEditing(true)}}>
             <Text style={styles.buttonText}>
               Edit Profile
             </Text>
           </TouchableOpacity>
           }
-          {isEditing && 
+          {isEditing &&
             <View style={{flexDirection:'row'}}>
               <TouchableOpacity style={styles.saveButton} onPress={handleEdit}>
                 <Text style={styles.buttonText}>
@@ -123,7 +123,7 @@ const ProfileDetailsScreen = ({ navigation }: any) => {
           }
 
           {/* Navigate to Logout Screen */}
-          <TouchableOpacity 
+          <TouchableOpacity
             style={[styles.button, styles.logoutButton]} 
             onPress={() => navigation.navigate('LogoutScreen')}
           >
@@ -133,31 +133,31 @@ const ProfileDetailsScreen = ({ navigation }: any) => {
 
         {/* Additional Options */}
         <View style={styles.optionsContainer}>
-          <TouchableOpacity 
+          <TouchableOpacity
             style={styles.optionButton}
             onPress={() => navigation.navigate('OrderHistoryScreen')}
           >
             <Text style={styles.optionText}>My Orders</Text>
           </TouchableOpacity>
-          <TouchableOpacity 
+          <TouchableOpacity
             style={styles.optionButton}
             onPress={() => navigation.navigate('HelpCentreScreen')}
           >
             <Text style={styles.optionText}>Help Centre</Text>
           </TouchableOpacity>
-          <TouchableOpacity 
+          <TouchableOpacity
             style={styles.optionButton}
             onPress={() => navigation.navigate('FeedbackScreen')}
           >
             <Text style={styles.optionText}>Feedback</Text>
           </TouchableOpacity>
-          <TouchableOpacity 
+          <TouchableOpacity
             style={styles.optionButton}
             onPress={() => navigation.navigate('TNCScreen')}
           >
             <Text style={styles.optionText}>Terms & Conditions</Text>
           </TouchableOpacity>
-          <TouchableOpacity 
+          <TouchableOpacity
             style={styles.optionButton}
             onPress={() => navigation.navigate('AboutScreen')}
           >
@@ -169,8 +169,4 @@ const ProfileDetailsScreen = ({ navigation }: any) => {
   );
 };
 
-
 export default ProfileDetailsScreen;
-
-
-
