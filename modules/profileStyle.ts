@@ -188,8 +188,8 @@ export const styles = StyleSheet.create({
     width: 180,
     height: 180,
     alignSelf: 'center',
-    marginTop: 20,
-    marginBottom: 15,
+    marginTop: 10,
+    marginBottom: 10,
   },
 
   cafeImage:{
@@ -204,6 +204,7 @@ export const styles = StyleSheet.create({
     textAlign: 'center',
     justifyContent: 'center',
     padding: 20,
+    fontSize: 16,
   },
 
 });
