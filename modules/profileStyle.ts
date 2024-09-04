@@ -194,6 +194,7 @@ export const styles = StyleSheet.create({
     width: 300,
     height: 180,
     alignSelf: 'center',
+    borderRadius: 20,
   },
 
   description:{
