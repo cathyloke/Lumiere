@@ -197,10 +197,10 @@ export const styles = StyleSheet.create({
   },
 
   description:{
-    fontFamily: 'Gantari-Bold',
+    fontFamily: 'Gantari-Regular',
     textAlign: 'center',
     justifyContent: 'center',
-    padding: 20, 
+    padding: 20,
   },
 
 });
