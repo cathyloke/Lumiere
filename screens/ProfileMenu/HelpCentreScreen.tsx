@@ -2,13 +2,12 @@ import React from 'react';
 import { View, Text, Image, StyleSheet, Dimensions } from 'react-native';
 
 const HelpCentreScreen = () => {
-  // Get the width of the screen
   const screenWidth = Dimensions.get('window').width;
 
   return (
     <View style={styles.container}>
       <Image
-        style={[styles.headerIMG, { width: screenWidth }]} // Set the width to the screen width
+        style={[styles.headerIMG, { width: screenWidth }]}
         source={require('../../img/help_center.png')}
       />
       <View style={styles.listContainer}>
@@ -32,15 +31,15 @@ const HelpCentreScreen = () => {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
+    backgroundColor: '#F8F0E5',
   },
   headerIMG: {
-    height: 150, // Fixed height
-    resizeMode: 'cover', // Ensure the image covers the width while maintaining aspect ratio
+    height: 150,
+    resizeMode: 'cover',
   },
   listContainer: {
-    marginTop: 20, // Margin top to create space below the image
-    paddingHorizontal: 20, // Padding on the sides
+    marginTop: 20, 
+    paddingHorizontal: 20,
   },
   item: {
     fontSize: 18,
@@ -49,8 +48,8 @@ const styles = StyleSheet.create({
   },
   separator: {
     height: 1,
-    backgroundColor: '#ddd', // Color of the separator line
-    marginVertical: 5, // Vertical margin between items
+    backgroundColor: '#ddd',
+    marginVertical: 5,
   },
 });
 

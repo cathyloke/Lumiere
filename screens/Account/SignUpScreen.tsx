@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, Alert } from 'react-native';
+import { View, Text, TextInput, TouchableOpacity, Alert, StyleSheet, ScrollView, Image } from 'react-native';
 import { getDBConnection, addUserData, getUser } from '../../assets/dbConnection';
 import { saveSession } from '../../assets/sessionData';
 
@@ -12,19 +12,19 @@ const SignUpScreen = ({ navigation }: any) => {
     try {
       const db = await getDBConnection();
       await addUserData(db, name, phone, password);
-      const user = await getUser(db, phone, password); 
+      const user = await getUser(db, phone, password);
 
       // Save user data to session
       saveSession(user.userID, user.name, user.phone);
 
-      Alert.alert('You had successfully register');
-      navigation.navigate('MainMenu')
+      Alert.alert('Success', 'You have successfully registered');
+      navigation.navigate('MainMenu');
       setName('');
       setPhone('');
       setPassword('');
     } catch (error) {
-      Alert.alert('Login failed', (error as Error).message);
-      console.log("Error log in:", error);
+      Alert.alert('Registration failed', (error as Error).message);
+      console.log("Error during registration:", error);
       setName('');
       setPhone('');
       setPassword('');
@@ -33,7 +33,7 @@ const SignUpScreen = ({ navigation }: any) => {
 
   const handleSignUp = () => {
     if (!name || !phone || !password) {
-      Alert.alert('Please fill all fields');
+      Alert.alert('Missing Fields', 'Please fill all fields');
       return;
     } else {
       addUser(name, phone, password);
@@ -41,31 +41,103 @@ const SignUpScreen = ({ navigation }: any) => {
   };
 
   return (
-    <View style={{ padding: 20 }}>
-      <Text>Sign Up</Text>
-      <TextInput
-        placeholder="Name"
-        value={name}
-        onChangeText={setName}
-        style={{ height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 10 }}
-      />
-      <TextInput
-        placeholder="Phone"
-        value={phone}
-        onChangeText={setPhone}
-        style={{ height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 10 }}
-      />
-      <TextInput
-        placeholder="Password"
-        secureTextEntry
-        value={password}
-        onChangeText={setPassword}
-        style={{ height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 10 }}
-      />
-      <Button title="Sign Up" onPress={handleSignUp} />
-      <Button title="Log in" onPress={() => {navigation.navigate('LogInScreen')}} />
-    </View>
+    <ScrollView contentContainerStyle={styles.container}>
+      <View style={styles.logoContainer}>
+        <Image
+          style={styles.logo}
+          source={require('../../img/lumiere_logo.png')}
+        />
+      </View>
+      <Text style={styles.title}>Create an Account</Text>
+      <View style={styles.inputContainer}>
+        <TextInput
+          placeholder="Full Name"
+          value={name}
+          onChangeText={setName}
+          style={styles.input}
+        />
+        <TextInput
+          placeholder="Phone Number"
+          value={phone}
+          onChangeText={setPhone}
+          style={styles.input}
+          keyboardType="phone-pad"
+        />
+        <TextInput
+          placeholder="Password"
+          secureTextEntry
+          value={password}
+          onChangeText={setPassword}
+          style={styles.input}
+        />
+      </View>
+      <TouchableOpacity style={styles.button} onPress={handleSignUp}>
+        <Text style={styles.buttonText}>Sign Up</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.link} onPress={() => navigation.navigate('LogInScreen')}>
+        <Text style={styles.linkText}>Already have an account? Log In</Text>
+      </TouchableOpacity>
+    </ScrollView>
   );
 };
+
+const styles = StyleSheet.create({
+  container: {
+    flexGrow: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#F8F0E5',
+    padding: 20,
+  },
+  logoContainer: {
+    marginBottom: 40,
+  },
+  logo: {
+    width: 200,
+    height: 200,
+    resizeMode: 'contain',
+  },
+  title: {
+    fontSize: 32,
+    fontFamily: 'Gantari-Bold',
+    color: '#102C57',
+    marginBottom: 20,
+  },
+  inputContainer: {
+    width: '100%',
+    marginBottom: 20,
+  },
+  input: {
+    height: 50,
+    borderColor: '#dcdcdc',
+    borderWidth: 1,
+    borderRadius: 10,
+    paddingHorizontal: 15,
+    marginBottom: 15,
+    backgroundColor: '#ffffff',
+  },
+  button: {
+    backgroundColor: '#102C57',
+    borderRadius: 10,
+    paddingVertical: 15,
+    paddingHorizontal: 30,
+    alignItems: 'center',
+    width: '100%',
+    marginBottom: 20,
+  },
+  buttonText: {
+    color: '#ffffff',
+    fontSize: 16,
+    fontFamily: 'Gantari-Bold',
+  },
+  link: {
+    marginTop: 20,
+  },
+  linkText: {
+    color: '#102C57',
+    fontSize: 16,
+    fontFamily: 'Gantari-Regular',
+  },
+});
 
 export default SignUpScreen;

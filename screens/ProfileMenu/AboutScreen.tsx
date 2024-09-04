@@ -4,7 +4,7 @@ import { styles } from '../../modules/profileStyle';
 
 const AboutScreen = () => {
    return (
-      <View>
+      <View style={{backgroundColor: '#F8F0E5'}}>
          <View>
             <Image
             style={styles.logo}

@@ -1,24 +1,28 @@
 import React, { useState } from 'react';
-import { View, Text, TouchableOpacity , SafeAreaView, TextInput, Button} from 'react-native';
+import { View, Text, TouchableOpacity, SafeAreaView, TextInput, Button, Alert } from 'react-native';
 import { styles } from '../../modules/profileStyle';
 
 const FeedbackScreen = () => {
-   // Create a state array to track the selection status of each box
    const [selectedBoxes, setSelectedBoxes] = useState([false, false, false, false, false, false]);
 
-   // Function to toggle the selection of a specific box
    const toggleSelection = (index) => {
-      // Update the state by toggling the specific box's selection status
       const newSelection = [...selectedBoxes];
       newSelection[index] = !newSelection[index];
       setSelectedBoxes(newSelection);
    };
 
-   const [number, onChangeNumber] = React.useState('');
+   const [number, setNumber] = useState('');
 
+   const handleSubmit = () => {
+      if (number.trim() === '') {
+         Alert.alert('Comment field is empty');
+      } else {
+         Alert.alert('Successfully submitted');
+      }
+   };
 
    return (
-      <View>
+      <View style={{ flex: 1, padding: 20, backgroundColor: '#F8F0E5'}}>
          <View>
             <Text style={styles.title}>Your Feedback Matters</Text>
             <Text style={styles.subtitle}>Let us know how we can serve you better.</Text>
@@ -67,7 +71,7 @@ const FeedbackScreen = () => {
             <SafeAreaView>
                <TextInput
                   style={styles.inputs}
-                  onChangeText={onChangeNumber}
+                  onChangeText={setNumber}
                   value={number}
                   placeholder="Enter your comment here"
                   keyboardType="default"
@@ -80,6 +84,7 @@ const FeedbackScreen = () => {
             <Button
                title="Submit"
                color="#102C57"
+               onPress={handleSubmit}
             />
          </View>
       </View>
