@@ -1,33 +1,68 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   SafeAreaView,
   ScrollView,
   View,
   Text,
   Image,
+  Alert, 
   TouchableOpacity,
   TextInput,
 } from 'react-native';
-import { createStackNavigator } from '@react-navigation/stack';
 import { styles } from '../../modules/profileStyle';
-import LogInScreen from '../Account/LogInScreen';  
-import SignUpScreen from '../Account/SignUpScreen'; 
-const Stack = createStackNavigator();
+import { getDBConnection, updateUserData } from '../../assets/dbConnection';
+import { clearSession, getSession, saveSession } from '../../assets/sessionData';
 
 const ProfileDetailsScreen = ({ navigation }: any) => {
-  const [username, setUsername] = useState('Alyssa');
-  const [email, setEmail] = useState('alyssa@example.com');
+  const [username, setUsername] = useState('');
+  const [phone, setPhone] = useState('');
+  const [userID, setUserId] = useState('');
   const [isEditing, setIsEditing] = useState(false);
   const [newUsername, setNewUsername] = useState(username);
-  const [newEmail, setNewEmail] = useState(email);
+  const [newPhone, setNewPhone] = useState(phone);
 
-  const handleEdit = () => {
-    if (isEditing) {
-      setUsername(newUsername);
-      setEmail(newEmail);
+  const retrieveSessionData = async () => {
+    const session = await getSession();
+    if (session) {
+      const { userId: sessionUserId, userPhone: sessionUserPhone, userName: sessionUserName } = session;
+      console.log('User ID:', sessionUserId);
+      console.log('User Name:', sessionUserName);
+      console.log('User Phone:', sessionUserPhone);
+      setUserId(sessionUserId || '');
+      setUsername(sessionUserName || '');
+      setPhone(sessionUserPhone || '')
+
+    } else {
+        console.log('No session found');
     }
-    setIsEditing(!isEditing);
   };
+
+  useEffect(() => {
+    retrieveSessionData();
+  }, []);
+
+  const handleEdit = async() => {
+    try {
+      if (isEditing) {
+        setUsername(newUsername);
+        setPhone(newPhone);
+        
+        const db = await getDBConnection();
+        updateUserData(db, userID, newUsername, newPhone);
+        
+        clearSession();
+        saveSession(userID, newUsername, newPhone);
+        
+        setNewUsername('');
+        setNewPhone('');
+      }
+      setIsEditing(!isEditing);
+      return(Alert.alert('Your data edited successfully'))
+    } catch (error) {
+        console.error("Error editing user data:", error);
+    }
+  };
+
 
   return (
     <SafeAreaView style={styles.container}>
@@ -44,6 +79,7 @@ const ProfileDetailsScreen = ({ navigation }: any) => {
               <TextInput
                 style={styles.input}
                 value={newUsername}
+                placeholder={username}
                 onChangeText={setNewUsername}
               />
             ) : (
@@ -51,38 +87,40 @@ const ProfileDetailsScreen = ({ navigation }: any) => {
             )}
           </View>
           <View style={styles.infoContainer}>
-            <Text style={styles.label}>Email:</Text>
+            <Text style={styles.label}>Phone number:</Text>
             {isEditing ? (
               <TextInput
                 style={styles.input}
-                value={newEmail}
-                onChangeText={setNewEmail}
+                value={newPhone}
+                placeholder={phone}
+                onChangeText={setNewPhone}
               />
             ) : (
-              <Text style={styles.value}>{email}</Text>
+              <Text style={styles.value}>{phone}</Text>
             )}
           </View>
-          <TouchableOpacity style={styles.button} onPress={handleEdit}>
+          
+          {!isEditing && 
+          <TouchableOpacity style={styles.button} onPress={() => {setIsEditing(true)}}>
             <Text style={styles.buttonText}>
-              {isEditing ? 'Save' : 'Edit Profile'}
+              Edit Profile
             </Text>
           </TouchableOpacity>
-          
-          {/* Navigate to Log In Screen */}
-          <TouchableOpacity 
-            style={[styles.button, styles.logInButton]} 
-            onPress={() => navigation.navigate('LogInScreen')}
-          >
-            <Text style={styles.buttonText}>Log In</Text>
-          </TouchableOpacity>
-
-          {/* Navigate to Sign Up Screen */}
-          <TouchableOpacity 
-            style={[styles.button, styles.signUpButton]} 
-            onPress={() => navigation.navigate('SignUpScreen')}
-          >
-            <Text style={styles.buttonText}>Sign Up</Text>
-          </TouchableOpacity>
+          }
+          {isEditing && 
+            <View style={{flexDirection:'row'}}>
+              <TouchableOpacity style={styles.button} onPress={handleEdit}>
+                <Text style={styles.buttonText}>
+                  Save
+                </Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.button} onPress={() => {setIsEditing(false)}}>
+                <Text style={styles.buttonText}>
+                  Cancel
+                </Text>
+              </TouchableOpacity>
+            </View>
+          }
 
           {/* Navigate to Logout Screen */}
           <TouchableOpacity 
@@ -131,15 +169,8 @@ const ProfileDetailsScreen = ({ navigation }: any) => {
   );
 };
 
-const ProfileStackNavigator = () => {
-  return (
-    <Stack.Navigator initialRouteName="ProfileDetailsScreen">
-      <Stack.Screen name="ProfileDetailsScreen" component={ProfileDetailsScreen} />
-      <Stack.Screen name="LogInScreen" component={LogInScreen} />
-      <Stack.Screen name="SignUpScreen" component={SignUpScreen} />
-      {/* Add other screens like LogoutScreen, OrderHistoryScreen, etc. */}
-    </Stack.Navigator>
-  );
-};
 
-export default ProfileStackNavigator;
+export default ProfileDetailsScreen;
+
+
+

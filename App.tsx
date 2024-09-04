@@ -5,6 +5,10 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
 import { Dimensions } from 'react-native';
 
+//Account Management Screen
+import LogInScreen from './screens/Account/LogInScreen';
+import SignUpScreen from './screens/Account/SignUpScreen';
+
 //Screens in Main menu
 import HomeScreen from './screens/HomeScreen';
 import MenuScreen from './screens/MenuScreen';
@@ -24,97 +28,124 @@ import TNCScreen from './screens/ProfileMenu/TNCScreen';
 import AboutScreen from './screens/ProfileMenu/AboutScreen';
 import LogoutScreen from './screens/Account/LogoutScreen';
 
-
+//Icons
 import Feather from 'react-native-vector-icons/Feather';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Octicons from 'react-native-vector-icons/Octicons';
 
+//Create Navigator
 const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
 
+const windowHeight = Dimensions.get('window').height;
+
+//NavigatorContainer
 const App = () => {
-
-  const windowHeight = Dimensions.get('window').height;
-
   return (
     <NavigationContainer>
-      <Tab.Navigator
+      <Stack.Navigator
         screenOptions={{
-          headerShown: false,
-          tabBarStyle: {
-            backgroundColor: '#EADBC8',
-            height: windowHeight * 0.1,
-            borderTopLeftRadius: 35,
-            borderTopRightRadius: 35,
-          },
-          tabBarActiveTintColor: '#102C57',
-          tabBarInactiveTintColor: '#999',
-          tabBarLabelStyle: {
-            fontSize: 12,
-            fontWeight: 'bold',
-            fontFamily: 'Gantari-Regular',
-            marginBottom: 16,
-          },
-          tabBarIconStyle: {
-            marginTop: 16,
-          },
+          headerTitleStyle: generalStyles.header,
+          headerShown: false
         }}
       >
-        <Tab.Screen 
-          name="Home" 
-          component={HomeScreen}
-          options={{
-            tabBarIcon: (({ focused }: any) => (
-              <Feather name="home" size={30} color={focused ? '#102C57' : '#999'} />
-            ))
-          }}
+        <Stack.Screen
+          name="LogInScreen"
+          component={LogInScreen}
+
         />
-        <Tab.Screen
-          name="Menu"
-          component={MenuScreen}
-          options={{
-            tabBarIcon: (({ focused }: any) => (
-              <MaterialIcons name="restaurant-menu" size={30} color={focused ? '#102C57' : '#999'} />
-            ))
-          }}
+        <Stack.Screen 
+          name="SignUpScreen" 
+          component={SignUpScreen} 
         />
-        <Tab.Screen 
-          name="Cart"
-          component={CartMenu}
-          options={{
-            tabBarIcon: (({ focused }: any) => (
-              <MaterialCommunityIcons name="cart-outline" size={30} color={focused ? '#102C57' : '#999'} />
-            )),
-          }}
+        <Stack.Screen 
+          name="MainMenu" 
+          component={MainMenu} 
         />
-        <Tab.Screen
-          name="Rewards"
-          component={RewardsScreen}
-          options={{
-            tabBarIcon: (({ focused }: any) => (
-              <Feather name="gift" size={30} color={focused ? '#102C57' : '#999'} />
-            ))
-          }}
-        />
-        <Tab.Screen 
-          name="Profile"
-          component={ProfileScreen}
-          options={{
-            tabBarIcon: (({ focused }: any) => (
-              <Octicons name="person" size={30} color={focused ? '#102C57' : '#999'} />
-            ))
-          }}
-        />
-      </Tab.Navigator>
+      </Stack.Navigator>
     </NavigationContainer>
   );
 };
 
 export default App;
 
+//Nested Navigator for Bottom Tab Menu
+const MainMenu = () => {
+  return (
+    
+    <Tab.Navigator
+      screenOptions={{
+        headerShown: false,
+        tabBarStyle: {
+          backgroundColor: '#EADBC8',
+          height: windowHeight * 0.1,
+          borderTopLeftRadius: 35,
+          borderTopRightRadius: 35,
+        },
+        tabBarActiveTintColor: '#102C57',
+        tabBarInactiveTintColor: '#999',
+        tabBarLabelStyle: {
+          fontSize: 12,
+          fontWeight: 'bold',
+          fontFamily: 'Gantari-Regular',
+          marginBottom: 16,
+        },
+        tabBarIconStyle: {
+          marginTop: 16,
+        },
+      }}
+    >
+      <Tab.Screen 
+        name="Home" 
+        component={HomeScreen}
+        options={{
+          tabBarIcon: (({ focused }: any) => (
+            <Feather name="home" size={30} color={focused ? '#102C57' : '#999'} />
+          ))
+        }}
+      />
+      <Tab.Screen
+        name="Menu"
+        component={MenuScreen}
+        options={{
+          tabBarIcon: (({ focused }: any) => (
+            <MaterialIcons name="restaurant-menu" size={30} color={focused ? '#102C57' : '#999'} />
+          ))
+        }}
+      />
+      <Tab.Screen 
+        name="Cart"
+        component={CartMenu}
+        options={{
+          tabBarIcon: (({ focused }: any) => (
+            <MaterialCommunityIcons name="cart-outline" size={30} color={focused ? '#102C57' : '#999'} />
+          )),
+        }}
+      />
+      <Tab.Screen
+        name="Rewards"
+        component={RewardsScreen}
+        options={{
+          tabBarIcon: (({ focused }: any) => (
+            <Feather name="gift" size={30} color={focused ? '#102C57' : '#999'} />
+          ))
+        }}
+      />
+      <Tab.Screen 
+        name="Profile"
+        component={ProfileScreen}
+        options={{
+          tabBarIcon: (({ focused }: any) => (
+            <Octicons name="person" size={30} color={focused ? '#102C57' : '#999'} />
+          ))
+        }}
+      />
+    </Tab.Navigator>
+  );
+};
 
-const Stack = createStackNavigator();
-
+//Nested Navigator for Profile Menu
 const ProfileScreen = () => {
   return (
     <Stack.Navigator
@@ -138,6 +169,7 @@ const ProfileScreen = () => {
   );
 };
 
+//Nested Navigator for Cart Menu - CartScreen and CheckoutScreen
 const CartMenu = () => {
   return (
     <Stack.Navigator
@@ -157,3 +189,6 @@ const CartMenu = () => {
     </Stack.Navigator>
   );
 };
+
+
+

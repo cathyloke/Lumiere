@@ -4,6 +4,7 @@ import { View, Text, Image, FlatList, TouchableOpacity, StyleSheet } from 'react
 import { getDBConnection, getCartItem, updateCartItem, deleteCartItem } from '../assets/dbConnection';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import {styles} from '../modules/cartStyle';
+import { getSession } from '../assets/sessionData';
 
 type CartItem = {
    cartItemID: string;
@@ -20,11 +21,26 @@ type CartItem = {
 
 const CartScreen = ({ navigation }: any) => {
    const [cartItems, setCartItems] = useState<CartItem[]>([]);
+   const [userID, setUserID] = useState('');
 
-   const query = async () => {
+   const retrieveSessionData = async () => {
+      const session = await getSession();
+      if (session) {
+         const { userId: sessionUserId } = session;
+         console.log('User ID:', sessionUserId);
+         setUserID(sessionUserId || '');
+         return sessionUserId;
+      } else {
+         console.log('No session found');
+         return null;
+      }
+    };
+  
+    const query = async (userId: string) => {
       try {
          const db = await getDBConnection();
-         const cartItemData = await getCartItem(db, '01');  // Replace with current user ID
+         const cartItemData = await getCartItem(db, userId);
+         
          setCartItems(cartItemData);
       } catch (error) {
          console.error('Error fetching order data: ', error);
@@ -33,7 +49,16 @@ const CartScreen = ({ navigation }: any) => {
 
    useFocusEffect(
       useCallback(() => {
-         query();
+         const fetchData = async () => {
+            const sessionUserId = await retrieveSessionData();
+            if (sessionUserId) {
+               await query(sessionUserId);
+            } else {
+               console.error('User ID is not set, skipping query');
+            }
+         };
+   
+         fetchData();
       }, [])
    );
 
@@ -43,7 +68,7 @@ const CartScreen = ({ navigation }: any) => {
          const updatedItems = cartItems.map(item =>
             item.foodID === foodID ? { ...item, quantity } : item
          );   
-         await updateCartItem(db, '01', foodID, quantity);  // Replace with current user ID
+         await updateCartItem(db, userID, foodID, quantity); 
          setCartItems(updatedItems);
       } catch (error) {
          console.error('Failed to update quantity:', error);
@@ -53,10 +78,10 @@ const CartScreen = ({ navigation }: any) => {
    const removeItem = async (id: string) => {
       try {
          const db = await getDBConnection();
-         await deleteCartItem(db, '01', id);  // Replace with current user ID
+         await deleteCartItem(db, userID, id); 
          const updatedItems = cartItems.filter(item => item.cartItemID !== id);
          setCartItems(updatedItems);
-         query();       //add this to refresh
+         query(userID);       //add this to refresh
       } catch (error) {
          console.error('Failed to delete cart item:', error);
       }
@@ -102,7 +127,6 @@ const CartScreen = ({ navigation }: any) => {
             renderItem={renderItem}
             keyExtractor={(item, index) => item.cartItemID || index.toString()}
          />
-
          <TouchableOpacity
             style={styles.checkoutButton}
             onPress={() => navigation.navigate('CheckoutScreen')}>

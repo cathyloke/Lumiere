@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import { styles } from '../modules/homeStyle';
 import MenuScreen from './MenuScreen';
+import { clearSession, getSession } from '../assets/sessionData';
 
 const images = [
   require('../img/promo/PromoCroissant.png'),
@@ -28,7 +29,22 @@ const HomeScreen = ({navigation} : any) => {
   const [imgActive, setImgActive] = useState(0);
   const [greeting, setGreeting] = useState('');
 
+  const [userName, setUserName] = useState('');
+
+  const retrieveSessionData = async () => {
+    const session = await getSession();
+    if (session) {
+      const { userName: sessionUserName } = session;
+      console.log('User Name:', sessionUserName);
+      setUserName(sessionUserName || '');
+    } else {
+        console.log('No session found');
+    }
+  };
+
   useEffect(() => {
+    retrieveSessionData();
+
     const getTimeOfDayGreeting = () => {
       const hours = new Date().getHours();
       if (hours < 12) {return 'Good Morning';}
@@ -87,7 +103,7 @@ const HomeScreen = ({navigation} : any) => {
         {/* GREETING MESSAGE */}
         <View style={styles.greetingContainer}>
           <Text style={styles.greetingText}>
-            {greeting}, (username)! {/* replace with {username} */}
+            {greeting}, {userName}!
           </Text>
 
           <Text style={styles.readyText}>

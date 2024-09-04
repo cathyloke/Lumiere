@@ -1,9 +1,11 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
+
 import { Alert, View, Text, Image, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
 import { getDBConnection, getCartItem, processPayment } from '../assets/dbConnection';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import {styles} from '../modules/checkoutStyle';
-
+import { getSession } from '../assets/sessionData';
 type CartItem = {
    cartItemId: string;
    foodID: string;
@@ -16,11 +18,25 @@ type CartItem = {
 const CheckoutScreen = ({ navigation }: any) => {
     const [cartItems, setCartItems] = useState<CartItem[]>([]);
     const [total, setTotal] = useState<any>(0);
+    const [userID, setUserID] = useState('');
 
-    const query = async () => {
+    const retrieveSessionData = async () => {
+        const session = await getSession();
+        if (session) {
+           const { userId: sessionUserId } = session;
+           console.log('User ID:', sessionUserId);
+           setUserID(sessionUserId || '');
+           return sessionUserId;
+        } else {
+           console.log('No session found');
+           return null;
+        }
+    };
+
+    const query = async (userId: string) => {
         try {
             const db = await getDBConnection();
-            const cartItemData = await getCartItem(db, '01');  // Replace with current user ID
+            const cartItemData = await getCartItem(db, userId); 
             setCartItems(cartItemData);
             calculateTotal(cartItemData);
         } catch (error) {
@@ -35,10 +51,20 @@ const CheckoutScreen = ({ navigation }: any) => {
         setTotal(total);
     };
 
-    useEffect(() => {
-        query();
-    },[])
-
+    useFocusEffect(
+        useCallback(() => {
+           const fetchData = async () => {
+              const sessionUserId = await retrieveSessionData();
+              if (sessionUserId) {
+                 await query(sessionUserId);
+              } else {
+                 console.error('User ID is not set, skipping query');
+              }
+           };
+     
+           fetchData();
+        }, [])
+     );
     const renderItem = ({ item }: { item: CartItem }) => (
         <View style={styles.itemContainer}>
             <Image source={item.image} style={styles.image} />
@@ -55,11 +81,11 @@ const CheckoutScreen = ({ navigation }: any) => {
     const checkoutAction = async() => {
         try {
             const db = await getDBConnection();
-            await processPayment(db, '01');  // Replace with current user ID
+            await processPayment(db, userID);  // Replace with current user ID
             
             Alert.alert('You have successfully paid.');
-            query();
-            navigation.goBack()
+            query(userID);
+            navigation.goBack();
          } catch (error) {
             console.error('Failed to delete process payment:', error);
          }    

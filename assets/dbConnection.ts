@@ -4,30 +4,19 @@ const databaseName = 'lumiereDatabase.sqlite';
 
 enablePromise(true);
 
-export const getDBConnection = async() => {
-    return await openDatabase(
-        {name: `${databaseName}`, createFromLocation:`~${databaseName}`},
-      openCallback,
-      errorCallback,
-    );
-}
+//get the today date
+const getTodayDate = (): string => {
+  const today = new Date();
+  const year = today.getFullYear();
+  const month = String(today.getMonth() + 1).padStart(2, '0'); // Months are 0-based, so add 1
+  const day = String(today.getDate()).padStart(2, '0'); // Ensure two digits for day
+  return `${year}-${month}-${day}`;
+};
 
-export const getUsers = async( db: SQLiteDatabase ): Promise<any> => {
-    try{
-        const userData : any = [];
-        const query = 'SELECT * FROM users';
-        const results = await db.executeSql(query);
-        results.forEach(result => {
-            (result.rows.raw()).forEach(( item:any ) => {
-                userData.push(item);
-            })
-          });
-        return userData;
-      } catch (error) {
-        console.error(error);
-        throw Error('Failed to get users !!!');
-      }
-}
+//generate primary key
+const generateUniqueID = (): string => {
+  return Math.random().toString(36).substr(2, 9); // Generate a unique ID
+};
 
 const getImage = (imageName: string) => {
   switch (imageName) {
@@ -66,6 +55,50 @@ const getImage = (imageName: string) => {
       return require('../img/drinks/DrinksTaroMilkTea.png');
   }
 };
+
+export const getDBConnection = async() => {
+    return await openDatabase(
+        {name: `${databaseName}`, createFromLocation:`~${databaseName}`},
+      openCallback,
+      errorCallback,
+    );
+}
+
+export const getUser = async( db: SQLiteDatabase, phone?:string, password?: string ): Promise<any> => {
+  try {
+    
+    const query = 'SELECT * FROM users WHERE phone=?';
+    const results = await db.executeSql(query, [phone]);
+    console.log(results)
+
+    //found match user
+    if (results.length > 0) {
+      const resultSet = results[0];
+      
+      // Ensure the query returned rows
+      if (resultSet.rows.length > 0) {
+        const user = resultSet.rows.raw()[0];
+
+        // Check password
+        if (user.password === password) {
+          return user;
+        } else {
+          console.log('Password is wrong');  
+          throw new Error('Password wrong');
+        }
+      } else {
+        console.log('User does not exist');
+        throw new Error('User not found. Ensure you had register an account.');
+      }
+    } else {
+      console.log('No results returned');
+      throw new Error('User not found. Ensure you had register an account.');
+    }
+  } catch (error) {
+    console.log('Fail to log in: ', error);
+    throw error;
+  }
+}
 
 export const getMenuData = async (db: SQLiteDatabase, category?: string): Promise<any> => {
   try {
@@ -137,61 +170,68 @@ export const getCartItem = async (db: SQLiteDatabase, userID?: string): Promise<
     }
   }
 
-const getTodayDate = (): string => {
-  const today = new Date();
-  const year = today.getFullYear();
-  const month = String(today.getMonth() + 1).padStart(2, '0'); // Months are 0-based, so add 1
-  const day = String(today.getDate()).padStart(2, '0'); // Ensure two digits for day
-  return `${year}-${month}-${day}`;
+// Add the user data 
+export const addUserData = async (db: SQLiteDatabase, name: string, phone: string, password: string): Promise<void> => {
+  try {
+    if (!name) {
+      console.log('Missing user name');
+      throw new Error('Name is required');
+    } else if (!phone) {
+      console.log('Missing phone number');
+      throw new Error('Phone number is required');
+    } else if (!password) {
+      console.log('Missing password');
+      throw new Error('Password is required');
+    }else {
+      console.log('No missing error in name, phone number and password')
+    }
+    
+
+    // Check if the user already exists in the database
+    const checkQuery = 'SELECT * FROM users WHERE phone = ? AND password = ?';
+    const result = await db.executeSql(checkQuery, [phone, password]);
+
+    if (result[0].rows.length > 0) {
+      // If the user exists
+      console.log('User already exists')
+      throw new Error('User already exist')
+    } else {
+      // If the user does not exist, insert it as a new entry
+      const userID = generateUniqueID();
+      const insertQuery = 'INSERT INTO users (userID, name, phone, password) VALUES (?, ?, ?, ?)';
+      await db.executeSql(insertQuery, [userID, name, phone, password]);
+    }
+    console.log('User added successfully');
+
+  } catch (error) {
+    console.error('Failed to update user data:', error);
+    throw new Error('Failed to update user data');
+  }
 };
 
-  // havent try for the checkout function -- cathy
-export const processPayment = async (db: SQLiteDatabase, userID: string): Promise<void> => {
+// Update the user data - name and phone number
+export const updateUserData = async (db: SQLiteDatabase, userID: string, name: string, phone: string): Promise<void> => {
   try {
     if (!userID) {
       console.log('Missing user ID');
       throw new Error('User ID is required');
+    } else if (!name) {
+      console.log('Missing user name');
+      throw new Error('Name is required');
+    } else if (!phone) {
+      console.log('Missing phone number');
+      throw new Error('Phone number is required');
     } else {
-      console.log('No missing error in userID')
+      console.log('No missing error in user ID, name and phone number')
     }
 
-    // Retrieve cart items
-    const cartItems = await getCartItem(db, userID);
-    console.log(cartItems)
-    console.log("aasdasd")
-    if (cartItems.length === 0) {
-      console.log('Cart is empty');
-      throw new Error('Cart is empty');
-    }
- 
-    // Get the current date
-    const date = getTodayDate();
- 
-    //Query to Insert and Delete
-    const insertOrderQuery = 'INSERT INTO orderHistory (orderID, userID, foodID, date, quantity) VALUES (?, ?, ?, ?, ?)';
-    
-    //update order history table
-    for (const item of cartItems) {
-      const orderID = generateUniqueID();
-      await db.executeSql(insertOrderQuery, [orderID, userID, item.foodID, date, item.quantity]);
-  
-    }
-    console.log("Done update cart Item table in database")
-
-    //delete cart item table
-    const deleteCartQuery = 'DELETE FROM cartItem WHERE userID = ?';
-    await db.executeSql(deleteCartQuery, [userID]);
-    console.log('Payment processed successfully');
+    const query = 'UPDATE users SET name = ? , phone = ? WHERE userID = ?';
+    await db.executeSql(query, [name, phone, userID]);
 
   } catch (error) {
-    console.error('Failed to process payment:', error);
-    throw new Error('Failed to process payment');
+    console.error('Failed to update user data:', error);
+    throw new Error('Failed to update user data');
   }
-};
-
-//generate primary key
-const generateUniqueID = (): string => {
-  return Math.random().toString(36).substr(2, 9); // Generate a unique ID
 };
 
 //add cart into cartItem table
@@ -267,6 +307,50 @@ export const deleteCartItem = async (db: SQLiteDatabase, userID: string, foodID:
   } catch (error) {
     console.error('Failed to delete cart item:', error);
     throw new Error('Failed to delete cart item');
+  }
+};
+
+//process payment by delete cart item and add into the order history
+export const processPayment = async (db: SQLiteDatabase, userID: string): Promise<void> => {
+  try {
+    if (!userID) {
+      console.log('Missing user ID');
+      throw new Error('User ID is required');
+    } else {
+      console.log('No missing error in userID')
+    }
+
+    // Retrieve cart items
+    const cartItems = await getCartItem(db, userID);
+    console.log(cartItems)
+    console.log("aasdasd")
+    if (cartItems.length === 0) {
+      console.log('Cart is empty');
+      throw new Error('Cart is empty');
+    }
+ 
+    // Get the current date
+    const date = getTodayDate();
+ 
+    //Query to Insert and Delete
+    const insertOrderQuery = 'INSERT INTO orderHistory (orderID, userID, foodID, date, quantity) VALUES (?, ?, ?, ?, ?)';
+    
+    //update order history table
+    for (const item of cartItems) {
+      const orderID = generateUniqueID();
+      await db.executeSql(insertOrderQuery, [orderID, userID, item.foodID, date, item.quantity]);
+  
+    }
+    console.log("Done update cart Item table in database")
+
+    //delete cart item table
+    const deleteCartQuery = 'DELETE FROM cartItem WHERE userID = ?';
+    await db.executeSql(deleteCartQuery, [userID]);
+    console.log('Payment processed successfully');
+
+  } catch (error) {
+    console.error('Failed to process payment:', error);
+    throw new Error('Failed to process payment');
   }
 };
 

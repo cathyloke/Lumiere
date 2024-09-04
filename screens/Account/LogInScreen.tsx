@@ -1,44 +1,42 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { View, Text, TextInput, Button, Alert } from 'react-native';
-import SQLite from 'react-native-sqlite-storage';
+import { getDBConnection, getUser } from '../../assets/dbConnection';
+import { saveSession, clearSession } from '../../assets/sessionData';
 
-const db = SQLite.openDatabase(
-  { name: 'lumiereDatabase.sqlite', createFromLocation: 1 },
-  () => {},
-  error => {
-    console.error('Error opening database', error);
-  }
-);
-
-const LogInScreen = ({ navigation }) => {
+const LogInScreen = ({ navigation }: any) => {
   const [phone, setPhone] = useState('');
   const [password, setPassword] = useState('');
+
+  const getUserQuery = async () => {
+    try {
+        const db = await getDBConnection();
+        const user = await getUser(db, phone, password); 
+        
+        setPhone(user.phone);
+
+        // Save user data to session
+        saveSession(user.userID, user.name, user.phone);
+
+        Alert.alert('You had successfully logged in');
+        navigation.navigate('MainMenu')
+        setPhone('');
+        setPassword('')
+
+    } catch (error) {
+      Alert.alert('Login failed', (error as Error).message);
+      console.log("Error log in:", error);
+      setPhone('');
+      setPassword('');
+    }
+  };
 
   const handleLogin = () => {
     if (!phone || !password) {
       Alert.alert('Please fill all fields');
       return;
+    } else {
+      getUserQuery();
     }
-
-    db.transaction(tx => {
-      tx.executeSql(
-        'SELECT * FROM users WHERE phone = ? AND password = ?',
-        [phone, password],
-        (tx, results) => {
-          if (results.rows.length > 0) {
-            Alert.alert('Login successful!');
-            // You can navigate to a home screen or dashboard after successful login
-            // navigation.navigate('Home');
-          } else {
-            Alert.alert('Login failed. Invalid phone number or password.');
-          }
-        },
-        error => {
-          console.error('Error logging in', error);
-          Alert.alert('Error logging in');
-        }
-      );
-    });
   };
 
   return (
@@ -58,6 +56,7 @@ const LogInScreen = ({ navigation }) => {
         style={{ height: 40, borderColor: 'gray', borderWidth: 1, marginBottom: 10 }}
       />
       <Button title="Log In" onPress={handleLogin} />
+      <Button title="Register" onPress={() => {navigation.navigate('SignUpScreen')}} />
     </View>
   );
 };

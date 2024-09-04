@@ -7,7 +7,7 @@ import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityI
 import Entypo from 'react-native-vector-icons/Entypo';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { getDBConnection, getMenuData, getCartItem, updateCartItem, addCartItem } from "../assets/dbConnection";
-
+import { getSession } from '../assets/sessionData';
 type FoodItem={
   id: string;
   name: string;
@@ -59,22 +59,40 @@ const CustomStackContent = ({ navigation }: any) => { //side bar
   );
 };
 
-const ItemDetailScreen = ({route}: any) => { //item detail screen
+const ItemDetailScreen = ({navigation, route}: any) => { //item detail screen
   const {item} = route.params;
   const [quantity, setQuantity] = useState(0);
+  const [userID, setUserID] = useState('');
 
+  const retrieveSessionData = async () => {
+    const session = await getSession();
+    if (session) {
+       const { userId: sessionUserId } = session;
+       console.log('User ID:', sessionUserId);
+       setUserID(sessionUserId || '');
+      
+    } else {
+       console.log('No session found');
+       return null;
+    }
+  };
 
   const handleAddToCart = async (foodID: string, quantity: number) => {
     try {
       const db = await getDBConnection();
-      await addCartItem(db, '01', foodID, quantity);  // Replace with current user ID
+      await addCartItem(db, userID, foodID, quantity);
       console.log('Added the Cart Item')
       Alert.alert('Added to cart', `Added ${quantity} ${item.name} to the cart.`);
+      navigation.goBack();
     } catch (error) {
       console.error('Failed to add to cart:', error);
       Alert.alert('Error', 'Failed to add item to cart.');
     }
   };
+
+  useEffect(() => {
+    retrieveSessionData();
+  }, [])
 
   return (
     <SafeAreaView style={styles.container}>
@@ -227,4 +245,5 @@ const MenuScreen = ({ navigation }: any) => {
     </View>
   );
 };
+
 export default MenuScreen;

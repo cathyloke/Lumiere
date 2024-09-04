@@ -1,9 +1,11 @@
-import React, {useState,useEffect} from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
 import { Image, View, Text, StyleSheet } from 'react-native';
 import {getDBConnection, getOrderHistory } from "../../assets/dbConnection";
 import { FlatList, ScrollView } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import {orderHistoryStyle} from '../../modules/orderHistoryStyle';
+import { getSession } from '../../assets/sessionData';
 
 type orderHistoryItem = {
    id: string;
@@ -22,20 +24,45 @@ type orderHistoryItem = {
 
 const OrderHistoryScreen = ({ navigation }: any) => {
    const [orderHistory, setOrderHistory] = useState<orderHistoryItem[]>([]);
+   const [userID, setUserID] = useState('');
 
-   const query = async () => {
+   const retrieveSessionData = async () => {
+      const session = await getSession();
+      if (session) {
+         const { userId: sessionUserId } = session;
+         console.log('User ID:', sessionUserId);
+         setUserID(sessionUserId || '');
+         return sessionUserId;
+      } else {
+         console.log('No session found');
+         return null;
+      }
+    };
+
+   const query = async (userId: string) => {
       try {
          const db = await getDBConnection();
-         const orderHistoryData = await getOrderHistory(db, '01');  // Replace with current user ID
+         const orderHistoryData = await getOrderHistory(db, userId);  // Replace with current user ID
          setOrderHistory(orderHistoryData);
       } catch (error) {
          console.error("Error fetching order data:", error);
       }
    };
 
-   useEffect(() => {
-      query();
-   }, []);
+   useFocusEffect(
+      useCallback(() => {
+         const fetchData = async () => {
+            const sessionUserId = await retrieveSessionData();
+            if (sessionUserId) {
+               await query(sessionUserId);
+            } else {
+               console.error('User ID is not set, skipping query');
+            }
+         };
+   
+         fetchData();
+      }, [])
+   );
 
    const renderOrderHistoryItem = ({ item }: { item: orderHistoryItem }) => (
       <View style={orderHistoryStyle.orderItem}>
