@@ -46,20 +46,20 @@ const ProfileDetailsScreen = ({ navigation }: any) => {
       if (isEditing) {
         setUsername(newUsername);
         setPhone(newPhone);
-        
+
         const db = await getDBConnection();
         updateUserData(db, userID, newUsername, newPhone);
-        
+
         clearSession();
         saveSession(userID, newUsername, newPhone);
-        
+
         setNewUsername('');
         setNewPhone('');
       }
       setIsEditing(!isEditing);
-      return(Alert.alert('Your data edited successfully'))
+      return (Alert.alert('Data edited successfully.'));
     } catch (error) {
-        console.error("Error editing user data:", error);
+        console.error('Error editing user data: ', error);
     }
   };
 
