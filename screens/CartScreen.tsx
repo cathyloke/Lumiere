@@ -5,6 +5,7 @@ import { getDBConnection, getCartItem, updateCartItem, deleteCartItem } from '..
 import { SafeAreaView } from 'react-native-safe-area-context';
 import {styles} from '../modules/cartStyle';
 import { getSession } from '../assets/sessionData';
+import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 
 type CartItem = {
    cartItemID: string;
@@ -109,8 +110,13 @@ const CartScreen = ({ navigation }: any) => {
                </TouchableOpacity>
                <TouchableOpacity
                   onPress={() => removeItem(item.foodID)}
+                  style={{marginLeft: 40}}
                >
-                  <Text>Remove Item</Text>
+                  <MaterialCommunityIcons
+                     name="trash-can-outline"
+                     size={24}
+                     color="#E57373"
+                  />
                </TouchableOpacity>
             </View>
             
