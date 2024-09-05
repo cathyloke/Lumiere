@@ -17,7 +17,7 @@ const SignUpScreen = ({ navigation }: any) => {
       // Save user data to session
       saveSession(user.userID, user.name, user.phone);
 
-      Alert.alert('Success', 'You have successfully registered');
+      Alert.alert('Sign up successful', 'You have successfully registered.');
       navigation.navigate('MainMenu');
       setName('');
       setPhone('');
@@ -34,7 +34,7 @@ const SignUpScreen = ({ navigation }: any) => {
   const handleSignUp = () => {
     // Validation: Empty input fields
     if (!name || !phone || !password) {
-      Alert.alert('Missing Fields', 'Please fill all fields.');
+      Alert.alert('Missing Fields', 'Please fill in all fields.');
       return;
     }
 
