@@ -179,12 +179,43 @@ const ProfileDrawerScreen = ({navigation}: any) => {
         },
         drawerStyle: { backgroundColor: '#EADBC8' },
         drawerActiveTintColor: '#102C57',
-
+        drawerLabelStyle: {
+          fontFamily: 'Gantari-Regular',
+          fontSize: 16,
+        },
       }}
     >
-      <Drawer.Screen name="ProfileDetailsScreen" component={ProfileDetailScreen} options={{ title: 'Profile' }} />
-      <Drawer.Screen name="AboutDeveloper" component={AboutDeveloper} options={{ title: 'About Developers'}}/>
-      <Drawer.Screen name="LogoutScreen" component={LogoutScreen} options={{ title: 'Log Out', headerShown: false}}/>
+      <Drawer.Screen
+        name="ProfileDetailsScreen"
+        component={ProfileDetailScreen}
+        options={{
+          title: 'Profile',
+          drawerIcon: (({ focused }: any) => (
+            <Octicons name="person" size={30} color={focused ? '#102C57' : '#999'} />
+          ))
+        }}
+      />
+      <Drawer.Screen
+        name="AboutDeveloper"
+        component={AboutDeveloper}
+        options={{
+          title: 'About Developers',
+          drawerIcon: (({ focused }: any) => (
+            <Feather name="info" size={30} color={focused ? '#102C57' : '#999'} />
+          ))
+        }}
+      />
+      <Drawer.Screen
+        name="LogoutScreen"
+        component={LogoutScreen}
+        options={{
+          title: 'Log Out',
+          headerShown: false,
+          drawerIcon: (({ focused }: any) => (
+            <MaterialIcons name="logout" size={30} color={focused ? '#102C57' : '#999'} />
+          ))
+        }}
+      />
     </Drawer.Navigator>
   );
 };
