@@ -10,7 +10,7 @@ const LogInScreen = ({ navigation }: any) => {
   const getUserQuery = async () => {
     try {
       const db = await getDBConnection();
-      const user = await getUser(db, phone, password); 
+      const user = await getUser(db, phone, password);
 
       // Save user data to session
       saveSession(user.userID, user.name, user.phone);
@@ -21,7 +21,7 @@ const LogInScreen = ({ navigation }: any) => {
       setPassword('');
     } catch (error) {
       Alert.alert('Login failed', (error as Error).message);
-      console.log("Error log in:", error);
+      console.log('Error logging in: ', error);
       setPhone('');
       setPassword('');
     }
@@ -29,7 +29,7 @@ const LogInScreen = ({ navigation }: any) => {
 
   const handleLogin = () => {
     if (!phone || !password) {
-      Alert.alert('Please fill all fields');
+      Alert.alert('Please fill in all fields');
       return;
     } else {
       getUserQuery();
@@ -44,7 +44,7 @@ const LogInScreen = ({ navigation }: any) => {
           source={require('../../img/lumiere_logo.png')}
         />
       </View>
-      <Text style={styles.title}>Welcome to Lumiere!</Text>
+      <Text style={styles.title}>Welcome to Lumière!</Text>
       <View style={styles.inputContainer}>
         <TextInput
           placeholder="Phone Number"
@@ -65,7 +65,7 @@ const LogInScreen = ({ navigation }: any) => {
         <Text style={styles.buttonText}>Log In</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.link} onPress={() => {navigation.navigate('SignUpScreen')}}>
-        <Text style={styles.linkText}>Don't have an account? Register</Text>
+        <Text style={styles.linkText}>Don't have an account? Register now</Text>
       </TouchableOpacity>
     </ScrollView>
   );
@@ -101,14 +101,16 @@ const styles = StyleSheet.create({
     height: 50,
     borderColor: '#dcdcdc',
     borderWidth: 1,
-    borderRadius: 10,
+    borderRadius: 50,
     paddingHorizontal: 15,
     marginBottom: 15,
     backgroundColor: '#ffffff',
+    fontFamily: 'Gantari-Regular',
+    fontSize: 16,
   },
   button: {
     backgroundColor: '#102C57',
-    borderRadius: 10,
+    borderRadius: 50,
     paddingVertical: 15,
     paddingHorizontal: 30,
     alignItems: 'center',

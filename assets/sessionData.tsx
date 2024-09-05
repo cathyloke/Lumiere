@@ -6,7 +6,6 @@ export const saveSession = async (userId: string, userName: string, userPhone: s
       await AsyncStorage.setItem('@user_id', userId);
       await AsyncStorage.setItem('@user_name', userName);
       await AsyncStorage.setItem('@user_phone', userPhone);
-    
 
       console.log('Session saved successfully');
     } catch (error) {
