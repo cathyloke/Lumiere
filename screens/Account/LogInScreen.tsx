@@ -65,7 +65,7 @@ const LogInScreen = ({ navigation }: any) => {
         <Text style={styles.buttonText}>Log In</Text>
       </TouchableOpacity>
       <TouchableOpacity style={styles.link} onPress={() => {navigation.navigate('SignUpScreen')}}>
-        <Text style={styles.linkText}>Don't have an account? Register</Text>
+        <Text style={styles.linkText}>Don't have an account? Register now</Text>
       </TouchableOpacity>
     </ScrollView>
   );
@@ -101,7 +101,7 @@ const styles = StyleSheet.create({
     height: 50,
     borderColor: '#dcdcdc',
     borderWidth: 1,
-    borderRadius: 10,
+    borderRadius: 50,
     paddingHorizontal: 15,
     marginBottom: 15,
     backgroundColor: '#ffffff',
