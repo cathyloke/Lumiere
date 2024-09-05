@@ -72,7 +72,8 @@ const LocationScreen = () => {
                     </Text>
                     <Text style={styles.branchHoursTime}>{hours}</Text>
                 </View>
-            ))}        
+            ))}
+            
             
         </View>
     );
@@ -80,11 +81,11 @@ const LocationScreen = () => {
     if (loading) {
         return <ActivityIndicator size="large" color="#0000ff" />;
     }
-  
+
     if (error) {
         return <Text style={styles.error}>{error}</Text>;
     }
- 
+
     return (
         <View style={styles.container}>
             <FlatList
@@ -142,16 +143,18 @@ const styles = StyleSheet.create({
         marginVertical: 2,
     },
     branchHoursHeader: {
+        fontFamily: 'Gantari-Bold',
         fontSize: 16,
-        fontWeight: 'bold',
         marginVertical: 8,
     },
     branchHoursDay: {
+        fontFamily: 'Gantari-Regular',
         fontSize: 14,
         color: '#666',
         flex: 1,
     },
     branchHoursTime: {
+        fontFamily: 'Gantari-Regular',
         fontSize: 14,
         color: '#666',
         textAlign: 'right',

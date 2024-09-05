@@ -24,7 +24,7 @@ const AboutScreen = ({navigation}:any) => {
                Still, one thing reamins true to us - our quest to bring joy through cafe cuisines.
             </Text>
          </View>
-         <View>
+         <View style={{justifyContent: 'center', alignItems: 'center'}}>
             <TouchableOpacity style={styles.button} onPress={() => {navigation.navigate('LocationScreen')}}>
                <Text style={styles.buttonText} >Click to Find Us</Text>
             </TouchableOpacity>
