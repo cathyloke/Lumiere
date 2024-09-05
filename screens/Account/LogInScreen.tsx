@@ -15,7 +15,7 @@ const LogInScreen = ({ navigation }: any) => {
       // Save user data to session
       saveSession(user.userID, user.name, user.phone);
 
-      Alert.alert('Login successful', 'You have successfully logged in');
+      Alert.alert('Login successful', 'You have successfully logged in.');
       navigation.navigate('MainMenu');
       setPhone('');
       setPassword('');

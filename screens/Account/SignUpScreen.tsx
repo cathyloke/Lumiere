@@ -24,7 +24,7 @@ const SignUpScreen = ({ navigation }: any) => {
       setPassword('');
     } catch (error) {
       Alert.alert('Registration failed', (error as Error).message);
-      console.log("Error during registration:", error);
+      console.log('Error during registration: ', error);
       setName('');
       setPhone('');
       setPassword('');
@@ -48,7 +48,7 @@ const SignUpScreen = ({ navigation }: any) => {
           source={require('../../img/lumiere_logo.png')}
         />
       </View>
-      <Text style={styles.title}>Create an Account</Text>
+      <Text style={styles.title}>Create an account</Text>
       <View style={styles.inputContainer}>
         <TextInput
           placeholder="Full Name"
@@ -111,14 +111,16 @@ const styles = StyleSheet.create({
     height: 50,
     borderColor: '#dcdcdc',
     borderWidth: 1,
-    borderRadius: 10,
+    borderRadius: 50,
     paddingHorizontal: 15,
     marginBottom: 15,
     backgroundColor: '#ffffff',
+    fontFamily: 'Gantari-Regular',
+    fontSize: 16,
   },
   button: {
     backgroundColor: '#102C57',
-    borderRadius: 10,
+    borderRadius: 50,
     paddingVertical: 15,
     paddingHorizontal: 30,
     alignItems: 'center',
