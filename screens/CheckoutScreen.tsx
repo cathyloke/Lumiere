@@ -25,7 +25,6 @@ const CheckoutScreen = ({ navigation }: any) => {
     const [cartItems, setCartItems] = useState<CartItem[]>([]);
     const [total, setTotal] = useState<any>(0);
     const [userID, setUserID] = useState('');
-    
 
     const connectSocket = async () => {
         try {
@@ -45,7 +44,7 @@ const CheckoutScreen = ({ navigation }: any) => {
                 setTotal(result.total);
             });
         } catch (error) {
-            console.error("Error connecting:", error);
+            console.error('Error connecting: ', error);
         }
     };
 
@@ -65,15 +64,20 @@ const CheckoutScreen = ({ navigation }: any) => {
     const query = async (userId: string) => {
         try {
             const db = await getDBConnection();
-            const cartItemData = await getCartItem(db, userId); 
+            const cartItemData = await getCartItem(db, userId);
             setCartItems(cartItemData);
+
+            // Emit cart data to server once fetched
+            socket.emit('client_send_cart', {
+            cartItems: cartItemData,
+        });
         } catch (error) {
-            console.error("Error fetching order data:", error);
+            console.error('Error fetching order data: ', error);
         }
     };
 
     useEffect(() => {
-        console.log('Total updated:', total);
+        console.log('Total updated: ', total);
     }, [total]);
 
     // const calculateTotal = (cartItems: CartItem[]) => {
@@ -94,7 +98,7 @@ const CheckoutScreen = ({ navigation }: any) => {
                  console.error('User ID is not set, skipping query');
               }
            };
-     
+
            fetchData();
         }, [])
      );
@@ -115,13 +119,13 @@ const CheckoutScreen = ({ navigation }: any) => {
         try {
             const db = await getDBConnection();
             await processPayment(db, userID);  // Replace with current user ID
-            
+
             Alert.alert('You have successfully paid.');
             query(userID);
             navigation.goBack();
          } catch (error) {
             console.error('Failed to delete process payment:', error);
-         }    
+         }
     }
 
     return (
@@ -135,7 +139,7 @@ const CheckoutScreen = ({ navigation }: any) => {
         <Text style={styles.total}>Total: RM{total.toFixed(2)}</Text>
         <TouchableOpacity
             style={styles.checkoutButton}
-            onPress={checkoutAction}>    
+            onPress={checkoutAction}>
             <Text style={styles.buttonText}>Pay</Text>
         </TouchableOpacity>
       </View>
