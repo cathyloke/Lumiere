@@ -55,8 +55,8 @@ const LocationScreen = () => {
             <View style={{flexDirection: 'row',justifyContent: 'space-between' }}>
                 <View style={{width: 175}}>
                     <Text style={styles.branchName}>{item.name}</Text>
-                    <Text style={styles.branchAddress}>{item.address}</Text>
-                    <Text style={styles.branchPhone}>{item.phone}</Text>
+                    <Text style={styles.branchInfo}>{item.address}</Text>
+                    <Text style={styles.branchInfo}>{item.phone}</Text>
                     <Text style={styles.branchServices}>Services: </Text>
                     <Text style={styles.branchServices}>{item.services.map(service => service.charAt(0).toUpperCase() + service.slice(1)).join(', ')}</Text>
                 </View>
@@ -126,12 +126,7 @@ const styles = StyleSheet.create({
         fontFamily: 'Gantari-Bold',
         color: '#102C57'
     },
-    branchAddress: {
-        fontSize: 16,
-        fontFamily: 'Gantari-Regular',
-        color: '#666',
-    },
-    branchPhone: {
+    branchInfo: {
         fontSize: 16,
         fontFamily: 'Gantari-Regular',
         color: '#666',
