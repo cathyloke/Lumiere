@@ -30,7 +30,7 @@ const ProfileDetailsScreen = ({ navigation }: any) => {
       console.log('User Phone:', sessionUserPhone);
       setUserId(sessionUserId || '');
       setUsername(sessionUserName || '');
-      setPhone(sessionUserPhone || '')
+      setPhone(sessionUserPhone || '');
 
     } else {
         console.log('No session found');
@@ -43,6 +43,11 @@ const ProfileDetailsScreen = ({ navigation }: any) => {
 
   const handleEdit = async() => {
     try {
+      if (!newUsername || !newPhone) {
+        Alert.alert('Error', 'Username and Phone number cannot be empty.');
+        return;
+      }
+
       if (isEditing) {
         setUsername(newUsername);
         setPhone(newPhone);
@@ -57,9 +62,9 @@ const ProfileDetailsScreen = ({ navigation }: any) => {
         setNewPhone('');
       }
       setIsEditing(!isEditing);
-      return (Alert.alert('Data edited successfully.'));
+      return (Alert.alert('Success', 'Data edited successfully.'));
     } catch (error) {
-        console.error('Error editing user data: ', error);
+        console.error('Error', 'Error editing user data: ', error);
     }
   };
 
