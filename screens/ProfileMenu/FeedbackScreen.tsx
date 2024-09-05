@@ -18,7 +18,6 @@ const FeedbackScreen = () => {
           const session = await getSession();
           setUserName(session?.userName || 'Anonymous');
       };
-
       fetchUserName();
   }, []);
 
@@ -99,6 +98,7 @@ const FeedbackScreen = () => {
                   placeholder="Enter your comment here"
                   keyboardType="default"
                   textAlignVertical="top"
+                  multiline
                />
             </SafeAreaView>
          </View>

@@ -8,19 +8,5 @@ export const generalStyles = StyleSheet.create({
       padding: 15,
       textAlign: 'center',
    },
-   aboutDevText: {
-      fontFamily: 'Gantari-Regular',
-      fontSize: 16,
-      color: '#102C57',
-      padding: 15,
-      textAlign: 'center',
-   },
-   aboutDevCopyright: {
-      fontFamily: 'Gantari-Bold',
-      fontSize: 16,
-      color: '#102C57',
-      padding: 15,
-      textAlign: 'center',
-      marginTop: 50,
-   }
+
 });

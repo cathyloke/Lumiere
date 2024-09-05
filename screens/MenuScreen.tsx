@@ -6,8 +6,9 @@ import { styles } from '../modules/menuStyle';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import { getDBConnection, getMenuData, getCartItem, updateCartItem, addCartItem } from "../assets/dbConnection";
+import { getDBConnection, getMenuData, addCartItem } from "../assets/dbConnection";
 import { getSession } from '../assets/sessionData';
+
 type FoodItem={
   id: string;
   name: string;
@@ -68,9 +69,7 @@ const ItemDetailScreen = ({navigation, route}: any) => { //item detail screen
     const session = await getSession();
     if (session) {
        const { userId: sessionUserId } = session;
-       console.log('User ID:', sessionUserId);
        setUserID(sessionUserId || '');
-      
     } else {
        console.log('No session found');
        return null;
@@ -81,7 +80,6 @@ const ItemDetailScreen = ({navigation, route}: any) => { //item detail screen
     try {
       const db = await getDBConnection();
       await addCartItem(db, userID, foodID, quantity);
-      console.log('Added the Cart Item')
       Alert.alert('Added to cart', `Added ${quantity} ${item.name} to the cart.`);
       navigation.goBack();
     } catch (error) {
@@ -153,7 +151,6 @@ const CategoryScreen = ({navigation, route}: any) => {
       console.error("Error fetching menu data:", error);
     }
   };
-  
 
   useEffect(() => {
     query();

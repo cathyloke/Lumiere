@@ -1,21 +1,26 @@
 import React from 'react';
+import { Dimensions } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { Dimensions } from 'react-native';
+import { generalStyles } from './modules/generalStyle';
+
+//Navigator Creation
+const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
+const Drawer = createDrawerNavigator();
 
 //Account Management Screen
 import LogInScreen from './screens/Account/LogInScreen';
 import SignUpScreen from './screens/Account/SignUpScreen';
 
-//Screens in Main menu
+//Screens in Main Menu - Bottom Tab
 import HomeScreen from './screens/HomeScreen';
 import MenuScreen from './screens/MenuScreen';
 import RewardsScreen from './screens/RewardsScreen';
 import ProfileDetailScreen from './screens/ProfileMenu/ProfileDetailScreen';
 import CartScreen from './screens/CartScreen';
-import { generalStyles } from './modules/generalStyle';
 
 //Screens in Cart Screen
 import CheckoutScreen from './screens/CheckoutScreen';
@@ -30,16 +35,11 @@ import LocationScreen from './screens/ProfileMenu/LocationScreen';
 import LogoutScreen from './screens/Account/LogoutScreen';
 import AboutDeveloper from './screens/ProfileMenu/AboutDeveloper';
 
-//Icons
+//Icons packages
 import Feather from 'react-native-vector-icons/Feather';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Octicons from 'react-native-vector-icons/Octicons';
-
-//Create Navigator
-const Tab = createBottomTabNavigator();
-const Stack = createStackNavigator();
-const Drawer = createDrawerNavigator();
 
 const windowHeight = Dimensions.get('window').height;
 
@@ -76,7 +76,6 @@ export default App;
 //Nested Navigator for Bottom Tab Menu
 const MainMenu = () => {
   return (
-
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
@@ -169,8 +168,8 @@ const CartMenu = () => {
   );
 };
 
-//Nested Navigator for Profile Menu
-const ProfileDrawerScreen = ({navigation}: any) => {
+//Nested Navigator for Drawer
+const ProfileDrawerScreen = () => {
   return (
     <Drawer.Navigator
       screenOptions={{

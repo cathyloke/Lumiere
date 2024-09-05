@@ -1,9 +1,7 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
-
-import { Alert, ToastAndroid, View, Text, Image, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
+import { Alert, ToastAndroid, View, Text, Image, FlatList, TouchableOpacity } from 'react-native';
 import { getDBConnection, getCartItem, processPayment } from '../assets/dbConnection';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import {styles} from '../modules/checkoutStyle';
 import { getSession } from '../assets/sessionData';
 import io from 'socket.io-client';
@@ -80,13 +78,6 @@ const CheckoutScreen = ({ navigation }: any) => {
         console.log('Total updated: ', total);
     }, [total]);
 
-    // const calculateTotal = (cartItems: CartItem[]) => {
-    //     const total = cartItems.reduce((sum, item) => {
-    //         return sum + item.price * item.quantity;
-    //     }, 0);
-    //     setTotal(total);
-    // };
-
     useFocusEffect(
         useCallback(() => {
            const fetchData = async () => {
@@ -118,7 +109,7 @@ const CheckoutScreen = ({ navigation }: any) => {
     const checkoutAction = async() => {
         try {
             const db = await getDBConnection();
-            await processPayment(db, userID);  // Replace with current user ID
+            await processPayment(db, userID); 
 
             Alert.alert('You have successfully paid.');
             query(userID);

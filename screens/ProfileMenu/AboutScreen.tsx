@@ -1,10 +1,11 @@
 import React from 'react';
-import { View, Text, Image, Button, TouchableOpacity } from 'react-native';
+import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { styles } from '../../modules/profileStyle';
+import { ScrollView } from 'react-native-gesture-handler';
 
 const AboutScreen = ({navigation}:any) => {
    return (
-      <View style={{backgroundColor: '#F8F0E5'}}>
+      <ScrollView style={styles.container}>
          <View>
             <Image
             style={styles.logo}
@@ -24,12 +25,12 @@ const AboutScreen = ({navigation}:any) => {
                Still, one thing reamins true to us - our quest to bring joy through cafe cuisines.
             </Text>
          </View>
-         <View style={{justifyContent: 'center', alignItems: 'center'}}>
+         <View style={styles.buttonContainer}>
             <TouchableOpacity style={styles.button} onPress={() => {navigation.navigate('LocationScreen')}}>
                <Text style={styles.buttonText} >Click to Find Us</Text>
             </TouchableOpacity>
          </View>
-      </View>
+      </ScrollView>
    );
 };
 

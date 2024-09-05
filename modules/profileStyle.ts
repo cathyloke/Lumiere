@@ -1,5 +1,4 @@
 import {StyleSheet} from 'react-native';
-import { blue } from 'react-native-reanimated/lib/typescript/Colors';
 
 export const styles = StyleSheet.create({
   container: {
@@ -48,6 +47,11 @@ export const styles = StyleSheet.create({
     color: '#102C57',
     width: '60%',
     textAlign: 'right',
+  },
+  buttonContainer: {
+    justifyContent: 'center', 
+    alignItems: 'center',
+    paddingBottom: 30,
   },
   button: {
     width: 250,
@@ -168,6 +172,7 @@ export const styles = StyleSheet.create({
     backgroundColor: '#102C57',
     paddingVertical: 10,
     paddingHorizontal: 30,
+    marginTop: 20,
     borderRadius: 20,
     alignItems: 'center',
     alignSelf: 'center',
