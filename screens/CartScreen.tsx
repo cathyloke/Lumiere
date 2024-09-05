@@ -36,12 +36,12 @@ const CartScreen = ({ navigation }: any) => {
          return null;
       }
     };
-  
+
     const query = async (userId: string) => {
       try {
          const db = await getDBConnection();
          const cartItemData = await getCartItem(db, userId);
-         
+
          setCartItems(cartItemData);
       } catch (error) {
          console.error('Error fetching order data: ', error);
@@ -58,7 +58,7 @@ const CartScreen = ({ navigation }: any) => {
                console.error('User ID is not set, skipping query');
             }
          };
-   
+
          fetchData();
       }, [])
    );
@@ -119,7 +119,7 @@ const CartScreen = ({ navigation }: any) => {
                   />
                </TouchableOpacity>
             </View>
-            
+
          </View>
       </View>
    );
@@ -128,7 +128,15 @@ const CartScreen = ({ navigation }: any) => {
       <View style={styles.container}>
          <Text style={styles.header}>My cart</Text>
          {cartItems.length === 0 ? (
-            <Text style={styles.emptyCartText}>Your cart is empty.</Text>
+            <View style={{justifyContent: 'center', alignItems: 'center'}}>
+               <Text style={styles.emptyCartText}>Your cart is empty.</Text>
+               <TouchableOpacity
+                  style={styles.menuButton}
+                  onPress={() => navigation.navigate('Menu')}
+               >
+                  <Text style={styles.menuButtonText}>Go to Menu</Text>
+               </TouchableOpacity>
+            </View>
          ) : (
             <FlatList
                data={cartItems}

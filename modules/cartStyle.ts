@@ -73,4 +73,19 @@ export const styles = StyleSheet.create({
       textAlign: 'center',
       marginTop: 30,
     },
+    menuButton: {
+      backgroundColor: '#102C57',
+      alignItems: 'center',
+      justifyContent: 'center',
+      padding: 10,
+      borderRadius: 100,
+      height: 80,
+      width: 200,
+      marginTop: 425,
+    },
+    menuButtonText: {
+      fontFamily: 'Gantari-Bold',
+      fontSize: 20,
+      color: '#F8F0E5',
+    }
  });
