@@ -51,7 +51,7 @@ export const styles = StyleSheet.create({
     textAlign: 'right',
   },
   button: {
-    width: '100%',
+    width: 250,
     padding: 15,
     backgroundColor: '#102C57',
     borderRadius: 50,
