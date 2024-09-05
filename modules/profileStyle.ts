@@ -6,7 +6,6 @@ export const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#F8F0E5',
   },
-
   scrollViewContent: {
     alignItems: 'center',
     paddingVertical: 20,
@@ -85,10 +84,10 @@ export const styles = StyleSheet.create({
     backgroundColor: '#E57373', // Red accent for logout
   },
   logInButton: {
-    backgroundColor: '#0000FF', 
+    backgroundColor: '#0000FF',
   },
   signUpButton: {
-    backgroundColor: '#0000FF', 
+    backgroundColor: '#0000FF',
   },
   optionsContainer: {
     width: '90%',
@@ -107,7 +106,6 @@ export const styles = StyleSheet.create({
     fontSize: 18,
     color: '#F8F0E5',
   },
-
   title:{
     fontFamily: 'Gantari-Bold',
     fontSize: 28,
@@ -115,7 +113,6 @@ export const styles = StyleSheet.create({
     color: '#102C57',
     marginTop: 20,
   },
-
   subtitle:{
     fontFamily: 'Gantari-Bold',
     marginTop:10,
@@ -123,7 +120,6 @@ export const styles = StyleSheet.create({
     color:'#000000',
     textAlign:'center',
   },
-
   box: {
     fontFamily: 'Gantari-Bold',
     width: 100,
@@ -134,22 +130,18 @@ export const styles = StyleSheet.create({
     marginVertical: 4,
     borderRadius: 20,
   },
-
   selectedBox: {
     fontFamily: 'Gantari-Bold',
     backgroundColor: '#102C57',
   },
-
   text: {
     fontFamily: 'Gantari-Bold',
     color: '#000',
   },
-
   selectedText: {
     fontFamily: 'Gantari-Bold',
     color: '#F8F0E5',
- },
-
+  },
   row: {
     flexDirection: 'row',
     justifyContent: 'space-between',
@@ -157,7 +149,6 @@ export const styles = StyleSheet.create({
     marginHorizontal: 18,
     margin: 30,
   },
-
   comments:{
     fontFamily: 'Gantari-Regular',
     marginTop:20,
@@ -165,7 +156,6 @@ export const styles = StyleSheet.create({
     textAlign: 'left',
     marginLeft:20,
   },
-
   inputs:{
     fontFamily: 'Gantari-Regular',
     height: 150,
@@ -174,7 +164,6 @@ export const styles = StyleSheet.create({
     padding: 10,
     borderRadius: 10,
   },
-
   subbutton: {
     backgroundColor: '#102C57',
     paddingVertical: 10,
@@ -184,7 +173,6 @@ export const styles = StyleSheet.create({
     alignSelf: 'center',
     width: 200,
   },
-
   logo:{
     width: 180,
     height: 180,
@@ -192,14 +180,12 @@ export const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 10,
   },
-
   cafeImage:{
     width: 300,
     height: 180,
     alignSelf: 'center',
     borderRadius: 20,
   },
-
   description:{
     fontFamily: 'Gantari-Regular',
     textAlign: 'center',
@@ -207,5 +193,4 @@ export const styles = StyleSheet.create({
     padding: 20,
     fontSize: 16,
   },
-
 });
