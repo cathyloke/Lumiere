@@ -2,7 +2,8 @@ import { StyleSheet } from 'react-native';
 
 export const orderHistoryStyle = StyleSheet.create({
    container: {
-      flex: 1
+      flex: 1,
+      backgroundColor: '#F8F0E5',
    },
    orderHeaderSection:{
       flexDirection: 'row',
