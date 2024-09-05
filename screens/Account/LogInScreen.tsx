@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { View, Text, TextInput, Button, Alert, Image, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
+import { View, Text, TextInput, Alert, Image, StyleSheet, TouchableOpacity, ScrollView } from 'react-native';
 import { getDBConnection, getUser } from '../../assets/dbConnection';
 import { saveSession } from '../../assets/sessionData';
 
