@@ -28,13 +28,35 @@ const LogInScreen = ({ navigation }: any) => {
   };
 
   const handleLogin = () => {
+    // Validation: Empty input fields
     if (!phone || !password) {
-      Alert.alert('Please fill in all fields');
+      Alert.alert('Error', 'Please fill in all fields.');
       return;
-    } else {
-      getUserQuery();
     }
+
+    // Validation: Phone number length (e.g., between 10-15 digits)
+    if (phone.length < 10 || phone.length > 15) {
+      Alert.alert('Error', 'Phone number must be between 10 and 15 digits.');
+      return;
+    }
+
+    // Validation: Password minimum length (e.g., at least 6 characters)
+    if (password.length < 6) {
+      Alert.alert('Error', 'Password must be at least 6 characters long.');
+      return;
+    }
+
+    // Validation: Phone number pattern (digits only)
+    const phonePattern = /^[0-9]+$/;
+    if (!phonePattern.test(phone)) {
+      Alert.alert('Error', 'Phone number can only contain digits.');
+      return;
+    }
+
+    // If all validations pass, proceed with login
+    getUserQuery();
   };
+
 
   return (
     <ScrollView contentContainerStyle={styles.container}>
