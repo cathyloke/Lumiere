@@ -1,66 +1,52 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.1/socket.io.js"></script>
-        <script>
-var socket  = io('http://' + document.domain + ':' + location.port + '/chat');
-socket.on('connect', function() {
-    // we emit a connected message to let the client know that we are connected.
-    socket.emit('web_client_connected', {'connected': true});
-    console.log('Connected to WebSocket server');
-});
+   <head>
+      <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.5.1/socket.io.js"></script>
+      <script>
+         var socket  = io('http://' + document.domain + ':' + location.port + '/chat');
 
-socket.on('message_broadcast', function(data) {
-    console.log('Response received from server');
+         socket.on('connect', function() {
+               socket.emit('web_client_connected', {'connected': true});
+               console.log('Connected to WebSocket server');
+         });
 
-    let messageBag = JSON.parse(data);
+         socket.on('message_broadcast', function(data) {
+               console.log('Response received from server');
+               let messageBag = JSON.parse(data);
+               let chatroom = document.getElementById('chatroom');
+               chatroom.value += `${messageBag.sender} on ${messageBag.timestamp}:\n${messageBag.message}\n\n`;
+         });
 
-    let chatroom = document.getElementById('chatroom');
+         socket.on('feedback_broadcast', function(data) {
+               console.log('Feedback received from server');
+               let feedbackBag = JSON.parse(data);
+               let chatroom = document.getElementById('chatroom');
+               chatroom.value += `Feedback from ${feedbackBag.sender} on ${feedbackBag.timestamp}:\n${feedbackBag.message}\n\n`;
+         });
 
-    chatroom.value += `${messageBag.sender} on ${messageBag.timestamp}:\n${messageBag.message}\n\n`;
-});
-        </script>
-        <script>
-function send() {
-    let username = document.getElementById('username').value;
-    let message = document.getElementById('message').value;
-
-    let data = {
-        sender: username,
-        message: message,
-    };
-
-    socket.emit('message_sent', data);
-
-    document.getElementById('message').value = '';
-
-    console.log('Client sent data to WebSocket server: ', data);
-}
-        </script>
-        <title>Chat Test</title>
-    </head>
-    <body>
-        <h1>Chat Test</h1>
-        <form>
-            <table border="1">
-                <tr>
-                    <th>Set User Name</th>
-                    <td><input type="text" id="username" name="username" value="User" size="79"></td>
-                </tr>
-                <tr>
-                    <th>Chat Room</th>
-                    <td><textarea id="chatroom" name="chatroom" readonly cols="80" rows="20"></textarea></td>
-                </tr>
-                <tr>
-                    <th>Message</th>
-                    <td><textarea id="message" name="message" cols="80" rows="5"></textarea></td>
-                </tr>
-                <tr>
-                    <td colspan="2">
-                        <button type="button" onclick="send()">Send</button>
-                    </td>
-                </tr>
-            </table>
-        </form>
-    </body>
+         function send() {
+               let username = document.getElementById('username').value;
+               let message = document.getElementById('message').value;
+               let data = {
+                  sender: username,
+                  message: message,
+               };
+               socket.emit('message_sent', data);
+               document.getElementById('message').value = '';
+               console.log('Client sent data to WebSocket server: ', data);
+         }
+      </script>
+      <title>Feedback</title>
+   </head>
+   <body>
+      <h1>Feedback from App</h1>
+      <form>
+         <table border="1">
+               <tr>
+                  <th>Feedback List</th>
+                  <td><textarea id="chatroom" name="chatroom" readonly cols="80" rows="20"></textarea></td>
+               </tr>
+         </table>
+      </form>
+   </body>
 </html>

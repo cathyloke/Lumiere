@@ -1,9 +1,26 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { View, Text, TouchableOpacity, SafeAreaView, TextInput, Button, Alert } from 'react-native';
 import { styles } from '../../modules/profileStyle';
+import io from 'socket.io-client';
+import { getSession } from '../../assets/sessionData';
+
+var socket = io('http://10.0.2.2:5001/chat', {
+   transports: ['websocket'],
+});
 
 const FeedbackScreen = () => {
    const [selectedBoxes, setSelectedBoxes] = useState([false, false, false, false, false, false]);
+   const [number, setNumber] = useState('');
+   const [userName, setUserName] = useState<string | null>(null);
+
+   useEffect(() => {
+      const fetchUserName = async () => {
+          const session = await getSession();
+          setUserName(session?.userName || 'Anonymous');
+      };
+
+      fetchUserName();
+  }, []);
 
    const toggleSelection = (index) => {
       const newSelection = [...selectedBoxes];
@@ -11,13 +28,19 @@ const FeedbackScreen = () => {
       setSelectedBoxes(newSelection);
    };
 
-   const [number, setNumber] = useState('');
-
    const handleSubmit = () => {
       if (number.trim() === '') {
          Alert.alert('Comment field is empty');
       } else {
-         Alert.alert('Successfully submitted');
+         // Emit feedback through WebSocket
+         const feedbackData = {
+            sender: userName,
+            message: number,
+         };
+         socket.emit('feedback_sent', feedbackData);
+
+         Alert.alert('Successfully submitted', 'Thank you for your feedback!');
+         setNumber(''); // Clear the feedback input
       }
    };
 
