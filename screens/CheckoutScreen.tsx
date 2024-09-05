@@ -1,11 +1,17 @@
 import React, { useState, useEffect, useCallback } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
 
-import { Alert, View, Text, Image, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
+import { Alert, ToastAndroid, View, Text, Image, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
 import { getDBConnection, getCartItem, processPayment } from '../assets/dbConnection';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import {styles} from '../modules/checkoutStyle';
 import { getSession } from '../assets/sessionData';
+import io from 'socket.io-client';
+
+var socket = io('http://10.0.2.2:5000/checkout',{
+    transports: ['websocket'],
+});
+
 type CartItem = {
    cartItemId: string;
    foodID: string;
@@ -19,6 +25,29 @@ const CheckoutScreen = ({ navigation }: any) => {
     const [cartItems, setCartItems] = useState<CartItem[]>([]);
     const [total, setTotal] = useState<any>(0);
     const [userID, setUserID] = useState('');
+    
+
+    const connectSocket = async () => {
+        try {
+            socket.on('connect', () => {
+                console.log('Socket connected:', socket.id);
+                socket.emit('client_connected', { connected: true });
+                ToastAndroid.show('Connected to server', ToastAndroid.LONG);
+            });
+
+            socket.on('error', (error: any) => {
+                console.log('Socket error:', error);
+                ToastAndroid.show('Failed to connect to server', ToastAndroid.LONG);
+            });
+
+            socket.on('server_send', (data: any) => {
+                let result = JSON.parse(data);
+                setTotal(result.total);
+            });
+        } catch (error) {
+            console.error("Error connecting:", error);
+        }
+    };
 
     const retrieveSessionData = async () => {
         const session = await getSession();
@@ -38,18 +67,21 @@ const CheckoutScreen = ({ navigation }: any) => {
             const db = await getDBConnection();
             const cartItemData = await getCartItem(db, userId); 
             setCartItems(cartItemData);
-            calculateTotal(cartItemData);
         } catch (error) {
             console.error("Error fetching order data:", error);
         }
     };
 
-    const calculateTotal = (cartItems: CartItem[]) => {
-        const total = cartItems.reduce((sum, item) => {
-            return sum + item.price * item.quantity;
-        }, 0);
-        setTotal(total);
-    };
+    useEffect(() => {
+        console.log('Total updated:', total);
+    }, [total]);
+
+    // const calculateTotal = (cartItems: CartItem[]) => {
+    //     const total = cartItems.reduce((sum, item) => {
+    //         return sum + item.price * item.quantity;
+    //     }, 0);
+    //     setTotal(total);
+    // };
 
     useFocusEffect(
         useCallback(() => {
@@ -57,6 +89,7 @@ const CheckoutScreen = ({ navigation }: any) => {
               const sessionUserId = await retrieveSessionData();
               if (sessionUserId) {
                  await query(sessionUserId);
+                 await connectSocket();
               } else {
                  console.error('User ID is not set, skipping query');
               }
