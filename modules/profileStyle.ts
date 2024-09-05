@@ -152,13 +152,14 @@ export const styles = StyleSheet.create({
 
   row: {
     flexDirection: 'row',
-    justifyContent: 'space-around',
+    justifyContent: 'space-between',
     marginVertical: 3,
+    marginHorizontal: 18,
     margin: 30,
   },
 
   comments:{
-    fontFamily: 'Gantari-Bold',
+    fontFamily: 'Gantari-Regular',
     marginTop:20,
     color:'#000000',
     textAlign: 'left',
@@ -166,7 +167,7 @@ export const styles = StyleSheet.create({
   },
 
   inputs:{
-    fontFamily: 'Gantari-Bold',
+    fontFamily: 'Gantari-Regular',
     height: 150,
     margin: 14,
     borderWidth: 1,

@@ -19,7 +19,7 @@ const AboutScreen = () => {
          </View>
          <View>
             <Text style={styles.description}>
-               Lumiere began its breakthrough as a humble cafe brand from Malaysia. Today, we are 
+               Lumière began its breakthrough as a humble cafe brand from Malaysia. Today, we are 
                Southeast Asia's largest cafe brand with over 800 outlets around the world!
                Still, one thing reamins true to us - our quest to bring joy through cafe cuisines.
             </Text>
