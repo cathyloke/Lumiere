@@ -9,7 +9,7 @@ branches = [
         "name": "Lumiere Downtown",
         "address": "123 Main Street, Downtown City",
         "image": "https://retaildesignblog.net/wp-content/uploads/2020/04/Coffee_01-780x524.jpg",
-        "phone": "+1-555-123-4567",
+        "phone": "+6012-3456789",
         "hours": {
             "monday": "8:00 AM - 8:00 PM",
             "tuesday": "8:00 AM - 8:00 PM",
@@ -30,7 +30,7 @@ branches = [
         "name": "Lumiere Uptown",
         "address": "456 Elm Street, Uptown City",
         "image": "https://retaildesignblog.net/wp-content/uploads/2020/04/Coffee_01-780x524.jpg",
-        "phone": "+1-555-987-6543",
+        "phone": "-6019-8765432",
         "hours": {
             "monday": "7:00 AM - 8:00 PM",
             "tuesday": "7:00 AM - 8:00 PM",

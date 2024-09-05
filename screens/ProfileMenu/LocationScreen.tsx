@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, Image, Button, TouchableOpacity, ActivityIndicator, FlatList, StyleSheet } from 'react-native';
-import { ScrollView } from 'react-native-gesture-handler';
 
 interface LocationData {
     branchID: number;
@@ -53,14 +52,17 @@ const LocationScreen = () => {
 
     const renderBranch = ({ item }: { item: LocationData }) => (
         <View style={styles.branchContainer}>
-            <View style={{flexDirection: 'row'}}>
-                <View>
-                <Text style={styles.branchName}>{item.name}</Text>
-                <Text style={styles.branchAddress}>{item.address}</Text>
-                <Text style={styles.branchPhone}>{item.phone}</Text>
-                <Text style={styles.branchServices}>Services: {item.services.join(', ')}</Text>
+            <View style={{flexDirection: 'row',justifyContent: 'space-between' }}>
+                <View style={{width: 175}}>
+                    <Text style={styles.branchName}>{item.name}</Text>
+                    <Text style={styles.branchAddress}>{item.address}</Text>
+                    <Text style={styles.branchPhone}>{item.phone}</Text>
+                    <Text style={styles.branchServices}>Services: </Text>
+                    <Text style={styles.branchServices}>{item.services.map(service => service.charAt(0).toUpperCase() + service.slice(1)).join(', ')}</Text>
                 </View>
-                {/* <Image source={{ uri: item.image }} /> */}
+                <View style={styles.imageContainer}>
+                    <Image source={{ uri: item.image }} style={styles.branchImage} />
+                </View>
             </View>
             <Text style={styles.branchHoursHeader}>Hours:</Text>
             {Object.entries(item.hours).map(([day, hours]) => (
@@ -70,8 +72,7 @@ const LocationScreen = () => {
                     </Text>
                     <Text style={styles.branchHoursTime}>{hours}</Text>
                 </View>
-            ))}
-            
+            ))}        
             
         </View>
     );
@@ -110,6 +111,14 @@ const styles = StyleSheet.create({
         shadowOpacity: 0.2,
         shadowRadius: 5,
         elevation: 3,
+    },
+    imageContainer: {
+        justifyContent: 'center'
+    },
+    branchImage: {
+        width: 120, 
+        height: 120,
+        borderRadius: 10, 
     },
     branchName: {
         fontSize: 18,
