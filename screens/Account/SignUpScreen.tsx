@@ -32,12 +32,33 @@ const SignUpScreen = ({ navigation }: any) => {
   };
 
   const handleSignUp = () => {
+    // Validation: Empty input fields
     if (!name || !phone || !password) {
-      Alert.alert('Missing Fields', 'Please fill all fields');
+      Alert.alert('Missing Fields', 'Please fill all fields.');
       return;
-    } else {
-      addUser(name, phone, password);
     }
+
+    // Validation: Phone number length (e.g., between 10-15 digits)
+    if (phone.length < 10 || phone.length > 15) {
+      Alert.alert('Invalid Phone Number', 'Phone number must be between 10 and 15 digits.');
+      return;
+    }
+
+    // Validation: Password minimum length (e.g., at least 6 characters)
+    if (password.length < 6) {
+      Alert.alert('Invalid Password', 'Password must be at least 6 characters long.');
+      return;
+    }
+
+    // Validation: Phone number pattern (digits only)
+    const phonePattern = /^[0-9]+$/;
+    if (!phonePattern.test(phone)) {
+      Alert.alert('Invalid Phone Number', 'Phone number can only contain digits.');
+      return;
+    }
+
+    // If all validations pass, proceed with user registration
+    addUser(name, phone, password);
   };
 
   return (
