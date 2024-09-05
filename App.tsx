@@ -57,13 +57,13 @@ const App = () => {
           component={LogInScreen}
 
         />
-        <Stack.Screen 
-          name="SignUpScreen" 
-          component={SignUpScreen} 
+        <Stack.Screen
+          name="SignUpScreen"
+          component={SignUpScreen}
         />
-        <Stack.Screen 
-          name="MainMenu" 
-          component={MainMenu} 
+        <Stack.Screen
+          name="MainMenu"
+          component={MainMenu}
         />
       </Stack.Navigator>
     </NavigationContainer>
@@ -75,7 +75,7 @@ export default App;
 //Nested Navigator for Bottom Tab Menu
 const MainMenu = () => {
   return (
-    
+
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
@@ -98,8 +98,8 @@ const MainMenu = () => {
         },
       }}
     >
-      <Tab.Screen 
-        name="Home" 
+      <Tab.Screen
+        name="Home"
         component={HomeScreen}
         options={{
           tabBarIcon: (({ focused }: any) => (
@@ -175,11 +175,11 @@ const ProfileDrawerScreen = ({navigation}: any) => {
       screenOptions={{
         headerTitleStyle: generalStyles.header,
         headerStyle: {
-          backgroundColor: '#EADBC8'
+          backgroundColor: '#EADBC8',
         },
         drawerStyle: { backgroundColor: '#EADBC8' },
-        drawerActiveTintColor: '#102C57', 
-           
+        drawerActiveTintColor: '#102C57',
+
       }}
     >
       <Drawer.Screen name="ProfileDetailsScreen" component={ProfileDetailScreen} options={{ title: 'Profile' }} />
