@@ -43,8 +43,26 @@ const ProfileDetailsScreen = ({ navigation }: any) => {
 
   const handleEdit = async() => {
     try {
+      // Empty input validation
       if (!newUsername || !newPhone) {
         Alert.alert('Error', 'Username and Phone number cannot be empty.');
+        return;
+      }
+
+      // Minimum and maximum length validation (for example, username: 3-20 characters, phone: 10-15 characters)
+      if (newUsername.length < 3 || newUsername.length > 20) {
+        Alert.alert('Error', 'Username must be between 3 and 20 characters.');
+        return;
+      }
+      if (newPhone.length < 10 || newPhone.length > 15) {
+        Alert.alert('Error', 'Phone number must be between 10 and 15 digits.');
+        return;
+      }
+
+      // Input pattern validation (e.g., email format or phone number)
+      const phonePattern = /^[0-9]+$/; // Only digits for phone number
+      if (!phonePattern.test(newPhone)) {
+        Alert.alert('Error', 'Phone number can only contain digits.');
         return;
       }
 
