@@ -183,7 +183,7 @@ const ProfileDrawerScreen = ({navigation}: any) => {
       }}
     >
       <Drawer.Screen name="ProfileDetailsScreen" component={ProfileDetailScreen} options={{ title: 'Profile' }} />
-      <Drawer.Screen name="AboutDeveloper" component={AboutDeveloper} options={{ title: 'About Developer'}}/>
+      <Drawer.Screen name="AboutDeveloper" component={AboutDeveloper} options={{ title: 'About Developers'}}/>
       <Drawer.Screen name="LogoutScreen" component={LogoutScreen} options={{ title: 'Log Out', headerShown: false}}/>
     </Drawer.Navigator>
   );
