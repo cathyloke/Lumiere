@@ -80,13 +80,6 @@ const CheckoutScreen = ({ navigation }: any) => {
         console.log('Total updated: ', total);
     }, [total]);
 
-    // const calculateTotal = (cartItems: CartItem[]) => {
-    //     const total = cartItems.reduce((sum, item) => {
-    //         return sum + item.price * item.quantity;
-    //     }, 0);
-    //     setTotal(total);
-    // };
-
     useFocusEffect(
         useCallback(() => {
            const fetchData = async () => {
