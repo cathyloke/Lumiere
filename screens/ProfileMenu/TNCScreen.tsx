@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 
-const termsData = require('./termsAndConditions.json');
+const termsData = require('../../assets/termsAndConditions.json');
 
 const TNCScreen = () => {
    return (

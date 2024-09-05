@@ -1,8 +1,8 @@
 import React from 'react';
-import { View, Text, Image, Button } from 'react-native';
+import { View, Text, Image, Button, TouchableOpacity } from 'react-native';
 import { styles } from '../../modules/profileStyle';
 
-const AboutScreen = () => {
+const AboutScreen = ({navigation}:any) => {
    return (
       <View style={{backgroundColor: '#F8F0E5'}}>
          <View>
@@ -23,6 +23,11 @@ const AboutScreen = () => {
                Southeast Asia's largest cafe brand with over 800 outlets around the world!
                Still, one thing reamins true to us - our quest to bring joy through cafe cuisines.
             </Text>
+         </View>
+         <View>
+            <TouchableOpacity style={styles.button} onPress={() => {navigation.navigate('LocationScreen')}}>
+               <Text style={styles.buttonText} >Click to Find Us</Text>
+            </TouchableOpacity>
          </View>
       </View>
    );

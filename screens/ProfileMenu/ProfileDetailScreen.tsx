@@ -188,6 +188,12 @@ const ProfileDetailsScreen = ({ navigation }: any) => {
           </TouchableOpacity>
           <TouchableOpacity
             style={styles.optionButton}
+            onPress={() => navigation.navigate('LocationScreen')}
+          >
+            <Text style={styles.optionText}>Find Lumière</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.optionButton}
             onPress={() => navigation.navigate('AboutDeveloper')}
           >
             <Text style={styles.optionText}>About Developers</Text>

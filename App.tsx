@@ -26,6 +26,7 @@ import HelpCentreScreen from './screens/ProfileMenu/HelpCentreScreen';
 import FeedbackScreen from './screens/ProfileMenu/FeedbackScreen';
 import TNCScreen from './screens/ProfileMenu/TNCScreen';
 import AboutScreen from './screens/ProfileMenu/AboutScreen';
+import LocationScreen from './screens/ProfileMenu/LocationScreen';
 import LogoutScreen from './screens/Account/LogoutScreen';
 import AboutDeveloper from './screens/ProfileMenu/AboutDeveloper';
 
@@ -234,6 +235,7 @@ const ProfileScreen = () => {
       <Stack.Screen name="FeedbackScreen" component={FeedbackScreen} options={{title: 'Feedback'}}/>
       <Stack.Screen name="TNCScreen" component={TNCScreen} options={{title: 'Terms & Conditions'}}/>
       <Stack.Screen name="AboutScreen" component={AboutScreen} options={{title: 'About Lumière'}}/>
+      <Stack.Screen name="LocationScreen" component={LocationScreen} options={{title: 'Find Lumière'}}/>
     </Stack.Navigator>
   );
 };
