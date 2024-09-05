@@ -27,6 +27,7 @@ import FeedbackScreen from './screens/ProfileMenu/FeedbackScreen';
 import TNCScreen from './screens/ProfileMenu/TNCScreen';
 import AboutScreen from './screens/ProfileMenu/AboutScreen';
 import LogoutScreen from './screens/Account/LogoutScreen';
+import AboutDeveloper from './screens/ProfileMenu/AboutDeveloper';
 
 //Icons
 import Feather from 'react-native-vector-icons/Feather';
@@ -37,6 +38,7 @@ import Octicons from 'react-native-vector-icons/Octicons';
 //Create Navigator
 const Tab = createBottomTabNavigator();
 const Stack = createStackNavigator();
+const Drawer = createDrawerNavigator();
 
 const windowHeight = Dimensions.get('window').height;
 
@@ -145,30 +147,6 @@ const MainMenu = () => {
   );
 };
 
-//Nested Navigator for Profile Menu
-const ProfileScreen = () => {
-  return (
-    <Stack.Navigator
-      screenOptions={{
-        headerTitleStyle: generalStyles.header,
-      }}
-    >
-      <Stack.Screen
-        name="ProfileDetailsScreen"
-        component={ProfileDetailScreen}
-        options={{ headerShown: false }}
-      />
-
-      <Stack.Screen name="OrderHistoryScreen" component={OrderHistoryScreen} options={{title: 'My Order History'}}/>
-      <Stack.Screen name="HelpCentreScreen" component={HelpCentreScreen} options={{title: 'Help Centre'}}/>
-      <Stack.Screen name="FeedbackScreen" component={FeedbackScreen} options={{title: 'Feedback'}}/>
-      <Stack.Screen name="TNCScreen" component={TNCScreen} options={{title: 'Terms & Conditions'}}/>
-      <Stack.Screen name="AboutScreen" component={AboutScreen} options={{title: 'About Lumière'}}/>
-      <Stack.Screen name="LogoutScreen" component={LogoutScreen} options={{title: 'Logout'}}/>
-    </Stack.Navigator>
-  );
-};
-
 //Nested Navigator for Cart Menu - CartScreen and CheckoutScreen
 const CartMenu = () => {
   return (
@@ -189,6 +167,50 @@ const CartMenu = () => {
     </Stack.Navigator>
   );
 };
+
+//Nested Navigator for Profile Menu
+const ProfileDrawerScreen = ({navigation}: any) => {
+  return (
+    <Drawer.Navigator
+      screenOptions={{
+        headerTitleStyle: generalStyles.header,
+        headerStyle: {
+          backgroundColor: '#EADBC8'
+        },
+        drawerStyle: { backgroundColor: '#EADBC8' },
+        drawerActiveTintColor: '#102C57', 
+           
+      }}
+    >
+      <Drawer.Screen name="ProfileDetailsScreen" component={ProfileDetailScreen} options={{ title: 'Profile' }} />
+      <Drawer.Screen name="AboutDeveloper" component={AboutDeveloper} options={{ title: 'About Developer'}}/>
+      <Drawer.Screen name="LogoutScreen" component={LogoutScreen} options={{ title: 'Log Out', headerShown: false}}/>
+    </Drawer.Navigator>
+  );
+};
+
+//Nested Navigator for Profile Menu
+const ProfileScreen = () => {
+  return (
+    <Stack.Navigator
+      screenOptions={{
+        headerTitleStyle: generalStyles.header,
+      }}
+    >
+      <Stack.Screen name="ProfileDrawerScreen" component={ProfileDrawerScreen} options={{ headerShown: false }} />
+      <Stack.Screen name="OrderHistoryScreen" component={OrderHistoryScreen} options={{ title: 'My Order History'}}/>
+      <Stack.Screen name="HelpCentreScreen" component={HelpCentreScreen} options={{title: 'Help Centre'}}/>
+      <Stack.Screen name="FeedbackScreen" component={FeedbackScreen} options={{title: 'Feedback'}}/>
+      <Stack.Screen name="TNCScreen" component={TNCScreen} options={{title: 'Terms & Conditions'}}/>
+      <Stack.Screen name="AboutScreen" component={AboutScreen} options={{title: 'About Lumière'}}/>
+    </Stack.Navigator>
+  );
+};
+
+
+
+
+
 
 
 
