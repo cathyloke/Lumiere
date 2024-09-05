@@ -1,21 +1,26 @@
 import React from 'react';
+import { Dimensions } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import { createDrawerNavigator } from '@react-navigation/drawer';
-import { Dimensions } from 'react-native';
+import { generalStyles } from './modules/generalStyle';
+
+//Navigator Creation
+const Tab = createBottomTabNavigator();
+const Stack = createStackNavigator();
+const Drawer = createDrawerNavigator();
 
 //Account Management Screen
 import LogInScreen from './screens/Account/LogInScreen';
 import SignUpScreen from './screens/Account/SignUpScreen';
 
-//Screens in Main menu
+//Screens in Main Menu - Bottom Tab
 import HomeScreen from './screens/HomeScreen';
 import MenuScreen from './screens/MenuScreen';
 import RewardsScreen from './screens/RewardsScreen';
 import ProfileDetailScreen from './screens/ProfileMenu/ProfileDetailScreen';
 import CartScreen from './screens/CartScreen';
-import { generalStyles } from './modules/generalStyle';
 
 //Screens in Cart Screen
 import CheckoutScreen from './screens/CheckoutScreen';
@@ -26,19 +31,15 @@ import HelpCentreScreen from './screens/ProfileMenu/HelpCentreScreen';
 import FeedbackScreen from './screens/ProfileMenu/FeedbackScreen';
 import TNCScreen from './screens/ProfileMenu/TNCScreen';
 import AboutScreen from './screens/ProfileMenu/AboutScreen';
+import LocationScreen from './screens/ProfileMenu/LocationScreen';
 import LogoutScreen from './screens/Account/LogoutScreen';
 import AboutDeveloper from './screens/ProfileMenu/AboutDeveloper';
 
-//Icons
+//Icons packages
 import Feather from 'react-native-vector-icons/Feather';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Octicons from 'react-native-vector-icons/Octicons';
-
-//Create Navigator
-const Tab = createBottomTabNavigator();
-const Stack = createStackNavigator();
-const Drawer = createDrawerNavigator();
 
 const windowHeight = Dimensions.get('window').height;
 
@@ -57,13 +58,13 @@ const App = () => {
           component={LogInScreen}
 
         />
-        <Stack.Screen 
-          name="SignUpScreen" 
-          component={SignUpScreen} 
+        <Stack.Screen
+          name="SignUpScreen"
+          component={SignUpScreen}
         />
-        <Stack.Screen 
-          name="MainMenu" 
-          component={MainMenu} 
+        <Stack.Screen
+          name="MainMenu"
+          component={MainMenu}
         />
       </Stack.Navigator>
     </NavigationContainer>
@@ -75,7 +76,6 @@ export default App;
 //Nested Navigator for Bottom Tab Menu
 const MainMenu = () => {
   return (
-    
     <Tab.Navigator
       screenOptions={{
         headerShown: false,
@@ -98,8 +98,8 @@ const MainMenu = () => {
         },
       }}
     >
-      <Tab.Screen 
-        name="Home" 
+      <Tab.Screen
+        name="Home"
         component={HomeScreen}
         options={{
           tabBarIcon: (({ focused }: any) => (
@@ -168,23 +168,54 @@ const CartMenu = () => {
   );
 };
 
-//Nested Navigator for Profile Menu
-const ProfileDrawerScreen = ({navigation}: any) => {
+//Nested Navigator for Drawer
+const ProfileDrawerScreen = () => {
   return (
     <Drawer.Navigator
       screenOptions={{
         headerTitleStyle: generalStyles.header,
         headerStyle: {
-          backgroundColor: '#EADBC8'
+          backgroundColor: '#EADBC8',
         },
         drawerStyle: { backgroundColor: '#EADBC8' },
-        drawerActiveTintColor: '#102C57', 
-           
+        drawerActiveTintColor: '#102C57',
+        drawerLabelStyle: {
+          fontFamily: 'Gantari-Regular',
+          fontSize: 16,
+        },
       }}
     >
-      <Drawer.Screen name="ProfileDetailsScreen" component={ProfileDetailScreen} options={{ title: 'Profile' }} />
-      <Drawer.Screen name="AboutDeveloper" component={AboutDeveloper} options={{ title: 'About Developer'}}/>
-      <Drawer.Screen name="LogoutScreen" component={LogoutScreen} options={{ title: 'Log Out', headerShown: false}}/>
+      <Drawer.Screen
+        name="ProfileDetailsScreen"
+        component={ProfileDetailScreen}
+        options={{
+          title: 'Profile',
+          drawerIcon: (({ focused }: any) => (
+            <Octicons name="person" size={30} color={focused ? '#102C57' : '#999'} />
+          ))
+        }}
+      />
+      <Drawer.Screen
+        name="AboutDeveloper"
+        component={AboutDeveloper}
+        options={{
+          title: 'About Developers',
+          drawerIcon: (({ focused }: any) => (
+            <Feather name="info" size={30} color={focused ? '#102C57' : '#999'} />
+          ))
+        }}
+      />
+      <Drawer.Screen
+        name="LogoutScreen"
+        component={LogoutScreen}
+        options={{
+          title: 'Log Out',
+          headerShown: false,
+          drawerIcon: (({ focused }: any) => (
+            <MaterialIcons name="logout" size={30} color={focused ? '#102C57' : '#999'} />
+          ))
+        }}
+      />
     </Drawer.Navigator>
   );
 };
@@ -203,6 +234,7 @@ const ProfileScreen = () => {
       <Stack.Screen name="FeedbackScreen" component={FeedbackScreen} options={{title: 'Feedback'}}/>
       <Stack.Screen name="TNCScreen" component={TNCScreen} options={{title: 'Terms & Conditions'}}/>
       <Stack.Screen name="AboutScreen" component={AboutScreen} options={{title: 'About Lumière'}}/>
+      <Stack.Screen name="LocationScreen" component={LocationScreen} options={{title: 'Find Lumière'}}/>
     </Stack.Navigator>
   );
 };

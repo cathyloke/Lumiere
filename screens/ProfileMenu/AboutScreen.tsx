@@ -1,10 +1,11 @@
 import React from 'react';
-import { View, Text, Image, Button } from 'react-native';
+import { View, Text, Image, TouchableOpacity } from 'react-native';
 import { styles } from '../../modules/profileStyle';
+import { ScrollView } from 'react-native-gesture-handler';
 
-const AboutScreen = () => {
+const AboutScreen = ({navigation}:any) => {
    return (
-      <View style={{backgroundColor: '#F8F0E5'}}>
+      <ScrollView style={styles.container}>
          <View>
             <Image
             style={styles.logo}
@@ -19,12 +20,17 @@ const AboutScreen = () => {
          </View>
          <View>
             <Text style={styles.description}>
-               Lumiere began its breakthrough as a humble cafe brand from Malaysia. Today, we are 
+               Lumière began its breakthrough as a humble cafe brand from Malaysia. Today, we are 
                Southeast Asia's largest cafe brand with over 800 outlets around the world!
                Still, one thing reamins true to us - our quest to bring joy through cafe cuisines.
             </Text>
          </View>
-      </View>
+         <View style={styles.buttonContainer}>
+            <TouchableOpacity style={styles.button} onPress={() => {navigation.navigate('LocationScreen')}}>
+               <Text style={styles.buttonText} >Click to Find Us</Text>
+            </TouchableOpacity>
+         </View>
+      </ScrollView>
    );
 };
 

@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
-  SafeAreaView,
   StyleSheet,
   View,
   Text,
@@ -8,13 +7,14 @@ import {
 } from 'react-native';
 import { FlatList } from 'react-native-gesture-handler';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
-const RewardsScreen = ({navigation}: any) => {
 
+const RewardsScreen = () => {
    const images = [
       require('../img/promo/PromoCoffee.png'),
       require('../img/promo/PromoPancake.png'),
       require('../img/promo/PromoCroissant.png'),
    ];
+
    const renderItem = ({ item }: { item: any }) => (
       <View style={styles.imageContainer}>
          <Image source={item} style={styles.image} />

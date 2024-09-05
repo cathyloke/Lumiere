@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
   },
   button: {
     backgroundColor: '#E93F3F',
-    borderRadius: 10,
+    borderRadius: 50,
     paddingVertical: 15,
     paddingHorizontal: 30,
     alignItems: 'center',
@@ -61,7 +61,7 @@ const styles = StyleSheet.create({
   },
   cancelButton: {
     backgroundColor: '#cccccc',
-    borderRadius: 10,
+    borderRadius: 50,
     paddingVertical: 15,
     paddingHorizontal: 30,
     alignItems: 'center',

@@ -12,6 +12,7 @@ import {
 import { styles } from '../../modules/profileStyle';
 import { getDBConnection, updateUserData } from '../../assets/dbConnection';
 import { clearSession, getSession, saveSession } from '../../assets/sessionData';
+import { ProfileButton } from '../../customComponents/customButton'
 
 const ProfileDetailsScreen = ({ navigation }: any) => {
   const [username, setUsername] = useState('');
@@ -20,6 +21,11 @@ const ProfileDetailsScreen = ({ navigation }: any) => {
   const [isEditing, setIsEditing] = useState(false);
   const [newUsername, setNewUsername] = useState(username);
   const [newPhone, setNewPhone] = useState(phone);
+
+  const clearUserInput = () => {
+    setNewUsername('');
+    setNewPhone('')
+  }
 
   const retrieveSessionData = async () => {
     const session = await getSession();
@@ -30,7 +36,7 @@ const ProfileDetailsScreen = ({ navigation }: any) => {
       console.log('User Phone:', sessionUserPhone);
       setUserId(sessionUserId || '');
       setUsername(sessionUserName || '');
-      setPhone(sessionUserPhone || '')
+      setPhone(sessionUserPhone || '');
 
     } else {
         console.log('No session found');
@@ -43,6 +49,32 @@ const ProfileDetailsScreen = ({ navigation }: any) => {
 
   const handleEdit = async() => {
     try {
+      // Empty input validation
+      if (!newUsername || !newPhone) {
+        Alert.alert('Error', 'Username and Phone number cannot be empty.');
+        return;
+      }
+
+      // Minimum and maximum length validation (for example, username: 3-20 characters, phone: 10-15 characters)
+      if (newUsername.length < 3 || newUsername.length > 20) {
+        Alert.alert('Error', 'Username must be between 3 and 20 characters.');
+        clearUserInput();
+        return;
+      }
+      if (newPhone.length < 10 || newPhone.length > 15) {
+        Alert.alert('Error', 'Phone number must be between 10 and 15 digits.');
+        clearUserInput();
+        return;
+      }
+
+      // Input pattern validation (e.g., email format or phone number)
+      const phonePattern = /^[0-9]+$/; // Only digits for phone number
+      if (!phonePattern.test(newPhone)) {
+        Alert.alert('Error', 'Phone number can only contain digits.');
+        clearUserInput();
+        return;
+      }
+
       if (isEditing) {
         setUsername(newUsername);
         setPhone(newPhone);
@@ -53,16 +85,14 @@ const ProfileDetailsScreen = ({ navigation }: any) => {
         clearSession();
         saveSession(userID, newUsername, newPhone);
 
-        setNewUsername('');
-        setNewPhone('');
+        clearUserInput();
       }
       setIsEditing(!isEditing);
-      return (Alert.alert('Data edited successfully.'));
+      return (Alert.alert('Success', 'Data edited successfully.'));
     } catch (error) {
-        console.error('Error editing user data: ', error);
+        console.error('Error', 'Error editing user data: ', error);
     }
   };
-
 
   return (
     <SafeAreaView style={styles.container}>
@@ -114,7 +144,7 @@ const ProfileDetailsScreen = ({ navigation }: any) => {
                   Save
                 </Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.cancelButton} onPress={() => {setIsEditing(false)}}>
+              <TouchableOpacity style={styles.cancelButton} onPress={() => {setIsEditing(false); clearUserInput();}}>
                 <Text style={styles.buttonText}>
                   Cancel
                 </Text>
@@ -131,38 +161,14 @@ const ProfileDetailsScreen = ({ navigation }: any) => {
           </TouchableOpacity>
         </View>
 
-        {/* Additional Options */}
         <View style={styles.optionsContainer}>
-          <TouchableOpacity
-            style={styles.optionButton}
-            onPress={() => navigation.navigate('OrderHistoryScreen')}
-          >
-            <Text style={styles.optionText}>My Orders</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.optionButton}
-            onPress={() => navigation.navigate('HelpCentreScreen')}
-          >
-            <Text style={styles.optionText}>Help Centre</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.optionButton}
-            onPress={() => navigation.navigate('FeedbackScreen')}
-          >
-            <Text style={styles.optionText}>Feedback</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.optionButton}
-            onPress={() => navigation.navigate('TNCScreen')}
-          >
-            <Text style={styles.optionText}>Terms & Conditions</Text>
-          </TouchableOpacity>
-          <TouchableOpacity
-            style={styles.optionButton}
-            onPress={() => navigation.navigate('AboutScreen')}
-          >
-            <Text style={styles.optionText}>About Lumière</Text>
-          </TouchableOpacity>
+          <ProfileButton onPress={() => navigation.navigate('OrderHistoryScreen')} title='My Orders' />
+          <ProfileButton onPress={() => navigation.navigate('HelpCentreScreen')} title='Help Centre' />
+          <ProfileButton onPress={() => navigation.navigate('FeedbackScreen')} title='Feedback' />
+          <ProfileButton onPress={() => navigation.navigate('TNCScreen')} title='Terms & Conditions' />
+          <ProfileButton onPress={() => navigation.navigate('AboutScreen')} title='About Lumière' />
+          <ProfileButton onPress={() => navigation.navigate('LocationScreen')} title='Find Lumière' />
+          <ProfileButton onPress={() => navigation.navigate('AboutDeveloper')} title='About Developers' />
         </View>
       </ScrollView>
     </SafeAreaView>

@@ -1,8 +1,7 @@
-import React, { useState, useEffect, useCallback } from 'react';
+import React, { useState, useCallback } from 'react';
 import { useFocusEffect } from '@react-navigation/native';
-import { View, Text, Image, FlatList, TouchableOpacity, StyleSheet } from 'react-native';
+import { View, Text, Image, FlatList, TouchableOpacity } from 'react-native';
 import { getDBConnection, getCartItem, updateCartItem, deleteCartItem } from '../assets/dbConnection';
-import { SafeAreaView } from 'react-native-safe-area-context';
 import { styles } from '../modules/cartStyle';
 import { getSession } from '../assets/sessionData';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -19,7 +18,6 @@ type CartItem = {
    quantity: number;
 };
 
-
 const CartScreen = ({ navigation }: any) => {
    const [cartItems, setCartItems] = useState<CartItem[]>([]);
    const [userID, setUserID] = useState('');
@@ -28,7 +26,6 @@ const CartScreen = ({ navigation }: any) => {
       const session = await getSession();
       if (session) {
          const { userId: sessionUserId } = session;
-         console.log('User ID:', sessionUserId);
          setUserID(sessionUserId || '');
          return sessionUserId;
       } else {
@@ -58,7 +55,6 @@ const CartScreen = ({ navigation }: any) => {
                console.error('User ID is not set, skipping query');
             }
          };
-
          fetchData();
       }, [])
    );
@@ -82,7 +78,7 @@ const CartScreen = ({ navigation }: any) => {
          await deleteCartItem(db, userID, id); 
          const updatedItems = cartItems.filter(item => item.cartItemID !== id);
          setCartItems(updatedItems);
-         query(userID);       //add this to refresh
+         query(userID); 
       } catch (error) {
          console.error('Failed to delete cart item:', error);
       }
@@ -119,7 +115,6 @@ const CartScreen = ({ navigation }: any) => {
                   />
                </TouchableOpacity>
             </View>
-
          </View>
       </View>
    );

@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, Text, StyleSheet, ScrollView } from 'react-native';
 
-const termsData = require('./termsAndConditions.json');
+const termsData = require('../../assets/termsAndConditions.json');
 
 const TNCScreen = () => {
    return (
@@ -9,7 +9,7 @@ const TNCScreen = () => {
          <Text style={styles.header}>
             Last updated: {termsData.lastUpdated}
          </Text>
-         
+
          {termsData.sections.map((section, index) => (
             <View key={index}>
                <Text style={styles.sectionTitle}>{section.title}</Text>

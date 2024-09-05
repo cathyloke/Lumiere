@@ -13,7 +13,7 @@ export const styles = StyleSheet.create({
   },
   wrap: {
     width: WIDTH,
-    height: HEIGHT * 0.4,
+    height: HEIGHT * 0.44,
   },
   wrapDot: {
     position: 'absolute',

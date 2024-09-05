@@ -8,8 +8,7 @@ import {
   TouchableOpacity,
 } from 'react-native';
 import { styles } from '../modules/homeStyle';
-import MenuScreen from './MenuScreen';
-import { clearSession, getSession } from '../assets/sessionData';
+import { getSession } from '../assets/sessionData';
 
 const images = [
   require('../img/promo/PromoCroissant.png'),
@@ -28,7 +27,6 @@ const bestSellers = [
 const HomeScreen = ({navigation} : any) => {
   const [imgActive, setImgActive] = useState(0);
   const [greeting, setGreeting] = useState('');
-
   const [userName, setUserName] = useState('');
 
   const retrieveSessionData = async () => {
