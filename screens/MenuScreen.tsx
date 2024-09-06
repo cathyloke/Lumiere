@@ -3,11 +3,13 @@ import { View, Text, Image, FlatList, TouchableOpacity, SafeAreaView,TouchableHi
 import { Picker } from '@react-native-picker/picker';
 import { createStackNavigator} from '@react-navigation/stack';
 import { styles } from '../modules/menuStyle';
+import { generalStyles } from '../modules/generalStyle';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import { getDBConnection, getMenuData, addCartItem } from "../assets/dbConnection";
 import { getSession } from '../assets/sessionData';
+import { ScrollView } from 'react-native-gesture-handler';
 
 type FoodItem={
   id: string;
@@ -94,7 +96,8 @@ const ItemDetailScreen = ({navigation, route}: any) => { //item detail screen
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={{flex:1,justifyContent:'center',marginBottom:100}}>
+      <ScrollView>
+      <View style={{flex:1}}>
         <Image source={item.image} style={styles.detailImage} />
         <Text style={styles.detailTitle}>{item.name}</Text>
         <Text style={styles.detailPrice}>RM {item.price.toFixed(2)}</Text>
@@ -118,7 +121,7 @@ const ItemDetailScreen = ({navigation, route}: any) => { //item detail screen
         <Text style={styles.addToCartText}>Add to cart</Text>
         <MaterialCommunityIcons name="cart" size={30} color="#102C57" />
       </TouchableOpacity>
-
+      </ScrollView>
     </SafeAreaView>
   );
 };
@@ -187,7 +190,7 @@ const CategoryScreen = ({navigation, route}: any) => {
           onValueChange={(itemValue) => setSelectedType(itemValue)}
         >
           {foodTypes.map(type => (
-            <Picker.Item key={type} label={type} value={type}/>
+            <Picker.Item key={type} label={type} value={type} style={[styles.title,{fontFamily: 'Gantari-Regular'}]} />
           ))}
         </Picker>
 
@@ -220,25 +223,29 @@ const CategoryScreen = ({navigation, route}: any) => {
 const MenuScreen = ({ navigation }: any) => {
   return (
     <View style={styles.container}>
-      <CustomStackContent navigation={navigation} />
-      <Stack.Navigator>
-        <Stack.Screen
-          name="CategoryScreen"
-          component={CategoryScreen}
-          initialParams={{category:'Food'}}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="ItemDetail"
-          component={ItemDetailScreen}
-          options={{
-            headerStyle: {backgroundColor:'#F8F0E5'},
-            headerTitle: '',
-            headerBackTitleVisible: false,
-            headerTintColor:'#102C57',
-          }}
-        />
-      </Stack.Navigator>
+      <Text style={[generalStyles.header,{textAlign: 'left'}]}>Lumière Menu</Text>
+      <View style={{flexDirection: 'row', flexGrow: 1}}>
+        
+        <CustomStackContent navigation={navigation} />
+        <Stack.Navigator>
+          <Stack.Screen
+            name="CategoryScreen"
+            component={CategoryScreen}
+            initialParams={{category:'Food'}}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="ItemDetail"
+            component={ItemDetailScreen}
+            options={{
+              headerStyle: {backgroundColor:'#F8F0E5'},
+              headerTitle: '',
+              headerBackTitleVisible: false,
+              headerTintColor:'#102C57',
+            }}
+          />
+        </Stack.Navigator>
+      </View>
     </View>
   );
 };
