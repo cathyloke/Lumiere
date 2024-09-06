@@ -5,7 +5,6 @@ export const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#F8F0E5',
     padding: 5,
-    flexDirection: 'row',
     flexGrow: 1,
   },
   picker: {
@@ -17,7 +16,7 @@ export const styles = StyleSheet.create({
   sidebar: {
     width: 70,
     backgroundColor: '#F8F0E5',
-    paddingVertical: 15,
+    
     borderRightWidth: 2,
     borderColor: '#DAC0A3',
   },
@@ -75,8 +74,9 @@ export const styles = StyleSheet.create({
     marginTop: 10,
   },
   detailImage: {
-    width: '100%',
-    height: 250,
+    width: '90%',
+    height: 220,
+    alignSelf: 'center',
     resizeMode: 'contain',
     borderColor:'#DAC0A3',
     borderWidth:5,
@@ -105,16 +105,16 @@ export const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   fab: {
-    position: 'absolute',
-    bottom: 25,
-    right: 10,
+    width: '60%',
+    alignSelf: 'flex-end',
+    alignItems: 'center',
+    justifyContent: 'center',
     backgroundColor: '#DAC0A3',
     borderRadius: 50,
     paddingVertical: 12,
-    paddingHorizontal: 20,
     flexDirection: 'row',
-    alignItems: 'center',
     elevation: 5,
+    marginTop: 10,
   },
   addToCartText: {
     fontFamily: 'Gantari-Regular',
