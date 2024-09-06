@@ -9,7 +9,7 @@ export const styles = StyleSheet.create({
     itemContainer: {
        flexDirection: 'row',
        marginTop: 10,
-       marginBottom: 10,  
+       marginBottom: 10,
     },
     header: {
        fontFamily: 'Gantari-Bold',
@@ -47,7 +47,7 @@ export const styles = StyleSheet.create({
        color: '#102C57',
     },
     itemDetails: {
-        fontFamily: 'Gantari-Bold',
+        fontFamily: 'Gantari-Regular',
         fontSize: 16,
         color: 'grey',
     },
@@ -61,5 +61,5 @@ export const styles = StyleSheet.create({
        alignItems: 'center',
        padding: 16,
        borderRadius: 50,
-    }
+    },
  });

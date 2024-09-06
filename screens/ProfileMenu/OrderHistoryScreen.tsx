@@ -1,9 +1,11 @@
-import React, {useState,useEffect} from 'react';
-import { Image, View, Text, StyleSheet } from 'react-native';
+import React, { useState, useCallback } from 'react';
+import { useFocusEffect } from '@react-navigation/native';
+import { Image, View, Text } from 'react-native';
 import {getDBConnection, getOrderHistory } from "../../assets/dbConnection";
-import { FlatList, ScrollView } from 'react-native-gesture-handler';
+import { FlatList } from 'react-native-gesture-handler';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import {orderHistoryStyle} from '../../modules/orderHistoryStyle';
+import { getSession } from '../../assets/sessionData';
 
 type orderHistoryItem = {
    id: string;
@@ -19,23 +21,42 @@ type orderHistoryItem = {
    quantity: number;
 }
 
-
-const OrderHistoryScreen = ({ navigation }: any) => {
+const OrderHistoryScreen = () => {
    const [orderHistory, setOrderHistory] = useState<orderHistoryItem[]>([]);
+   const retrieveSessionData = async () => {
+      const session = await getSession();
+      if (session) {
+         const { userId: sessionUserId } = session;
+         console.log('User ID:', sessionUserId);
+         return sessionUserId;
+      } else {
+         return null;
+      }
+   };
 
-   const query = async () => {
+   const query = async (userId: string) => {
       try {
          const db = await getDBConnection();
-         const orderHistoryData = await getOrderHistory(db, '01');  // Replace with current user ID
+         const orderHistoryData = await getOrderHistory(db, userId); 
          setOrderHistory(orderHistoryData);
       } catch (error) {
          console.error("Error fetching order data:", error);
       }
    };
 
-   useEffect(() => {
-      query();
-   }, []);
+   useFocusEffect(
+      useCallback(() => {
+         const fetchData = async () => {
+            const sessionUserId = await retrieveSessionData();
+            if (sessionUserId) {
+               await query(sessionUserId);
+            } else {
+               console.error('User ID is not set.');
+            }
+         };
+         fetchData();
+      }, [])
+   );
 
    const renderOrderHistoryItem = ({ item }: { item: orderHistoryItem }) => (
       <View style={orderHistoryStyle.orderItem}>
@@ -48,8 +69,8 @@ const OrderHistoryScreen = ({ navigation }: any) => {
                <Image source={item.image} style={orderHistoryStyle.image} />
                <View>
                   <Text style={orderHistoryStyle.orderDetails}>Quantity: {item.quantity}</Text>
-                  <Text style={[orderHistoryStyle.orderDetails, { marginBottom: 40 }]}>Price: {item.price}</Text>
-                  <Text style={orderHistoryStyle.orderDetails}>SubTotal: {(item.price * item.quantity).toFixed(2)}</Text>
+                  <Text style={[orderHistoryStyle.orderDetails, { marginBottom: 40 }]}>Price: RM{(item.price).toFixed(2)}</Text>
+                  <Text style={orderHistoryStyle.orderDetails}>Subtotal: RM{(item.price * item.quantity).toFixed(2)}</Text>
                </View>
             </View>
          </View>
@@ -58,19 +79,13 @@ const OrderHistoryScreen = ({ navigation }: any) => {
 
    return (
       <SafeAreaView style={orderHistoryStyle.container}>
-         <Text style={orderHistoryStyle.header}>My orders</Text>
-
             <FlatList
-               data = {orderHistory}   
+               data = {orderHistory}
                renderItem = {renderOrderHistoryItem}
                keyExtractor={(item, index) => item.id || index.toString()}
             />
       </SafeAreaView>
    );
 };
-
-
-
-
 
 export default OrderHistoryScreen;

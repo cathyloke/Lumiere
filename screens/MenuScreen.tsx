@@ -1,12 +1,15 @@
 import React, { useState, useEffect } from 'react';
-import { View, Text, Image, FlatList, TouchableOpacity, SafeAreaView,TouchableHighlight, } from 'react-native';
+import { View, Text, Image, FlatList, TouchableOpacity, SafeAreaView,TouchableHighlight, Alert, } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 import { createStackNavigator} from '@react-navigation/stack';
 import { styles } from '../modules/menuStyle';
+import { generalStyles } from '../modules/generalStyle';
 import MaterialCommunityIcons from 'react-native-vector-icons/MaterialCommunityIcons';
 import Entypo from 'react-native-vector-icons/Entypo';
 import Ionicons from 'react-native-vector-icons/Ionicons';
-import {getDBConnection, getMenuData } from "../assets/dbConnection";
+import { getDBConnection, getMenuData, addCartItem } from "../assets/dbConnection";
+import { getSession } from '../assets/sessionData';
+import { ScrollView } from 'react-native-gesture-handler';
 
 type FoodItem={
   id: string;
@@ -59,15 +62,44 @@ const CustomStackContent = ({ navigation }: any) => { //side bar
   );
 };
 
-const ItemDetailScreen = ({route}: any) => { //item detail screen
+const ItemDetailScreen = ({navigation, route}: any) => { //item detail screen
   const {item} = route.params;
-  const [quantity, setQuantity] = useState(1);
+  const [quantity, setQuantity] = useState(0);
+  const [userID, setUserID] = useState('');
+
+  const retrieveSessionData = async () => {
+    const session = await getSession();
+    if (session) {
+       const { userId: sessionUserId } = session;
+       setUserID(sessionUserId || '');
+    } else {
+       console.log('No session found');
+       return null;
+    }
+  };
+
+  const handleAddToCart = async (foodID: string, quantity: number) => {
+    try {
+      const db = await getDBConnection();
+      await addCartItem(db, userID, foodID, quantity);
+      Alert.alert('Added to cart', `Added ${quantity} ${item.name} to the cart.`);
+      navigation.goBack();
+    } catch (error) {
+      console.error('Failed to add to cart:', error);
+      Alert.alert('Error', 'Failed to add item to cart.');
+    }
+  };
+
+  useEffect(() => {
+    retrieveSessionData();
+  }, [])
 
   return (
     <SafeAreaView style={styles.container}>
-      <View style={{flex:1,justifyContent:'center',marginBottom:20}}>
+      <ScrollView>
+      <View style={{flex:1}}>
         <Image source={item.image} style={styles.detailImage} />
-        <Text style={styles.detailTitle}>{item.title}</Text>
+        <Text style={styles.detailTitle}>{item.name}</Text>
         <Text style={styles.detailPrice}>RM {item.price.toFixed(2)}</Text>
         <Text style={styles.detailDescription}>{item.description}</Text>
 
@@ -81,9 +113,15 @@ const ItemDetailScreen = ({route}: any) => { //item detail screen
           <TouchableOpacity onPress={() => setQuantity(q => q + 1)} style={{marginLeft:20}}>
             <Ionicons name="add-circle-outline" size={30} color="#102C57" />
           </TouchableOpacity>
-          
+
         </View>
       </View>
+
+      <TouchableOpacity style={styles.fab} onPress={() => {handleAddToCart(item.foodID, quantity)}}>
+        <Text style={styles.addToCartText}>Add to cart</Text>
+        <MaterialCommunityIcons name="cart" size={30} color="#102C57" />
+      </TouchableOpacity>
+      </ScrollView>
     </SafeAreaView>
   );
 };
@@ -116,7 +154,6 @@ const CategoryScreen = ({navigation, route}: any) => {
       console.error("Error fetching menu data:", error);
     }
   };
-  
 
   useEffect(() => {
     query();
@@ -153,7 +190,7 @@ const CategoryScreen = ({navigation, route}: any) => {
           onValueChange={(itemValue) => setSelectedType(itemValue)}
         >
           {foodTypes.map(type => (
-            <Picker.Item key={type} label={type} value={type}/>
+            <Picker.Item key={type} label={type} value={type} style={[styles.title,{fontFamily: 'Gantari-Regular'}]} />
           ))}
         </Picker>
 
@@ -170,7 +207,7 @@ const CategoryScreen = ({navigation, route}: any) => {
 
                 <View style={styles.textContainer}>
                   <Text style={styles.title}>{item.name}</Text>
-                  <Text style={styles.price}>RM {item.price}</Text>
+                  <Text style={styles.price}>RM {item.price.toFixed(2)}</Text>
                 </View>
               </View>
             </TouchableHighlight>
@@ -186,26 +223,31 @@ const CategoryScreen = ({navigation, route}: any) => {
 const MenuScreen = ({ navigation }: any) => {
   return (
     <View style={styles.container}>
-      <CustomStackContent navigation={navigation} />
-      <Stack.Navigator>
-        <Stack.Screen
-          name="CategoryScreen"
-          component={CategoryScreen}
-          initialParams={{category:'Food'}}
-          options={{ headerShown: false }}
-        />
-        <Stack.Screen
-          name="ItemDetail"
-          component={ItemDetailScreen}
-          options={{
-            headerStyle: {backgroundColor:'#F8F0E5'},
-            headerTitle: '',
-            headerBackTitleVisible: false,
-            headerTintColor:'#102C57',
-          }}
-        />
-      </Stack.Navigator>
+      <Text style={[generalStyles.header,{textAlign: 'left'}]}>Lumière Menu</Text>
+      <View style={{flexDirection: 'row', flexGrow: 1}}>
+        
+        <CustomStackContent navigation={navigation} />
+        <Stack.Navigator>
+          <Stack.Screen
+            name="CategoryScreen"
+            component={CategoryScreen}
+            initialParams={{category:'Food'}}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name="ItemDetail"
+            component={ItemDetailScreen}
+            options={{
+              headerStyle: {backgroundColor:'#F8F0E5'},
+              headerTitle: '',
+              headerBackTitleVisible: false,
+              headerTintColor:'#102C57',
+            }}
+          />
+        </Stack.Navigator>
+      </View>
     </View>
   );
 };
+
 export default MenuScreen;

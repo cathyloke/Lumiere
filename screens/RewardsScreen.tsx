@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
-  SafeAreaView,
   StyleSheet,
   View,
   Text,
@@ -9,21 +8,11 @@ import {
 import { FlatList } from 'react-native-gesture-handler';
 import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
-
-const RewardsScreen = ({navigation}: any) => {
-
+const RewardsScreen = () => {
    const images = [
-      require('../img/promo/chuu.jpg'),
       require('../img/promo/PromoCoffee.png'),
-      require('../img/promo/PromoCroissant.png'),
       require('../img/promo/PromoPancake.png'),
-      require('../img/promo/yves.jpg'),
-      require('../img/promo/chuu.jpg'),
-      require('../img/promo/PromoCoffee.png'),
       require('../img/promo/PromoCroissant.png'),
-      require('../img/promo/PromoPancake.png'),
-      require('../img/promo/yves.jpg'),
-      require('../img/promo/PromoCoffee.png'),
    ];
 
    const renderItem = ({ item }: { item: any }) => (
@@ -33,10 +22,10 @@ const RewardsScreen = ({navigation}: any) => {
    );
 
    return (
-      <GestureHandlerRootView>
+      <GestureHandlerRootView style={styles.container}>
         <Text style={styles.header}>Rewards</Text>
         <View>
-          <Text style={styles.content}>Get Rewards</Text>
+          <Text style={styles.content}>Get rewards</Text>
         </View>
         <FlatList
           data={images}
@@ -81,7 +70,7 @@ const styles = StyleSheet.create({
    },
    image: {
      width: '100%',
-     height: 150,
+     height: 200,
      borderRadius: 10,
    },
  });

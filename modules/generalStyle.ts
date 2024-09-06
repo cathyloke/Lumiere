@@ -8,4 +8,5 @@ export const generalStyles = StyleSheet.create({
       padding: 15,
       textAlign: 'center',
    },
+
 });

@@ -1,88 +1,108 @@
-import React from 'react';
-import { View, Text, Image, StyleSheet, TextInput, Button, TouchableOpacity } from 'react-native';
-import logo from '../img/lumiere_logo.png';
-import { useNavigation } from '@react-navigation/native';
+import React, { useState } from 'react';
+import { View, Text, Image, TextInput, TouchableOpacity, Alert, ScrollView } from 'react-native';
 
-const LogInScreen = () => {
+import { getDBConnection, getUser } from '../../assets/dbConnection';
+import { saveSession } from '../../assets/sessionData';
+import { styles } from '../../modules/accountStyle';
 
-    return (
-        <View style={styles.container}>
-            <Image
-                source={logo}
-                style={styles.logo} 
-            />
-            <View>
-                <Text style={styles.title}>{"\n"}Phone Number</Text>
-                <TextInput
-                    style={styles.input}
-                    placeholder="Enter your phone number"
-                    keyboardType="default"
-                />
-            </View>
+const LogInScreen = ({ navigation }: any) => {
+  const [phone, setPhone] = useState('');
+  const [password, setPassword] = useState('');
 
-            <View>
-                <Text style={styles.title}>{"\n"}{"\n"}Password</Text>
-                <TextInput
-                    style={styles.input}
-                    placeholder="Enter your password"
-                    keyboardType="default"
-                />
-            </View>
+  const clearUserInput = () => {
+    setPhone('');
+    setPassword('')
+  }
 
-            <View style={styles.button}>
-                <Button
-                    title="Log In"
-                    color="#102C57"
-                />
-            </View>
-            <TouchableOpacity onPress={() => navigation.navigate('SignUp')}>
-                <Text style={styles.last}>
-                    Don't have an account? Sign Up
-                </Text>
-            </TouchableOpacity>
-        </View>
-    );
-};
+  const getUserQuery = async () => {
+    try {
+      const db = await getDBConnection();
+      const user = await getUser(db, phone, password);
 
-const styles = StyleSheet.create({
-    container: {
-        flex: 1,                  // Takes up the full height of the screen
-        justifyContent: 'center', // Centers content vertically
-        alignItems: 'center',     // Centers content horizontally
-    },
-    logo: {
-        width: 170, 
-        height: 170,
-    },
-    input: {
-        fontFamily: 'Gantari-Bold',
-        height: 40,
-        margin: 12,
-        borderWidth: 1,
-        padding: 10,
-        borderRadius: 15,
-        width: 300,
-        alignSelf: 'center', // Centers the input boxes horizontally
-    },
-    title: {
-        fontFamily: 'Gantari-Bold',
-        textAlign: "left",
-        marginLeft: 17,
-    },
-    button: {
-        backgroundColor: '#102C57',  
-        paddingVertical: 10,
-        paddingHorizontal: 30,  
-        borderRadius: 20, 
-        alignItems: 'center',
-        alignSelf: 'center',
-        marginTop: 30,
-        width: 250,
-    },
-    last:{
-        marginTop: 10,
-        textAlign:'center'
+      // Save user data to session
+      saveSession(user.userID, user.name, user.phone);
+
+      Alert.alert('Login successful', 'You have successfully logged in.');
+      navigation.navigate('MainMenu');
+
+      clearUserInput();
+    } catch (error) {
+      Alert.alert('Login failed', (error as Error).message);
+      clearUserInput();
     }
-});
+  };
+
+  //Input Validation
+  const handleLogin = () => {
+    // Validation: Empty input fields
+    if (!phone || !password) {
+      Alert.alert('Missing Fields', 'Please fill in all fields.');
+      return;
+    }
+
+    // Validation: Phone number length (e.g., between 10-15 digits)
+    if (phone.length < 10 || phone.length > 15) {
+      Alert.alert('Invalid Phone Number', 'Phone number must be between 10 and 15 digits.');
+      clearUserInput();
+      return;
+    }
+
+    // Validation: Password minimum length (e.g., at least 6 characters)
+    if (password.length < 6) {
+      Alert.alert('Invalid Password', 'Password must be at least 6 characters long.');
+      clearUserInput();
+      return;
+    }
+
+    // Validation: Phone number pattern (digits only)
+    const phonePattern = /^[0-9]+$/;
+    if (!phonePattern.test(phone)) {
+      Alert.alert('Invalid Phone Number', 'Phone number can only contain digits.');
+      clearUserInput();
+      return;
+    }
+
+    // If all validations pass, proceed with login
+    getUserQuery();
+  };
+
+  return (
+    <ScrollView contentContainerStyle={styles.container}>
+      <View style={styles.logoContainer}>
+        <Image
+          style={styles.logo}
+          source={require('../../img/lumiere_logo.png')}
+        />
+      </View>
+
+      <Text style={styles.title}>Welcome to Lumière!</Text>
+
+      <View style={styles.inputContainer}>
+        <TextInput
+          placeholder="Phone Number"
+          value={phone}
+          onChangeText={setPhone}
+          style={styles.input}
+          keyboardType="phone-pad"
+        />
+        <TextInput
+          placeholder="Password"
+          secureTextEntry
+          value={password}
+          onChangeText={setPassword}
+          style={styles.input}
+        />
+      </View>
+
+      <TouchableOpacity style={styles.button} onPress={handleLogin}>
+        <Text style={styles.buttonText}>Log In</Text>
+      </TouchableOpacity>
+      <TouchableOpacity style={styles.link} onPress={() => {navigation.navigate('SignUpScreen')}}>
+        <Text style={styles.linkText}>Don't have an account? Sign up now</Text>
+      </TouchableOpacity>
+
+    </ScrollView>
+  );
+};
 
 export default LogInScreen;

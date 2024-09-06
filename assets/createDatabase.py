@@ -67,82 +67,82 @@ cursor.execute('''
 
 cursor.execute('''
     INSERT INTO menu(foodID, name, category, type, description, image, price)
-    VALUES('001','Egg croissant sandwich', 'Food', 'Breakfast', 'A delicious Egg Croissant Sandwich is suit for you as a breakfast', 'FoodEggCroissantSandwich', 8.00)
+    VALUES('001','Egg Croissant Sandwich', 'Food', 'Breakfast', 'A delicious Egg Croissant Sandwich is suitable for you as a breakfast.', 'FoodEggCroissantSandwich', 8.00)
 ''')
 
 cursor.execute('''
     INSERT INTO menu(foodID, name, category, type, description, image, price)
-    VALUES('002','Berry Pancakes', 'Food', 'Dessert', 'Berry Pancakes, a sweet and sour taste sure will make you happy whole day', 'FoodBerryPancakes', 9.90)
+    VALUES('002','Berry Pancakes', 'Food', 'Dessert', 'Berry Pancakes, a sweet and sour taste sure will make you happy the whole day.', 'FoodBerryPancakes', 9.90)
 ''')
 
 cursor.execute('''
     INSERT INTO menu(foodID, name, category, type, description, image, price)
-    VALUES('003','Avocado toast', 'Food', 'Breakfast', 'Avocado Toast, fast prepared breakfast, speed up and save your time', 'FoodAvocadoToast', 8.90)
+    VALUES('003','Avocado Toast', 'Food', 'Breakfast', 'Avocado Toast, fast prepared breakfast, speed up and save your time.', 'FoodAvocadoToast', 8.90)
 ''')
 
 cursor.execute('''
     INSERT INTO menu(foodID, name, category, type, description, image, price)
-    VALUES('004','Chocolate cake', 'Food', 'Dessert', 'Chocolate Cake, a cake flavored with melted chocolate, and cocoa powder put on top', 'FoodChocolateCake', 15.90)
+    VALUES('004','Chocolate Cake', 'Food', 'Dessert', 'Chocolate Cake, a cake flavored with melted chocolate, and cocoa powder on top.', 'FoodChocolateCake', 15.90)
 ''')
 
 cursor.execute('''
     INSERT INTO menu(foodID, name, category, type, description, image, price)
-    VALUES('005','New York cheesecake', 'Food', 'Dessert', 'New York Cheesecake, full of cheese taste and smooth texture', 'FoodNewYorkCheesecake', 12.90)
+    VALUES('005','New York Cheesecake', 'Food', 'Dessert', 'New York Cheesecake, full of cheesy and smooth texture.', 'FoodNewYorkCheesecake', 12.90)
 ''')
 
 cursor.execute('''
     INSERT INTO menu(foodID, name, category, type, description, image, price)
-    VALUES('006','Tiramisu cake', 'Food', 'Dessert', 'Tiramisu Cake, a vanilla sponge cakes soaked in coffee, frosted with a fluffy mascarpone cream and topped with a dusting of cocoa powder', 'FoodTiramisuCake', 13.90)
+    VALUES('006','Tiramisu Cake', 'Food', 'Dessert', 'Tiramisu Cake, a vanilla sponge cakes soaked in coffee, frosted with a fluffy mascarpone cream and topped with a dusting of cocoa powder.', 'FoodTiramisuCake', 13.90)
 ''')
 
 cursor.execute('''
     INSERT INTO menu(foodID, name, category, type, description, image, price)
-    VALUES('007','Hokkaido Cheese Tart', 'Food', 'Dessert', 'Hokkaido Cheese Tart, delicious cheese tart with full of cheese', 'FoodHokkaidoCheeseTart', 6.90)
+    VALUES('007','Hokkaido Cheese Tart', 'Food', 'Dessert', 'Hokkaido Cheese Tart, delicious cheese tart with full of cheese.', 'FoodHokkaidoCheeseTart', 6.90)
 ''')
 
 cursor.execute('''
     INSERT INTO menu(foodID, name, category, type, description, image, price)
-    VALUES('008','Macarons', 'Food', 'Dessert', 'Macarons, a sweet meringue-based confection dessert', 'FoodMacarons', 4.90)
+    VALUES('008','Macarons', 'Food', 'Dessert', 'Macarons, a sweet meringue-based confection dessert.', 'FoodMacarons', 4.90)
 ''')
 
 cursor.execute('''
     INSERT INTO menu(foodID, name, category, type, description, image, price)
-    VALUES('009','Americano', 'Drink', 'Coffee', 'Americano, diluting an espresso shot with hot water, have a lighter taste', 'DrinksAmericano', 5.90)
+    VALUES('009','Americano', 'Drink', 'Coffee', 'Americano, diluting an espresso shot with hot water, making a lighter taste.', 'DrinksAmericano', 5.90)
 ''')
 
 cursor.execute('''
     INSERT INTO menu(foodID, name, category, type, description, image, price)
-    VALUES('010','Latte', 'Drink', 'Coffee', 'Latte, made by espresso and steamed milk', 'DrinksLatte', 9.90)
+    VALUES('010','Latte', 'Drink', 'Coffee', 'Latte, made by espresso and steamed milk.', 'DrinksLatte', 9.90)
 ''')
 
 cursor.execute('''
     INSERT INTO menu(foodID, name, category, type, description, image, price)
-    VALUES('011','Latte special', 'Drink', 'Coffee', 'Latte, made by espresso and steamed milk, added with chocolate and ice cream', 'DrinksLatteSpecial', 12.90)
+    VALUES('011','Latte special', 'Drink', 'Coffee', 'Latte, made by espresso and steamed milk, topped with chocolate and ice cream.', 'DrinksLatteSpecial', 12.90)
 ''')
 
 cursor.execute('''
     INSERT INTO menu(foodID, name, category, type, description, image, price)
-    VALUES('012','Cappuccino', 'Drink', 'Coffee', 'Cappuccino, espresso-based coffee drink with steamed milk including a layer of milk foam', 'DrinksCappuccino', 8.90)
+    VALUES('012','Cappuccino', 'Drink', 'Coffee', 'Cappuccino, espresso-based coffee drink with steamed milk including a layer of milk foam.', 'DrinksCappuccino', 8.90)
 ''')
 
 cursor.execute('''
     INSERT INTO menu(foodID, name, category, type, description, image, price)
-    VALUES('013','Mocha', 'Drink', 'Coffee', 'Mocha, used good quality coffee that is made from a specific coffee bean', 'DrinksMocha', 9.90)
+    VALUES('013','Mocha', 'Drink', 'Coffee', 'Mocha, with good quality coffee that is made from a specific coffee bean.', 'DrinksMocha', 9.90)
 ''')
 
 cursor.execute('''
     INSERT INTO menu(foodID, name, category, type, description, image, price)
-    VALUES('014','Matcha Latte', 'Drink', 'Coffee', 'Matcha Latte, Latte with mixing of matcha powder, steaming hot milk and honey', 'DrinksMatchaLatte', 12.90)
+    VALUES('014','Matcha Latte', 'Drink', 'Coffee', 'Matcha Latte, Latte with a mix of matcha powder, steaming hot milk, and honey.', 'DrinksMatchaLatte', 12.90)
 ''')
 
 cursor.execute('''
     INSERT INTO menu(foodID, name, category, type, description, image, price)
-    VALUES('015','Matcha Milk Tea', 'Drink', 'Milk Tea', 'Matcha Milk Tea, mixing of matcha powder and milk, added with boba', 'DrinksMatchaMilkTea', 12.90)
+    VALUES('015','Matcha Milk Tea', 'Drink', 'Milk Tea', 'Matcha Milk Tea, mixing of matcha powder and milk, added with boba.', 'DrinksMatchaMilkTea', 12.90)
 ''')
 
 cursor.execute('''
     INSERT INTO menu(foodID, name, category, type, description, image, price)
-    VALUES('016','Taro Milk Tea', 'Drink', 'Milk Tea', 'Taro Milk Tea, A drink that popular in Taro Lovers', 'DrinksTaroMilkTea', 10.90)
+    VALUES('016','Taro Milk Tea', 'Drink', 'Milk Tea', 'Taro Milk Tea, A drink that is popular among Taro Lovers', 'DrinksTaroMilkTea', 10.90)
 ''')
 
 cursor.execute('''

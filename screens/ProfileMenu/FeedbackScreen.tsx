@@ -1,24 +1,50 @@
-import React, { useState } from 'react';
-import { View, Text, TouchableOpacity , SafeAreaView, TextInput, Button} from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { View, Text, TouchableOpacity, SafeAreaView, TextInput, Button, Alert } from 'react-native';
 import { styles } from '../../modules/profileStyle';
+import io from 'socket.io-client';
+import { getSession } from '../../assets/sessionData';
+
+var socket = io('http://10.0.2.2:5001/chat', {
+   transports: ['websocket'],
+});
 
 const FeedbackScreen = () => {
-   // Create a state array to track the selection status of each box
    const [selectedBoxes, setSelectedBoxes] = useState([false, false, false, false, false, false]);
+   const [number, setNumber] = useState('');
+   const [userName, setUserName] = useState<string | null>(null);
 
-   // Function to toggle the selection of a specific box
+   useEffect(() => {
+      const fetchUserName = async () => {
+          const session = await getSession();
+          setUserName(session?.userName || 'Anonymous');
+      };
+      fetchUserName();
+  }, []);
+
    const toggleSelection = (index) => {
-      // Update the state by toggling the specific box's selection status
       const newSelection = [...selectedBoxes];
       newSelection[index] = !newSelection[index];
       setSelectedBoxes(newSelection);
    };
 
-   const [number, onChangeNumber] = React.useState('');
+   const handleSubmit = () => {
+      if (number.trim() === '') {
+         Alert.alert('Comment field is empty');
+      } else {
+         // Emit feedback through WebSocket
+         const feedbackData = {
+            sender: userName,
+            message: number,
+         };
+         socket.emit('feedback_sent', feedbackData);
 
+         Alert.alert('Successfully submitted', 'Thank you for your feedback!');
+         setNumber(''); // Clear the feedback input
+      }
+   };
 
    return (
-      <View>
+      <View style={{ flex: 1, padding: 20, backgroundColor: '#F8F0E5'}}>
          <View>
             <Text style={styles.title}>Your Feedback Matters</Text>
             <Text style={styles.subtitle}>Let us know how we can serve you better.</Text>
@@ -67,11 +93,12 @@ const FeedbackScreen = () => {
             <SafeAreaView>
                <TextInput
                   style={styles.inputs}
-                  onChangeText={onChangeNumber}
+                  onChangeText={setNumber}
                   value={number}
                   placeholder="Enter your comment here"
                   keyboardType="default"
                   textAlignVertical="top"
+                  multiline
                />
             </SafeAreaView>
          </View>
@@ -80,6 +107,7 @@ const FeedbackScreen = () => {
             <Button
                title="Submit"
                color="#102C57"
+               onPress={handleSubmit}
             />
          </View>
       </View>
