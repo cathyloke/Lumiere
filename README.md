@@ -1,6 +1,6 @@
 <p align="center">
   <a href="" rel="noopener">
- <img src="./img/lumiere_logo.png" alt="Lumiere" width="400" height="auto"></a>
+ <img src="./img/lumiere_logo.png" alt="Lumiere" width="250" height="auto"></a>
 </p>
 <h1 align="center">Lumière</h1>
 
@@ -30,8 +30,8 @@ This is one way to run your app — you can also run it directly from within And
   <img src="./img/ss4.png" width="200" >
   <img src="./img/ss5.png" width="200" >
   <img src="./img/ss6.png" width="200" >
-  <img src="./img/ss7.png" width="200" >
   <img src="./img/ss8.png" width="200" >
+  <img src="./img/ss7.png" width="200" >
 </div>
 
 <h2 align="center">👨‍💻 Contributor</h2>
