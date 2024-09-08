@@ -22,7 +22,7 @@ If everything is set up _correctly_, you should see your the app running in your
 
 This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
 
-<h2 align="center">Mobile Application Design 💻</h2>
+<h2 align="center">📱 Mobile Application Design</h2>
 <div style="display:flex;">
   <img src="./img/ss1.png" width="200" >
   <img src="./img/ss2.png" width="200" >
