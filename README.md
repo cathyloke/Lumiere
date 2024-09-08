@@ -1,79 +1,46 @@
-This is a new [**React Native**](https://reactnative.dev) project, bootstrapped using [`@react-native-community/cli`](https://github.com/react-native-community/cli).
+<p align="center">
+  <a href="" rel="noopener">
+ <img src="./img/lumiere_logo.png" alt="Lumiere" width="400" height="auto"></a>
+</p>
+<h1 align="center">Lumière</h1>
 
-# Getting Started
+<p>The Lumière Café Ordering Application is a user-friendly mobile application designed to streamline the process of ordering foods and beverages from Lumière Café.</p>
 
->**Note**: Make sure you have completed the [React Native - Environment Setup](https://reactnative.dev/docs/environment-setup) instructions till "Creating a new application" step, before proceeding.
+<h2 align="center">🚀 Getting Started</h2>
 
-## Step 1: Start the Metro Server
-
-First, you will need to start **Metro**, the JavaScript _bundler_ that ships _with_ React Native.
-
-To start Metro, run the following command from the _root_ of your React Native project:
-
-```bash
-# using npm
-npm start
-
-# OR using Yarn
-yarn start
-```
-
-## Step 2: Start your Application
-
-Let Metro Bundler run in its _own_ terminal. Open a _new_ terminal from the _root_ of your React Native project. Run the following command to start your _Android_ or _iOS_ app:
-
-### For Android
+Install necessary dependencies > Start the Metro Server and the Application
 
 ```bash
-# using npm
-npm run android
+# Install dependencies
+npm install
 
-# OR using Yarn
-yarn android
+# Start Metro server and the application
+npx react-native run-android
 ```
 
-### For iOS
-
-```bash
-# using npm
-npm run ios
-
-# OR using Yarn
-yarn ios
-```
-
-If everything is set up _correctly_, you should see your new app running in your _Android Emulator_ or _iOS Simulator_ shortly provided you have set up your emulator/simulator correctly.
+If everything is set up _correctly_, you should see your the app running in your _Android Emulator_ shortly provided you have set up your emulator/simulator correctly.
 
 This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
 
-## Step 3: Modifying your App
+<h2 align="center">Mobile Application Design 💻</h2>
+<div style="display:flex;">
+  <img src="./img/ss1.png" width="200" >
+  <img src="./img/ss2.png" width="200" >
+  <img src="./img/ss3.png" width="200" >
+  <img src="./img/ss4.png" width="200" >
+  <img src="./img/ss5.png" width="200" >
+  <img src="./img/ss6.png" width="200" >
+  <img src="./img/ss7.png" width="200" >
+  <img src="./img/ss8.png" width="200" >
+</div>
 
-Now that you have successfully run the app, let's modify it.
+<h2 align="center">👨‍💻 Contributor</h2>
 
-1. Open `App.tsx` in your text editor of choice and edit some lines.
-2. For **Android**: Press the <kbd>R</kbd> key twice or select **"Reload"** from the **Developer Menu** (<kbd>Ctrl</kbd> + <kbd>M</kbd> (on Window and Linux) or <kbd>Cmd ⌘</kbd> + <kbd>M</kbd> (on macOS)) to see your changes!
+<p>The Lumière Café Ordering Application is developed by a team of Software Engineering students from UTAR. Feel free to visit their GitHub Profiles below!
+<ul>
+   <li><a href="https://github.com/Zoriannn">Choo Jia Zheng</a></li>
+   <li><a href="https://github.com/linnlms">Leong Ming Shan</a></li>
+   <li><a href="https://github.com/cathyloke">Loke Weng Yan</a></li>
+   <li><a href="https://github.com/joelytin">Tin Hui Hui</a></li>
+</ul>
 
-   For **iOS**: Hit <kbd>Cmd ⌘</kbd> + <kbd>R</kbd> in your iOS Simulator to reload the app and see your changes!
-
-## Congratulations! :tada:
-
-You've successfully run and modified your React Native App. :partying_face:
-
-### Now what?
-
-- If you want to add this new React Native code to an existing application, check out the [Integration guide](https://reactnative.dev/docs/integration-with-existing-apps).
-- If you're curious to learn more about React Native, check out the [Introduction to React Native](https://reactnative.dev/docs/getting-started).
-
-# Troubleshooting
-
-If you can't get this to work, see the [Troubleshooting](https://reactnative.dev/docs/troubleshooting) page.
-
-# Learn More
-
-To learn more about React Native, take a look at the following resources:
-
-- [React Native Website](https://reactnative.dev) - learn more about React Native.
-- [Getting Started](https://reactnative.dev/docs/environment-setup) - an **overview** of React Native and how setup your environment.
-- [Learn the Basics](https://reactnative.dev/docs/getting-started) - a **guided tour** of the React Native **basics**.
-- [Blog](https://reactnative.dev/blog) - read the latest official React Native **Blog** posts.
-- [`@facebook/react-native`](https://github.com/facebook/react-native) - the Open Source; GitHub **repository** for React Native.

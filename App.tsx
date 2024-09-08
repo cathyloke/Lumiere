@@ -49,7 +49,6 @@ const App = () => {
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{
-          headerTitleStyle: generalStyles.header,
           headerShown: false
         }}
       >
