@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, ActivityIndicator, FlatList, StyleSheet } from 'react-native';
+import { View, Text, Image, ActivityIndicator, FlatList, Button, StyleSheet } from 'react-native';
+import { Picker } from '@react-native-picker/picker';
 
 interface LocationData {
   branchID: number;
@@ -24,30 +25,54 @@ interface LocationData {
 }
 
 const LocationScreen = () => {
-  const url = 'http://10.0.2.2:5003/api/data';
+  const postUrl = 'http://10.0.2.2:5003/api/filter';
+  const getUrl = 'http://10.0.2.2:5003/api/data';
 
   const [locationData, setLocationData] = useState<LocationData[]>([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const [selectedLocation, setSelectedLocation] = useState<string>('all');
 
-  //Fetch branch data from the server
-  const fetchData = async() => {
+  const fetchData = async () => {
+    setLoading(true);
     try {
-      const response = await fetch(url);          //default - GET
+      const response = await fetch(getUrl); 
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
       const result = await response.json();
-      setLocationData(result.branches); // Adjust this based on your response structure
+      setLocationData(result.branches); 
     } catch (error) {
       setError(error.message);
     } finally {
       setLoading(false);
     }
-  }
+  };
+
+  const sendFilter = async (selectedLocation: string) => {
+    setLoading(true);
+    try {
+      const response = await fetch(postUrl, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ location: selectedLocation }),
+      });
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+      await fetchData();
+    } catch (error) {
+      setError(error.message);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   useEffect(() => {
     fetchData();
+    sendFilter(selectedLocation);
   }, []);
 
   const renderBranch = ({ item }: { item: LocationData }) => (
@@ -86,6 +111,18 @@ const LocationScreen = () => {
 
   return (
     <View style={styles.container}>
+      <Picker
+        selectedValue={selectedLocation}
+        style={styles.picker} 
+        onValueChange={(itemValue) => {
+          setSelectedLocation(itemValue); 
+          sendFilter(itemValue);
+        }}
+      >
+        <Picker.Item label="All" value="all" style={styles.pickerText} />
+        <Picker.Item label="Downtown" value="downtown" style={styles.pickerText} />
+        <Picker.Item label="Uptown" value="uptown" style={styles.pickerText} />
+      </Picker>
       <FlatList
         data={locationData}
         renderItem={renderBranch}
@@ -163,6 +200,16 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     marginTop: 20,
   },
+  picker: {
+    height: 50,
+    width: 160,
+    alignSelf: 'flex-end',
+  },
+  pickerText: {
+    color: '#102C57',
+    fontFamily: 'Gantari-Regular',
+    fontSize: 16
+  }
 });
 
 export default LocationScreen;
