@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
-# assume branches data from server
+# assume branches data from server - Admin side
 branches = [
     {
         "branchID": 1,
@@ -57,7 +57,6 @@ def get_data():
     filtered_branches = branches
     
     if current_filter and current_filter.lower() != 'all':
-        # Filter branches based on the current filter set by the POST request
         filtered_branches = [branch for branch in branches if current_filter.lower() in branch['name'].lower()]
     
     return jsonify({"branches": filtered_branches})

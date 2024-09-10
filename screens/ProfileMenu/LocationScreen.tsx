@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { View, Text, Image, ActivityIndicator, FlatList, Button, StyleSheet } from 'react-native';
+import { View, Text, Image, ActivityIndicator, FlatList, StyleSheet } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
 
 interface LocationData {
