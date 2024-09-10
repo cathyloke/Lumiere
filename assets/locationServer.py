@@ -2,7 +2,7 @@ from flask import Flask, request, jsonify
 
 app = Flask(__name__)
 
-# assume branches data from server
+# assume branches data from server - Admin side
 branches = [
     {
         "branchID": 1,
@@ -48,18 +48,30 @@ branches = [
     }
 ]
 
+current_filter = 'all'
+
 # Route to handle GET requests to '/api/data'
 @app.route('/api/data', methods=['GET'])
 def get_data():
-    return jsonify({"branches": branches})
+    global current_filter
+    filtered_branches = branches
+    
+    if current_filter and current_filter.lower() != 'all':
+        filtered_branches = [branch for branch in branches if current_filter.lower() in branch['name'].lower()]
+    
+    return jsonify({"branches": filtered_branches})
 
-# Route to handle POST requests to '/api/data'
-@app.route('/api/data', methods=['POST'])
-def receive_data():
+# Route to handle POST requests to '/api/filter'
+@app.route('/api/filter', methods=['POST'])
+def set_filter():
+    global current_filter  
     data = request.get_json()
-    if not data:
+    if not data or 'location' not in data:
         return jsonify({'error': 'Invalid or missing JSON'}), 400
-    return jsonify({'message': 'Data received successfully', 'received_data': data})
+    
+    current_filter = data['location'] 
+    return jsonify({'message': 'Filter set successfully', 'current_filter': current_filter})
+
 
 if __name__ == '__main__':
     # Run the server on localhost:5003

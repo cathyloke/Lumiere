@@ -1,6 +1,6 @@
 <p align="center">
   <a href="" rel="noopener">
- <img src="./img/lumiere_logo.png" alt="Lumiere" width="400" height="auto"></a>
+ <img src="./img/lumiere_logo.png" alt="Lumiere" width="250" height="auto"></a>
 </p>
 <h1 align="center">Lumière</h1>
 
@@ -20,9 +20,9 @@ npx react-native run-android
 
 If everything is set up _correctly_, you should see your the app running in your _Android Emulator_ shortly provided you have set up your emulator/simulator correctly.
 
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
+This is one way to run your app — you can also run it directly from within Android Studio.
 
-<h2 align="center">Mobile Application Design 💻</h2>
+<h2 align="center">📱 Mobile Application Design</h2>
 <div style="display:flex;">
   <img src="./img/ss1.png" width="200" >
   <img src="./img/ss2.png" width="200" >
@@ -30,8 +30,8 @@ This is one way to run your app — you can also run it directly from within And
   <img src="./img/ss4.png" width="200" >
   <img src="./img/ss5.png" width="200" >
   <img src="./img/ss6.png" width="200" >
-  <img src="./img/ss7.png" width="200" >
   <img src="./img/ss8.png" width="200" >
+  <img src="./img/ss7.png" width="200" >
 </div>
 
 <h2 align="center">👨‍💻 Contributor</h2>
