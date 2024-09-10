@@ -20,7 +20,7 @@ npx react-native run-android
 
 If everything is set up _correctly_, you should see your the app running in your _Android Emulator_ shortly provided you have set up your emulator/simulator correctly.
 
-This is one way to run your app — you can also run it directly from within Android Studio and Xcode respectively.
+This is one way to run your app — you can also run it directly from within Android Studio.
 
 <h2 align="center">📱 Mobile Application Design</h2>
 <div style="display:flex;">
