@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { View, Text, Image, ActivityIndicator, FlatList, StyleSheet } from 'react-native';
 import { Picker } from '@react-native-picker/picker';
+import OpenMap from "react-native-open-maps";
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 interface LocationData {
   branchID: number;
@@ -19,8 +21,8 @@ interface LocationData {
   };
   services: string[];
   coordinates: {
-    latitude: number;
-    longitude: number;
+    latitude: string;
+    longitude: string;
   };
 }
 
@@ -76,7 +78,15 @@ const LocationScreen = () => {
   }, []);
 
   const renderBranch = ({ item }: { item: LocationData }) => (
-    <View style={styles.branchContainer}>
+    <TouchableOpacity 
+      style={styles.branchContainer} 
+      onPress = {()=> {
+        OpenMap({
+          latitude: parseFloat(item.coordinates.latitude), 
+          longitude: parseFloat(item.coordinates.longitude),
+        })
+      }}
+    >
       <View style={{flexDirection: 'row',justifyContent: 'space-between' }}>
         <View style={{width: 175}}>
           <Text style={styles.branchName}>{item.name}</Text>
@@ -98,7 +108,7 @@ const LocationScreen = () => {
           <Text style={styles.branchHoursTime}>{hours}</Text>
         </View>
       ))}  
-    </View>
+    </TouchableOpacity>
   );
 
   if (loading) {
