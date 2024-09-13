@@ -30,7 +30,7 @@ If everything is set up _correctly_, you should see your the app running in your
 
 This is one way to run your app — you can also run it directly from within Android Studio.
 
-Besides, you also require to run the command below to start the web socket. 
+Besides, you also required to run the command below to start the web socket. 
 
 ```bash
 # Web-based API
