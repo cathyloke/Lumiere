@@ -10,9 +10,9 @@
 
 Make sure the following tools are installed on you machine:
 
-Python 3.x
-Node.js (for React Native)
-React Native CLI
+- Python 3.x
+- Node.js (for React Native)
+- React Native CLI
 
 <h2 align="center">🚀 Getting Started</h2>
 
