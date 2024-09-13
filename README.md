@@ -6,6 +6,14 @@
 
 <p>The Lumière Café Ordering Application is a user-friendly mobile application designed to streamline the process of ordering foods and beverages from Lumière Café.</p>
 
+<h2 align="center">Pre Requisites</h2>
+
+Make sure the following tools are installed on you machine:
+
+- Python 3.x
+- Node.js (for React Native)
+- React Native CLI
+
 <h2 align="center">🚀 Getting Started</h2>
 
 Install necessary dependencies > Start the Metro Server and the Application
@@ -21,6 +29,24 @@ npx react-native run-android
 If everything is set up _correctly_, you should see your the app running in your _Android Emulator_ shortly provided you have set up your emulator/simulator correctly.
 
 This is one way to run your app — you can also run it directly from within Android Studio.
+
+Besides, you also required to run the command below to start the web socket. 
+
+```bash
+# Web-based API
+cd assets
+python locationServer.py
+
+# Web Socket
+cd assets
+python feedbackSocket.py
+
+# Web Socket
+cd assets
+python checkoutSocket.py
+```
+
+Note: These servers must remain running while the application is in use. Open separate terminal windows or tabs for each server to keep them active.
 
 <h2 align="center">📱 Mobile Application Design</h2>
 <div style="display:flex;">
