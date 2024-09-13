@@ -238,12 +238,6 @@ export const processPayment = async (db: SQLiteDatabase, userID: string): Promis
   try {
     // Retrieve cart items
     const cartItems = await getCartItem(db, userID);
-  
-    //If cart is empty
-    if (cartItems.length === 0) {
-      console.log('Cart is empty');
-      throw new Error('Cart is empty');
-    }
  
     //Get the current date
     const date = getTodayDate();

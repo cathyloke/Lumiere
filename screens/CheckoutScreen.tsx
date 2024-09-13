@@ -67,7 +67,7 @@ const CheckoutScreen = ({ navigation }: any) => {
 
             // Emit cart data to server once fetched
             socket.emit('client_send_cart', {
-            cartItems: cartItemData,
+                cartItems: cartItemData,
         });
         } catch (error) {
             console.error('Error fetching order data: ', error);
